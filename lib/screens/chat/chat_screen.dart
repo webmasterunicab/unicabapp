@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniconecta/widgets/chat/chat_body.dart';
 
 class ChatScreen extends StatelessWidget {
 
@@ -6,6 +7,23 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ;
+  final avatar = CircleAvatar(
+    backgroundImage: AssetImage(
+      'imagen.jpg'
+      ),
+  );
+
+    return Scaffold(
+      appBar: AppBar(  
+        leading: Container(
+          margin: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+          padding: const EdgeInsets.all(5.0),
+          child: avatar,
+        ),
+        title: Text('Nombre Usuario'),
+        centerTitle: true,
+      ),
+      body: ChatBody(),
+    );
   }
 }
