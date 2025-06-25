@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-class SenderMessageBubble extends StatelessWidget {
-  const SenderMessageBubble({super.key});
+class ReceptorMessageBubble extends StatelessWidget {
+  const ReceptorMessageBubble({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final double espaciado = 25;
+    final double espaciado = 20;
 
     final estilosBurbujaMensaje = BoxDecoration(
-      color: Color.fromRGBO(221, 219, 215, 1),
+      color: Color.fromRGBO(11, 119, 179, 1),
       borderRadius: BorderRadius.only(
         topLeft: Radius.circular(40),
         topRight: Radius.circular(40),
@@ -52,20 +52,21 @@ Integer a nisl velit. Mauris laoreet in urna sed tincidunt. Suspendisse potenti.
       margin: EdgeInsets.fromLTRB(0, 5, 5, 0),
       child: Text(
         '${ahora.day} de ${meses[ahora.month - 1]} del ${ahora.year}',
-        style: TextStyle(color: Color.fromRGBO(134, 132, 129, 1), fontSize: 13),
+        style: TextStyle(color: Color.fromRGBO(136, 201, 238, 1), fontSize: 13),
       ),
     );
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         SizedBox(
           height: espaciado,
         ),
-        Text('Tú'),
+        Text('Usuario'),
         SizedBox(
           height: 5,
         ),
+        
         Container(
           decoration: estilosBurbujaMensaje,
           child: ConstrainedBox(
@@ -77,12 +78,12 @@ Integer a nisl velit. Mauris laoreet in urna sed tincidunt. Suspendisse potenti.
               children: [
                 Container(
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
-                  child: Text(mensajeLargo),
+                  child: Text(mensajeLargo, style: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),),
                 ),
                 Align(
-                  alignment: Alignment.centerRight,
+                  alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 15),
                     child: fecha,
                   ),
                 ),
@@ -90,6 +91,7 @@ Integer a nisl velit. Mauris laoreet in urna sed tincidunt. Suspendisse potenti.
             ),
           ),
         ),
+
         SizedBox(
           height: espaciado,
         ),

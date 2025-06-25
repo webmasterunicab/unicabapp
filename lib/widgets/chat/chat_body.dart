@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/widgets/chat/sender_message_bubble.dart';
+import 'package:uniconecta/widgets/chat/emisor_message_bubble.dart';
+import 'package:uniconecta/widgets/chat/receptor_message_bubble.dart';
 
 class ChatBody extends StatelessWidget {
   const ChatBody({super.key});
@@ -8,7 +9,7 @@ class ChatBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
 
@@ -16,7 +17,7 @@ class ChatBody extends StatelessWidget {
               child: ListView.builder(
                 itemCount: 100,
                 itemBuilder: (context, index) {
-                  return SenderMessageBubble();
+                  return (index % 2 ==  0) ? EmisorMessageBubble() : ReceptorMessageBubble();
                 },
               ),
             ),

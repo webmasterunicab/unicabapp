@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/config/theme/app_theme.dart';
-import 'package:uniconecta/screens/chat/chat_screen.dart';
+import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: AppTheme().theme(),
-      home: const ChatScreen(),
+      home: VideoInicioScreen(),
     );
   }
 }
