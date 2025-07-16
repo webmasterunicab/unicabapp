@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/screens/chat/chat_screen.dart';
+import 'package:uniconecta/screens/inicio_sesion/inicio_sesion_screen.dart';
 import 'package:uniconecta/screens/registro_estudiante/registro_screen.dart';
 
-class InicioBtn extends StatelessWidget {
+class InicioButton extends StatelessWidget {
   final String btnNombre;
   final bool bottom;
 
-  const InicioBtn({super.key, required this.btnNombre, this.bottom = true});
+  const InicioButton({super.key, required this.btnNombre, this.bottom = true});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final screen = btnNombre.contains("Registro") ? RegistroScreen() : ChatScreen();
+        final screen = btnNombre.contains("Registro") ? RegistroScreen() : InicioSesion();
 
         Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => screen),

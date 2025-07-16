@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/widgets/inicio/inicio_btn.dart';
+import 'package:uniconecta/widgets/inicio/inicio_button.dart';
 import 'package:uniconecta/widgets/inicio/inicio_head.dart';
 
 class InicioScreen extends StatelessWidget {
@@ -18,8 +18,8 @@ class InicioScreen extends StatelessWidget {
               Expanded(
                 child: Column(
                   children: [
-                    InicioBtn(btnNombre: "Inicio de sesión", bottom: false,),
-                    InicioBtn(btnNombre: "Registro",),
+                    InicioButton(btnNombre: "Inicio de sesión", bottom: false,),
+                    InicioButton(btnNombre: "Registro",),
                     
                   ],
                 ),
