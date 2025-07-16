@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uniconecta/screens/chat/chat_screen.dart';
 import 'package:uniconecta/screens/registro_estudiante/registro_screen.dart';
 
 class InicioBtn extends StatelessWidget {
@@ -11,11 +12,10 @@ class InicioBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        final screen = btnNombre.contains("Registro") ? RegistroScreen() : ChatScreen();
 
-let screen = btnNombre
-
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => RegistroScreen()),
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => screen),
         );
       },
       child: Container(
