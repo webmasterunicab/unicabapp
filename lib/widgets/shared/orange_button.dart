@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class OrangeButton extends StatelessWidget {
-  const OrangeButton({super.key, required this.buttonText});
+  const OrangeButton({super.key, required this.buttonText, required this.onPressed});
 
   final String buttonText;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class OrangeButton extends StatelessWidget {
         )
       ),
 
-      onPressed: () {}, 
+      onPressed: onPressed, 
 
       child: Text(
         buttonText,

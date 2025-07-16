@@ -1,0 +1,22 @@
+import 'package:flutter/material.dart';
+
+class CustomButtonSesion extends StatelessWidget {
+  const CustomButtonSesion({super.key, required this.buttonText, required this.onPressed});
+  final String buttonText;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () {}, 
+
+      child: Text(
+        buttonText,
+        style: TextStyle(
+          color: Color.fromRGBO(255, 152, 5, 1),
+          fontSize: 15
+        ),
+      ),
+    );
+  }
+}
