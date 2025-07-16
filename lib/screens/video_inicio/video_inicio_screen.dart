@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/screens/chat/chat_screen.dart';
+import 'package:uniconecta/screens/inicio/inicio_screen.dart';
+import 'package:uniconecta/screens/registro_estudiante/registro_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoInicioScreen extends StatefulWidget {
@@ -28,7 +29,7 @@ Future<void> _setupVideo() async {
     if (controller.value.position >= controller.value.duration &&
         !controller.value.isPlaying) {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (_) => ChatScreen()),
+        MaterialPageRoute(builder: (_) => InicioScreen()),
       );
     }
   });
@@ -44,7 +45,7 @@ Future<void> _setupVideo() async {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox.expand(
+    return SafeArea(
       child: VideoPlayer(controller),
     );
   }
