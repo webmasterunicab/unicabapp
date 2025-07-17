@@ -24,9 +24,9 @@ class InicioButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent, // Fondo transparente
           border: Border(
-            top: BorderSide(color: Colors.white, width: 1), // Borde superior
+            top: BorderSide(color: Colors.white, width: 0.5), // Borde superior
             bottom: ((bottom)
-                ? BorderSide(color: Colors.white, width: 1)
+                ? BorderSide(color: Colors.white, width: 0.5)
                 : BorderSide(color: Colors.transparent)),
             // Borde inferior
           ), // Borde blanco

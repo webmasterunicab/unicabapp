@@ -29,6 +29,7 @@ class CampoSesion extends StatelessWidget {
             child: Text(
               fieldLabel,
               style: TextStyle(
+                fontFamily: 'Roboto',
                 fontSize: 13,
                 color: Colors.white
               ),
@@ -44,6 +45,10 @@ class CampoSesion extends StatelessWidget {
           
               enabledBorder: border,
               focusedBorder: border,
+            ),
+            
+            style: TextStyle(
+              fontFamily: 'Roboto'
             ),
           ),
 
