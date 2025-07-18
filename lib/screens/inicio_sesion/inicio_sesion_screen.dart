@@ -10,48 +10,60 @@ class InicioSesion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(11, 119, 179, 1),
-      body: Center(
-        child: Column(
-          children: [
-            MainNavegationBar(navType: NavBarTypes.noBody, canGetBackHere: true), // App bar custom
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    'assets/img/LOGO UNICONECTA.png',
-                    width: 154,
-                    height: 54,
-                  ),
-                  SizedBox(height: 25),
-              
-                  CampoSesion(fieldLabel: "Usuario"),
-                  SizedBox(height: 30),
-              
-                  CampoSesion(fieldLabel: "Contraseña"),
-                  SizedBox(height: 30),
-              
-                  OrangeButton(
-                    buttonText: "Iniciar Sesión", 
-                    onPressed: () {
-              
-                    },
-                    textWeight: FontWeight.w600,
-                  ),
-                  SizedBox(height: 30),
-              
-                  CustomButtonSesion(
-                    buttonText: "Olvide mi contraseña", 
-                    onPressed: () {
-                    
-                    },
-                  ),
-                ],
+      backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: Column(
+                  children: [
+                    MainNavegationBar(
+                      navType: NavBarTypes.noBody,
+                      canGetBackHere: true,
+                    ),
+      
+                    // Este Expanded está dentro del IntrinsicHeight y funciona bien
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/img/LOGO UNICONECTA.png',
+                            width: 154,
+                            height: 54,
+                          ),
+                          const SizedBox(height: 25),
+      
+                          CampoSesion(fieldLabel: "Usuario"),
+                          const SizedBox(height: 30),
+      
+                          CampoSesion(fieldLabel: "Contraseña"),
+                          const SizedBox(height: 30),
+      
+                          OrangeButton(
+                            buttonText: "Iniciar Sesión",
+                            onPressed: () {},
+                            textWeight: FontWeight.w600,
+                          ),
+                          const SizedBox(height: 30),
+      
+                          CustomButtonSesion(
+                            buttonText: "Olvide mi contraseña",
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

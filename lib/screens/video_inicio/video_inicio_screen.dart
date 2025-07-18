@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/screens/inicio/inicio_screen.dart';
-import 'package:uniconecta/screens/registro_estudiante/registro_screen.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoInicioScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ void initState() {
 }
 
 Future<void> _setupVideo() async {
-  controller = VideoPlayerController.asset('assets/video/prueba2.mp4');
+  controller = VideoPlayerController.asset('assets/video/inicio.mp4');
   await controller.initialize();
   controller.setVolume(0);
   controller.play();
