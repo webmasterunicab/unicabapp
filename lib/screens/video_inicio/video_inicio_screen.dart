@@ -20,7 +20,7 @@ void initState() {
 }
 
 Future<void> _setupVideo() async {
-  controller = VideoPlayerController.asset('assets/video/prueba.mp4');
+  controller = VideoPlayerController.asset('assets/video/prueba2.mp4');
   await controller.initialize();
   controller.setVolume(0);
   controller.play();
