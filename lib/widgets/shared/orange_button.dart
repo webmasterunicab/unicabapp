@@ -8,7 +8,8 @@ class OrangeButton extends StatelessWidget {
     this.prefix,
     this.suffix,
     this.width,
-    this.height,
+    this.height, 
+    required this.textWeight,
   });
 
   final String buttonText;
@@ -19,6 +20,8 @@ class OrangeButton extends StatelessWidget {
 
   final Widget? prefix;
   final Widget? suffix;
+
+  final FontWeight textWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +45,17 @@ class OrangeButton extends StatelessWidget {
           mainAxisSize: width == null ? MainAxisSize.min : MainAxisSize.max,
           mainAxisAlignment: organizeSpace,
           children: [
-            if (prefix != null) prefix!,
+            if (prefix != null) ...[prefix!, SizedBox(width:20)],
             Text(
               buttonText,
-              style: const TextStyle(
+              style: TextStyle(
+                fontFamily: 'Roboto',
                 color: Colors.white,
                 fontSize: 15,
+                fontWeight: textWeight
               ),
             ),
-            if (suffix != null) suffix!,
+            if (suffix != null) ...[SizedBox(width:20), suffix!],
           ],
         ),
       ),

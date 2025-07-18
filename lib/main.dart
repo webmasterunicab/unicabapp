@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniconecta/config/theme/app_theme.dart';
+import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
 import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/screens/inicio/inicio_screen.dart';
-import 'package:uniconecta/screens/registro_acuerdos/registro_acuerdos_screen.dart';
 import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
 
 void main() {

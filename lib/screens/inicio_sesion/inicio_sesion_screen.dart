@@ -14,7 +14,7 @@ class InicioSesion extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            MainNavegationBar(navType: NavBarTypes.noBody, canGoBack: true), // App bar custom
+            MainNavegationBar(navType: NavBarTypes.noBody, canGetBackHere: true), // App bar custom
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +37,7 @@ class InicioSesion extends StatelessWidget {
                     onPressed: () {
               
                     },
+                    textWeight: FontWeight.w600,
                   ),
                   SizedBox(height: 30),
               

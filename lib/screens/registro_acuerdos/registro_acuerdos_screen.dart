@@ -40,6 +40,7 @@ class RegistroAcuerdos extends StatelessWidget {
                   "REGISTRO ACUERDOS",
                   style: TextStyle(
                     color: Color.fromRGBO(134, 132, 129, 1),
+                    fontFamily: 'Roboto',
                     fontSize: 15,
                     fontWeight: FontWeight.w600
                   ),
@@ -52,6 +53,7 @@ class RegistroAcuerdos extends StatelessWidget {
               child: Text(
                 "¿Desde qué área realizarás el seguimiento?",
                 style: TextStyle(
+                  fontFamily: 'Roboto',
                   color: Color.fromRGBO(14, 14, 14, 1),
                   fontSize: 17
                 ),

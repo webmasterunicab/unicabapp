@@ -16,6 +16,7 @@ class ButtonExtrasAcuerdos extends StatelessWidget {
         style: TextButton.styleFrom(
           backgroundColor: Color.fromRGBO(255, 255, 255, 1),
           textStyle: TextStyle(
+            fontFamily: 'Roboto',
             fontSize: 8,
           ),
 
