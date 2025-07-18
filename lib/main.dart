@@ -5,6 +5,14 @@ import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
 
 void main() {
   runApp(const MyApp());
+
+  // Invisible status bar on android
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, // transparente
+      statusBarIconBrightness: Brightness.light, // color de íconos
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
