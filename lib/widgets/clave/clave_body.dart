@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/screens/clave/clave_screen.dart';
+import 'package:uniconecta/screens/chat/chat_screen.dart';
+import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
-class RegistroBody extends StatelessWidget {
-  const RegistroBody({super.key});
+class ClaveBody extends StatelessWidget {
+  const ClaveBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,75 +27,71 @@ class RegistroBody extends StatelessWidget {
     );
 
     final espaciado = SizedBox(
-                    height: 25.0 ,
-                  );
+      height: 25.0,
+    );
     return SingleChildScrollView(
       child: Column(
         children: [
           Container(
               width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              margin: EdgeInsets.only(top: 75),
+              padding: EdgeInsets.symmetric(vertical: 46, horizontal: 40),
               decoration: decoracion,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  RegistroLabel(
-                    label: '¿Cómo te llamas?',
-                  ),
-                  RegistroInput(
-                      placeholder: 'Tal como te conocen en casa y en UNICAB.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Cuándo es tu cumpleaños?',
-                  ),
-                  RegistroInput(
-                      placeholder:
-                          'No prometemos pastel, pero nos gusta saberlo.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Desde dónde te conectas?',
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RegistroLabel(label: 'Elige tu clave secreta'),
+                      SizedBox(width: 8), // Espacio entre texto e icono
+                      Icon(
+                        Icons.lock_outline,
+                        size: 20,
+                        color: const Color.fromRGBO(255, 152, 5, 1),
+                      ),
+                    ],
                   ),
                   RegistroInput(
                       placeholder:
-                          'UNICAB es virtual, pero tú tienes un mundo propio.'),
+                          'Algo fácil de recordar, pero difícil de adivinar.'),
                   espaciado,
-                  RegistroLabel(
-                    label: '¿Cuál es tu rol?',
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RegistroLabel(label: 'Confirma tu clave'),
+                      SizedBox(width: 8), // Espacio entre texto e icono
+                      Icon(
+                        Icons.lock_outline,
+                        size: 20,
+                        color: const Color.fromRGBO(255, 152, 5, 1),
+                      ),
+                    ],
                   ),
                   RegistroInput(
                       placeholder:
-                          'Dinos si eres estudiante, maestro mediador, padre de familia...'),
-                  espaciado,
-                  RegistroLabel(
-                    label: 'Tu correo en UNICAB',
-                  ),
-                  RegistroInput(
-                      placeholder:
-                          'Para avisarte de cosas importantes. Nada de spam, lo prometemos.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Qué lugares has viajado o te gustaría visitar?',
-                  ),
-                  RegistroInput(
-                      placeholder:
-                          'El mundo es enorme, cuéntanos qué sitios ha explorado o sueñas conocer.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Por qué elige a UNICAB?',
-                  ),
-                  RegistroInput(
-                      placeholder:
-                          'Cada historia es única. ¿Qué te trajo hasta aquí?'),
+                          'Solo para estar seguro de que la escribiste bien'),
                 ],
               )),
           Container(
+            margin: EdgeInsets.symmetric(vertical: 38, horizontal: 38),
+            child: Text(
+              'Requisitos: *Mínimo 8 caracteres, incluye letras, números y al menos un Mínimo 8 caracteres, incluye letras, números y al menos un símbolo.',
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.normal,
+                fontSize: 10,
+                color: Color.fromRGBO(14, 14, 14, 1),
+              ),
+            ),
+          ),
+          Container(
               margin: EdgeInsets.only(top: 22),
-              //TODO: Cambiar boton compartido para que acepte fontSize
               child: OrangeButton(
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ClaveScreen()),
+                    MaterialPageRoute(builder: (_) => SubirFotoScreen()),
                   );
                 },
                 buttonText: '¡Listo, sigamos!',
