@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/widgets/registro_acuerdos/button_extras_acuerdos.dart';
-import 'package:uniconecta/widgets/shared/main_navegation_bar.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/outlined_orange_button.dart';
+import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class RegistroAcuerdos extends StatelessWidget {
   const RegistroAcuerdos({super.key});
@@ -19,34 +20,7 @@ class RegistroAcuerdos extends StatelessWidget {
 
             SizedBox(height: 31),
 
-            Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-
-              decoration: BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.16),
-                    blurRadius: 6,
-                    offset: Offset(0, 3)
-                  )
-                ],
-              ),
-
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 9),
-                child: Text(
-                  "REGISTRO ACUERDOS",
-                  style: TextStyle(
-                    color: Color.fromRGBO(134, 132, 129, 1),
-                    fontFamily: 'Roboto',
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  ),
-                ),
-              )
-            ),
+            ScreenNameDisplay(name: "REGISTRO ACUERDOS"),
             
             Padding(
               padding: EdgeInsets.symmetric(vertical: 30),

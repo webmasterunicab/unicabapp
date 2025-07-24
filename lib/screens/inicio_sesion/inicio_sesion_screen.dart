@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/widgets/inicio_sesion/campo_sesion.dart';
 import 'package:uniconecta/widgets/inicio_sesion/custom_button_sesion.dart';
-import 'package:uniconecta/widgets/shared/main_navegation_bar.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class InicioSesion extends StatelessWidget {
@@ -21,35 +22,34 @@ class InicioSesion extends StatelessWidget {
               child: IntrinsicHeight(
                 child: Column(
                   children: [
-                    MainNavegationBar(
-                      navType: NavBarTypes.noBody,
-                      canGetBackHere: true,
-                    ),
-      
-                    // Este Expanded está dentro del IntrinsicHeight y funciona bien
+                    MainNavegationBar(navType: NavBarTypes.noBody),
                     Expanded(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(
-                            'assets/img/LOGO UNICONECTA.png',
-                            width: 154,
-                            height: 54,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 51),
+                            child: Image.asset(
+                              'assets/img/LOGO UNICONECTA.png',
+                              width: 154,
+                              height: 54,
+                            ),
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 138),
       
                           CampoSesion(fieldLabel: "Usuario"),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 47),
       
                           CampoSesion(fieldLabel: "Contraseña"),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 36),
       
                           OrangeButton(
                             buttonText: "Iniciar Sesión",
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen()), (Route<dynamic> route) => false);
+                            },
                             textWeight: FontWeight.w600,
                           ),
-                          const SizedBox(height: 30),
+                          const SizedBox(height: 42),
       
                           CustomButtonSesion(
                             buttonText: "Olvide mi contraseña",

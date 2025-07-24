@@ -9,7 +9,9 @@ class OrangeButton extends StatelessWidget {
     this.suffix,
     this.width,
     this.height, 
-    required this.textWeight,
+    this.padding = const EdgeInsets.all(20),
+    this.fontSize = 15, 
+    required this.textWeight, 
   });
 
   final String buttonText;
@@ -17,9 +19,12 @@ class OrangeButton extends StatelessWidget {
 
   final double? width;
   final double? height;
+  final double? fontSize;
 
   final Widget? prefix;
   final Widget? suffix;
+
+  final EdgeInsets? padding;
 
   final FontWeight textWeight;
 
@@ -32,7 +37,7 @@ class OrangeButton extends StatelessWidget {
     return TextButton(
       style: TextButton.styleFrom(
         backgroundColor: const Color.fromRGBO(255, 152, 5, 1),
-        padding: const EdgeInsets.all(20),
+        padding: padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -51,7 +56,7 @@ class OrangeButton extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Colors.white,
-                fontSize: 15,
+                fontSize: fontSize,
                 fontWeight: textWeight
               ),
             ),

@@ -1,0 +1,2 @@
+D:/uniconecta/unicabapp/android/app/.cxx/Debug/6d4p3w4s/x86/CMakeFiles/edit_cache.dir
+D:/uniconecta/unicabapp/android/app/.cxx/Debug/6d4p3w4s/x86/CMakeFiles/rebuild_cache.dir

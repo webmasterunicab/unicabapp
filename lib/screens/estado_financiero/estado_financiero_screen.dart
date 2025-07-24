@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uniconecta/widgets/estado_financiero/boton_azul_financiero.dart';
 import 'package:uniconecta/widgets/estado_financiero/item_lista_financiero.dart';
 import 'package:uniconecta/widgets/estado_financiero/resultado_financiero.dart';
-import 'package:uniconecta/widgets/shared/main_navegation_bar.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 
 class EstadoFinanciero extends StatelessWidget {
   const EstadoFinanciero({super.key});
@@ -15,7 +15,7 @@ class EstadoFinanciero extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            MainNavegationBar(navType: NavBarTypes.navegating),
+            MainNavegationBar(navType: NavBarTypes.navegating, ),
             SizedBox(height: 77),
 
             Text(

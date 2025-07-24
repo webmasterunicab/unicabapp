@@ -1,57 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/nav_bar_avatar.dart';
 
-enum NavBarTypes {
-  normal,
-  navegating,
-  alternative,
-  noBody;
-}
-
-class MainNavegationBar extends StatelessWidget {
-  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen});
-
-  final NavBarTypes navType;
-
-  final Widget? nextScreen;
-  final bool canGetBackHere;
-
-  @override
-  Widget build(BuildContext context) {
-
-    final EdgeInsets padding = (navType != NavBarTypes.noBody) ? const EdgeInsets.only(bottom: 12, left: 20, right: 20) : const EdgeInsets.symmetric(horizontal: 10);
-    final Color bodyColor = (navType != NavBarTypes.noBody) ? const Color.fromRGBO(11, 119, 179, 1) : Colors.transparent;
-    final double neededHeight = (navType == NavBarTypes.normal) ? 130 : 86;
-
-    return Container(
-      height: neededHeight,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(topLeft: Radius.circular(35), topRight: Radius.circular(35), bottomLeft: Radius.circular(0), bottomRight: Radius.circular(35)),
-        color: bodyColor,
-
-        boxShadow: [
-          if (navType != NavBarTypes.noBody)
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.16),
-              blurRadius: 6,
-              offset: Offset(0, 3)
-            )
-        ],
-      ),
-
-      child: Container(
-        padding: padding,
-
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: _getNavStructure(navType: navType, context: context),
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _getNavStructure({required NavBarTypes navType, required BuildContext context}) {
-    if (navType == NavBarTypes.normal) {
+List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext context, Widget? nextScreen, bool canGetBackHere = false}) {
+  switch (type) {
+    case NavBarTypes.normal:
       return [
         TextButton(
           onPressed: () {}, 
@@ -64,6 +17,7 @@ class MainNavegationBar extends StatelessWidget {
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text("Juanita Perez", style: TextStyle(
                   fontSize: 15,
@@ -85,17 +39,12 @@ class MainNavegationBar extends StatelessWidget {
             ),
             SizedBox(width: 18),
 
-            CircleAvatar(
-              radius: 38,
-              backgroundColor: Colors.white,
-              child: Icon(Icons.person, color: Color.fromRGBO(145, 145, 145, 1), size: 60,),
-            )
+            NavBarAvatar()
           ],
         ),
       ];
-    }
 
-    if (navType == NavBarTypes.navegating) {
+    case NavBarTypes.navegating:
       return [
         if (Navigator.of(context).canPop())
           SizedBox(
@@ -107,7 +56,9 @@ class MainNavegationBar extends StatelessWidget {
                 Navigator.of(context).pop();
               },
             ),
-          ),
+          )
+        else
+          SizedBox(width: 40),
 
         SizedBox(
           height: 40,
@@ -128,21 +79,63 @@ class MainNavegationBar extends StatelessWidget {
               color: Colors.white,
               onPressed: () {
                 if (canGetBackHere) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                 } else {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                 }
               },
             ),
-          ),
+          )
+        else
+          SizedBox(width: 40),
       ];
-    }
 
-    if (navType == NavBarTypes.alternative) {
-      return [];
-    }
+    case NavBarTypes.alternative:
+      return [
+        Row(
+          children: [
+            if (Navigator.of(context).canPop())
+              SizedBox(
+                height: 40,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_rounded), 
+                  color: Colors.white,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
 
-    if (navType == NavBarTypes.noBody) {
+            SizedBox(
+              height: 40,
+              child: IconButton(
+                icon: Icon(Icons.arrow_forward_ios_rounded), 
+                color: Colors.white,
+                onPressed: () {
+                  if (canGetBackHere && nextScreen != null) {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
+                  } else if (!canGetBackHere && nextScreen != null) {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                  }
+                },
+              ),
+            )
+          ],
+        ),
+
+        SizedBox(
+          height: 40,
+          child: Row(
+            children: [
+              Image.asset("assets/img/msgIconNav.png", height: 25, width: 25, fit: BoxFit.contain, color: Colors.white),
+              SizedBox(width: 18),
+              Image.asset("assets/img/bellNav.png", height: 25, width: 25, fit: BoxFit.contain, color: Colors.white),
+            ],
+          ),
+        ),
+      ];
+
+    case NavBarTypes.noBody:
       return [
         if (Navigator.of(context).canPop())
           SizedBox(
@@ -164,16 +157,13 @@ class MainNavegationBar extends StatelessWidget {
               color: Colors.white,
               onPressed: () {
                 if (canGetBackHere) {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                 } else {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                 }
               },
             ),
-          ),
+          )
       ];
-    }
-
-    return [];
   }
 }
