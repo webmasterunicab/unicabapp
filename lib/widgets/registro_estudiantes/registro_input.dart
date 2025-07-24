@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 
 class RegistroInput extends StatelessWidget {
   final String placeholder;
-
-  const RegistroInput({super.key, required this.placeholder});
+  final bool readOnly;
+  const RegistroInput({super.key, required this.placeholder, this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity, // Ocupa todo el ancho disponible
       child: TextField(
+        readOnly: readOnly,
         decoration: InputDecoration(
           hintText: placeholder,
           hintMaxLines: 2,

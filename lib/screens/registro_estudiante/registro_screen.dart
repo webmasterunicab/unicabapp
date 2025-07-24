@@ -8,7 +8,7 @@ class RegistroScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: RegistroAppBar(),
+      appBar: RegistroAppBar(mostrarTexto: true,),
       body: SafeArea(child: RegistroBody()),
     );
   }

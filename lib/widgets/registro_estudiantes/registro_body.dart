@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uniconecta/screens/clave/clave_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
+import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class RegistroBody extends StatelessWidget {
   const RegistroBody({super.key});
@@ -8,7 +10,7 @@ class RegistroBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final decoracion = BoxDecoration(
-      color: Colors.white, // fondo del container si lo necesitas
+      color: Colors.white,
       boxShadow: [
         BoxShadow(
           color: Colors.black.withValues(
@@ -23,7 +25,9 @@ class RegistroBody extends StatelessWidget {
       ],
     );
 
-    final espaciado = 25.0;
+    final espaciado = SizedBox(
+                    height: 25.0 ,
+                  );
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -40,54 +44,42 @@ class RegistroBody extends StatelessWidget {
                   ),
                   RegistroInput(
                       placeholder: 'Tal como te conocen en casa y en UNICAB.'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: '¿Cuándo es tu cumpleaños?',
                   ),
                   RegistroInput(
                       placeholder:
                           'No prometemos pastel, pero nos gusta saberlo.'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: '¿Desde dónde te conectas?',
                   ),
                   RegistroInput(
                       placeholder:
                           'UNICAB es virtual, pero tú tienes un mundo propio.'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: '¿Cuál es tu rol?',
                   ),
                   RegistroInput(
                       placeholder:
                           'Dinos si eres estudiante, maestro mediador, padre de familia...'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: 'Tu correo en UNICAB',
                   ),
                   RegistroInput(
                       placeholder:
                           'Para avisarte de cosas importantes. Nada de spam, lo prometemos.'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: '¿Qué lugares has viajado o te gustaría visitar?',
                   ),
                   RegistroInput(
                       placeholder:
                           'El mundo es enorme, cuéntanos qué sitios ha explorado o sueñas conocer.'),
-                  SizedBox(
-                    height: espaciado,
-                  ),
+                  espaciado,
                   RegistroLabel(
                     label: '¿Por qué elige a UNICAB?',
                   ),
@@ -97,28 +89,17 @@ class RegistroBody extends StatelessWidget {
                 ],
               )),
           Container(
-            margin: EdgeInsets.only(top: 22),
-            child: TextButton(
+              margin: EdgeInsets.only(top: 22),
+              //TODO: Cambiar boton compartido para que acepte fontSize
+              child: OrangeButton(
                 onPressed: () {
-                  // Acción al presionar
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => ClaveScreen()),
+                  );
                 },
-                style: TextButton.styleFrom(
-                  backgroundColor: Color.fromRGBO(255, 152, 5, 1),
-                  padding: EdgeInsets.symmetric(vertical: 22, horizontal: 24),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  '¡Listo, sigamos!',
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                )),
-          ),
+                buttonText: '¡Listo, sigamos!',
+                textWeight: FontWeight.w600,
+              )),
           Container(
             margin: EdgeInsets.only(top: 55),
             child: TextButton(
