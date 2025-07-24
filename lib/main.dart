@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniconecta/config/theme/app_theme.dart';
+import 'package:uniconecta/screens/inicio/inicio_screen.dart';
 import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: AppTheme().theme(),
-      home: VideoInicioScreen(),
+      home: InicioScreen(),
     );
   }
 }

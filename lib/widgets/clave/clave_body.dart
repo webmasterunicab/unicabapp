@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/screens/chat/chat_screen.dart';
 import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
