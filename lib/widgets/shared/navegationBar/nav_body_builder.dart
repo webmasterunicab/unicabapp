@@ -115,7 +115,7 @@ List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext co
                   if (canGetBackHere && nextScreen != null) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                   } else if (!canGetBackHere && nextScreen != null) {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen!));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => nextScreen));
                   }
                 },
               ),
