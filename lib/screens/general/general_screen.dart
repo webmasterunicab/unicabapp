@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/widgets/shared/main_navegation_bar.dart';
+import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
+import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
+import 'package:uniconecta/screens/observador/observador_screen.dart';
+import 'package:uniconecta/screens/seguimiento_acuerdos/seguimiento_acuerdos_screen.dart';
+import 'package:uniconecta/widgets/general/see_more_container.dart';
+import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class GeneralScreen extends StatelessWidget {
@@ -7,12 +12,14 @@ class GeneralScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double buttonSpacing = 13;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(child: Column(
         children: [
           MainNavegationBar(navType: NavBarTypes.normal),
-          SizedBox(height: 32),
+          SizedBox(height: 20),
 
           OrangeButton(
             buttonText: "Calificaciones", 
@@ -20,9 +27,11 @@ class GeneralScreen extends StatelessWidget {
             prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen()));
+            }
           ),
-          SizedBox(height: 23),
+          SizedBox(height: buttonSpacing),
 
           OrangeButton(
             buttonText: "Observador", 
@@ -30,9 +39,11 @@ class GeneralScreen extends StatelessWidget {
             prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorScreen()));
+            }
           ),
-          SizedBox(height: 23),
+          SizedBox(height: buttonSpacing),
 
           OrangeButton(
             buttonText: "Seguimientos y Acuerdos", 
@@ -40,9 +51,11 @@ class GeneralScreen extends StatelessWidget {
             prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => SeguimientoAcuerdosScreen()));
+            }
           ),
-          SizedBox(height: 23),
+          SizedBox(height: buttonSpacing),
 
           OrangeButton(
             buttonText: "Financiera", 
@@ -50,9 +63,11 @@ class GeneralScreen extends StatelessWidget {
             prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => EstadoFinanciero()));
+            }
           ),
-          SizedBox(height: 23),
+          SizedBox(height: buttonSpacing),
 
           OrangeButton(
             buttonText: "Comunidad", 
@@ -61,7 +76,10 @@ class GeneralScreen extends StatelessWidget {
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
             onPressed: () {}
-          )
+          ),
+          SizedBox(height: buttonSpacing),
+
+          SeeMoreContainer(),
         ],
       )),
     );

@@ -1,0 +1,37 @@
+
+import 'package:flutter/material.dart';
+
+class DropdownItemNav extends StatelessWidget {
+  const DropdownItemNav({super.key, required this.name, required this.onPressed});
+
+  final VoidCallback onPressed;
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 40,
+
+      child: TextButton(
+        onPressed: onPressed,
+      
+        style: TextButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.zero)
+          ),
+          alignment: Alignment.centerLeft
+        ),
+      
+      
+      
+        child: Text(name, style: TextStyle(
+          fontFamily: 'Roboto',
+          fontSize: 12,
+          fontWeight: FontWeight.normal,
+          color: Colors.black,
+        )),
+      ),
+    );
+  }
+}
