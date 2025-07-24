@@ -15,7 +15,7 @@ class CustomButtonSesion extends StatelessWidget {
         style: TextStyle(
           fontFamily: 'Roboto',
           color: Color.fromRGBO(255, 152, 5, 1),
-          fontSize: 15
+          fontSize: 13
         ),
       ),
     );
