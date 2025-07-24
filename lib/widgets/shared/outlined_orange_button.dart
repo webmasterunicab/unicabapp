@@ -37,7 +37,7 @@ class OrangeOutlinedButton extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Roboto',
             color: Colors.black,
-            fontSize: 15,
+            fontSize: 13,
           ),
         ),
       ),

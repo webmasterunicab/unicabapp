@@ -17,7 +17,7 @@ class ButtonExtrasAcuerdos extends StatelessWidget {
           backgroundColor: Color.fromRGBO(255, 255, 255, 1),
           textStyle: TextStyle(
             fontFamily: 'Roboto',
-            fontSize: 8,
+            fontSize: 7,
           ),
 
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6))
@@ -30,7 +30,7 @@ class ButtonExtrasAcuerdos extends StatelessWidget {
           children: [
             Image.asset(iconPath, height: 20, width: 20,),
             SizedBox(height: 4,),
-            Text(text, textAlign: TextAlign.center,),
+            Text(text, textAlign: TextAlign.center, style: TextStyle(color: Colors.black)),
           ],
         )
       ),

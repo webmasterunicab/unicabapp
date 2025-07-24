@@ -35,7 +35,7 @@ class ScreenNameDisplay extends StatelessWidget {
               style: TextStyle(
                 color: Color.fromRGBO(134, 132, 129, 1),
                 fontFamily: 'Roboto',
-                fontSize: 15,
+                fontSize: 13,
                 fontWeight: FontWeight.w600
               ),
             ),

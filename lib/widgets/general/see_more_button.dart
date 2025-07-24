@@ -32,7 +32,7 @@ class SeeMoreButton extends StatelessWidget {
             
             SizedBox(height: 27,),
 
-            Text(title, style: TextStyle(fontSize: 10, fontFamily: 'Roboto', fontWeight: FontWeight.w300, color: Color.fromRGBO(100, 96, 92, 0.7))),
+            Text(title, style: TextStyle(fontSize: 8, fontFamily: 'Roboto', fontWeight: FontWeight.w300, color: Color.fromRGBO(100, 96, 92, 0.7))),
           ],
         ),
       ),

@@ -18,14 +18,14 @@ class PensamientoCardObservador extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 33),
+            padding: EdgeInsets.symmetric(horizontal: 33),
       
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(pensamientoName, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 15)),
-                Text(teacherName, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 12, color: Color.fromRGBO(11, 119, 179, 1))),
-                Text(date, style: TextStyle(fontFamily: 'Roboto', fontSize: 8)),
+                Text(pensamientoName, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 13)),
+                Text(teacherName, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 10, color: Color.fromRGBO(11, 119, 179, 1))),
+                Text(date, style: TextStyle(fontFamily: 'Roboto', fontSize: 7)),
               ],
             ),
           ),

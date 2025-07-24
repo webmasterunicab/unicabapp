@@ -36,9 +36,9 @@ class SeguimientoAcuerdosScreen extends StatelessWidget {
                 }, 
                 textWeight: FontWeight.normal, 
                 padding: EdgeInsets.all(0),
-                fontSize: 10,
+                fontSize: 9,
               ),
-              suffixSize: 69,
+              suffixSize: 60,
             ),
         
             for (int i=0; i < acuerdosList.length; i++)

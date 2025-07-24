@@ -10,8 +10,10 @@ void main() {
   // Invisible status bar on android
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, // transparente
-      statusBarIconBrightness: Brightness.light, // color de íconos
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark
     ),
   );
 

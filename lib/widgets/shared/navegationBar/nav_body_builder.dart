@@ -20,7 +20,7 @@ List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext co
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text("Juanita Perez", style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 13,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w600,
                   color: Colors.white

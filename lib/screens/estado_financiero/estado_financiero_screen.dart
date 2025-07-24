@@ -23,7 +23,7 @@ class EstadoFinanciero extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Color.fromRGBO(134, 132, 129, 1),
-                fontSize: 15,
+                fontSize: 13,
                 fontWeight: FontWeight.w600
               ),
             ),
@@ -60,7 +60,7 @@ class EstadoFinanciero extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.normal,
-                fontSize: 12
+                fontSize: 10
               ),
             ),
             SizedBox(height: 25),
@@ -68,7 +68,7 @@ class EstadoFinanciero extends StatelessWidget {
             BotonAzulFinanciero(buttonText: "Seleccionar", prefix: Image.asset('assets/img/pictureIcon.png', fit: BoxFit.contain, width: 16, height: 16), weight: FontWeight.normal),
             SizedBox(height: 25),
             
-            BotonAzulFinanciero(buttonText: "Enviar", fontSize: 15, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
+            BotonAzulFinanciero(buttonText: "Enviar", fontSize: 13, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
             SizedBox(height: 20),
 
             ResultadoFinanciero(operationSuccess: true)

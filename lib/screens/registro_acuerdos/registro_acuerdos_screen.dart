@@ -29,7 +29,7 @@ class RegistroAcuerdos extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Roboto',
                   color: Color.fromRGBO(14, 14, 14, 1),
-                  fontSize: 17
+                  fontSize: 15
                 ),
               ),
             ),

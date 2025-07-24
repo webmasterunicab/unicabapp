@@ -10,7 +10,7 @@ class OrangeButton extends StatelessWidget {
     this.width,
     this.height, 
     this.padding = const EdgeInsets.all(20),
-    this.fontSize = 15, 
+    this.fontSize = 13, 
     required this.textWeight, 
   });
 

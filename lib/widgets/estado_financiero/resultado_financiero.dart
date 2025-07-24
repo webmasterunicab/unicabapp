@@ -19,7 +19,7 @@ class ResultadoFinanciero extends StatelessWidget {
         ),
         SizedBox(width: 10,),
 
-        Text("Exitoso")
+        Text("Exitoso", style: TextStyle(fontSize: 10))
       ],
     );
   }

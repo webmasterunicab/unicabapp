@@ -39,19 +39,19 @@ class SeguimientoCard extends StatelessWidget {
                 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 33), 
-                  child: Text(acuerdos, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 12, color: Color.fromRGBO(14, 14, 14, 1)))
+                  child: Text(acuerdos, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 10, color: Color.fromRGBO(14, 14, 14, 1)))
                 ),
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 33), 
-                  child: Text(pensamiento, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 15, color: Color.fromRGBO(134, 132, 129, 1)))
+                  child: Text(pensamiento, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 13, color: Color.fromRGBO(134, 132, 129, 1)))
                 ),
 
                 Container(margin: EdgeInsets.symmetric(horizontal: 33), child: TextArea(fieldHeight: 80, readOnly: true)),
 
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 33, vertical: 5), 
-                  child: Text(date, style: TextStyle(fontFamily: 'Roboto', fontSize: 8))
+                  child: Text(date, style: TextStyle(fontFamily: 'Roboto', fontSize: 7))
                 ),
               ],
             ),
@@ -118,7 +118,7 @@ class _VerticalTimeline extends StatelessWidget {
                   fontFamily: 'Roboto',
                   color: Colors.black,
                   fontWeight: FontWeight.normal,
-                  fontSize: 11
+                  fontSize: 9
                 ),
               ),
             ),

@@ -29,7 +29,7 @@ class ObservadorFaltaScreen extends StatelessWidget {
                     ScreenNameDisplay(name: "OBSERVADOR"),
                     SizedBox(height: 20),
 
-                    OrangeButton(buttonText: "Tipo de falta", onPressed: () {}, textWeight: FontWeight.w600, suffix: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white, size: 30), width: 200,),
+                    OrangeButton(buttonText: "Tipo de falta", onPressed: () {}, textWeight: FontWeight.w600, suffix: Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white, size: 30), width: 180,),
                     SizedBox(height: 24),
 
                     OrangeOutlinedButton(buttonText: "Tipo 1", onPressed: () {}, width: 154,),
@@ -45,7 +45,7 @@ class ObservadorFaltaScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 33),
                       child: Row(
                         children: [
-                          Text("Ingrese la observación", style: TextStyle(fontFamily: 'Roboto', fontSize: 17)),
+                          Text("Ingrese la observación", style: TextStyle(fontFamily: 'Roboto', fontSize: 15)),
                         ],
                       ),
                     ),
@@ -54,7 +54,7 @@ class ObservadorFaltaScreen extends StatelessWidget {
                     Container(margin: EdgeInsets.symmetric(horizontal: 33), child: TextArea(fieldHeight: 136)),
                     SizedBox(height: 35),
 
-                    BotonAzulObservador(buttonText: "Enviar", fontSize: 15, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
+                    BotonAzulObservador(buttonText: "Enviar", fontSize: 13, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
                     SizedBox(height: 15),
 
                     ResultadoObservador(operationSuccess: true)

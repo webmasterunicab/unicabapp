@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BotonAzulFinanciero extends StatelessWidget {
-  const BotonAzulFinanciero({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 12, this.paddingRadius = const EdgeInsets.all(15)});
+  const BotonAzulFinanciero({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 10, this.paddingRadius = const EdgeInsets.all(15)});
 
   final String buttonText;
   final Widget? prefix;

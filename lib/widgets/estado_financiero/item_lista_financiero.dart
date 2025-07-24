@@ -38,11 +38,11 @@ class ItemListaFinanciero extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     color: Color.fromRGBO(14, 14, 14, 1),
-                    fontSize: 13,
+                    fontSize: 11,
                   ),
                 ),
 
-                if (itemDescription.isNotEmpty) Text(itemDescription, style: TextStyle(fontSize: 8, color: Color.fromRGBO(14, 14, 14, 1))),
+                if (itemDescription.isNotEmpty) Text(itemDescription, style: TextStyle(fontSize: 7, color: Color.fromRGBO(14, 14, 14, 1))),
               ],
             ),
 
@@ -50,7 +50,7 @@ class ItemListaFinanciero extends StatelessWidget {
               itemValue,
               style: TextStyle(
                 color: Color.fromRGBO(255, 152, 5, 1),
-                fontSize: 15,
+                fontSize: 13,
               ),
             ),
           ],

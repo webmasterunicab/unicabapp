@@ -22,7 +22,7 @@ class SeeMoreContainer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 35, right: 35, top: 9, bottom: 18),
                 child: Text(
                   "Descubre más",
-                  style: TextStyle(fontFamily: 'Roboto', fontSize: 10),
+                  style: TextStyle(fontFamily: 'Roboto', fontSize: 8),
                 ),
               ),
             ],
@@ -37,7 +37,7 @@ class SeeMoreContainer extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SeeMoreButton(title: "Conectados", thumbnailPath: "assets/img/placeholder_General.jpg", route: GeneralScreen()),
-                  SizedBox(width: 15,),
+                  SizedBox(width: 10),
                   SeeMoreButton(title: "Biblioteca", thumbnailPath: "assets/img/placeholder_General.jpg", route: GeneralScreen()),
                 ],
               ),
@@ -45,7 +45,7 @@ class SeeMoreContainer extends StatelessWidget {
           ),
 
           Container(
-            margin: EdgeInsets.only(top: 5),
+            margin: EdgeInsets.only(top: 3),
             child: TextButton(
               onPressed: () {
                 // Acción al presionar

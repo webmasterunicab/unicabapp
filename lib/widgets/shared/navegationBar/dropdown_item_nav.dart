@@ -27,7 +27,7 @@ class DropdownItemNav extends StatelessWidget {
       
         child: Text(name, style: TextStyle(
           fontFamily: 'Roboto',
-          fontSize: 12,
+          fontSize: 10,
           fontWeight: FontWeight.normal,
           color: Colors.black,
         )),
