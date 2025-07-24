@@ -18,7 +18,7 @@ class PensamientoCardObservador extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: EdgeInsetsGeometry.symmetric(horizontal: 33),
+            padding: EdgeInsets.symmetric(horizontal: 33),
       
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
