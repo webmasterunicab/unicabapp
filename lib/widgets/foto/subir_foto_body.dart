@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/screens/chat/chat_screen.dart';
+import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
@@ -52,7 +52,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                     ),
                     onPressed: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => ChatScreen()),
+                        MaterialPageRoute(builder: (_) => RegistroConfirmadoScreen()),
                       );
                     },
                     splashRadius:
