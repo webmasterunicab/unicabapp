@@ -1,4 +1,3 @@
-import 'dart:io';
 
 class ApiConfig {
   static final String enviroment = 'dev';
@@ -25,15 +24,15 @@ class ApiConfig {
   //     'http://10.0.2.2:80/hostuniconecta/requests';
 
   // Endpoints específicos
-  static String get opcionesUrl => '$baseUrl/general/opciones.php';
-  static String get menusUrl => '$baseUrl/general/menus.php';
-  static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
-  static String get noticiasUrl => '$baseUrl/general/noticias.php';
-  static String get materiasUrl => '$baseUrl/calificaciones/materias.php';
-  static String get materiasEstudianteUrl =>
-      '$baseUrl/calificaciones/materias_estudiante.php';
-  static String get calificacionesInscripcionUrl =>
-      '$baseUrl/calificaciones/calificaciones_inscripcion.php';
+  // static String get opcionesUrl => '$baseUrl/general/opciones.php';
+  // static String get menusUrl => '$baseUrl/general/menus.php';
+  // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
+  // static String get noticiasUrl => '$baseUrl/general/noticias.php';
+  // static String get materiasUrl => '$baseUrl/calificaciones/materias.php';
+  // static String get materiasEstudianteUrl =>
+  //     '$baseUrl/calificaciones/materias_estudiante.php';
+  // static String get calificacionesInscripcionUrl =>
+  //     '$baseUrl/calificaciones/calificaciones_inscripcion.php';
 
   // Headers por defecto para las peticiones
   static const Map<String, String> defaultHeaders = {
