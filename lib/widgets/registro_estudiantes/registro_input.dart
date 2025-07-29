@@ -9,7 +9,7 @@ class RegistroInput extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity, // Ocupa todo el ancho disponible
-      child: TextField(
+      child: TextFormField(
         readOnly: readOnly,
         decoration: InputDecoration(
           hintText: placeholder,

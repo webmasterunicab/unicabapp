@@ -50,11 +50,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                       color: Colors.grey[600],
                       size: 22,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (_) => RegistroConfirmadoScreen()),
-                      );
-                    },
+                    onPressed: () {},
                     splashRadius:
                         20, // Opcional: para ajustar el radio del toque
                     tooltip:
@@ -125,9 +121,10 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
               margin: EdgeInsets.only(top: 22),
               child: OrangeButton(
                 onPressed: () {
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(builder: (_) => ChatScreen()),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) => RegistroConfirmadoScreen()),
+                  );
                 },
                 buttonText: 'Subir',
                 textWeight: FontWeight.w600,
