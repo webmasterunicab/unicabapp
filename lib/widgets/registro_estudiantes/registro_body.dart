@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/models/registro/rol_modelo.dart';
-import 'package:uniconecta/repositories/DAO/roles_dao.dart';
+import 'package:uniconecta/repositories/roles_repository.dart';
 import 'package:uniconecta/screens/clave/clave_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
@@ -14,6 +14,35 @@ class RegistroBody extends StatefulWidget {
 }
 
 class _RegistroBodyState extends State<RegistroBody> {
+    final _formKey = GlobalKey<FormState>();
+    final RolesRepository _repo = RolesRepository();
+    List<RolModelo> _registros = [];
+    String? seleccionada;
+
+    bool _cargando = true;
+    String? _error;
+
+    @override
+  void initState() {
+    super.initState();
+    _cargarRegistros();
+  }
+
+  Future<void> _cargarRegistros() async {
+    try {
+      final data = await _repo.obtenerRoles();
+      setState(() {
+        _registros = data;
+        _cargando = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _cargando = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final decoracion = BoxDecoration(
@@ -36,8 +65,13 @@ class _RegistroBodyState extends State<RegistroBody> {
       height: 25.0,
     );
 
-    String seleccionada = '';
-    List<RolModelo> opciones = RolesDao.obtenerRoles().then(onValue);
+    if (_cargando) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (_error != null) {
+      return Scaffold(body: Center(child: Text('Error: $_error')));
+    }
 
     return SingleChildScrollView(
       child: Column(
@@ -81,7 +115,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                         border: OutlineInputBorder(),
                       ),
                       value: seleccionada,
-                      items: opciones.map((rol) {
+                      items: _registros.map((rol) {
                         return DropdownMenuItem<String>(
                           value: rol.nombreRol,
                           child: Text(rol.nombreRol),

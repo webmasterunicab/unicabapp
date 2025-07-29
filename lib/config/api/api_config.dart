@@ -2,7 +2,7 @@
 class ApiConfig {
   static final String enviroment = 'dev';
   static final String development =
-      'http://localhost/hostuniconecta/requests';
+      'http://192.168.1.16/hostuniconecta/requests';
   static final String production = '';
   // Base URL de la API - Se adapta automáticamente según la plataforma
   static String get baseUrl {
