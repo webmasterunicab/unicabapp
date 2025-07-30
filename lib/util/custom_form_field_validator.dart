@@ -1,13 +1,16 @@
-class FormFieldValidator {
+class CustomFormFieldValidator {
+  
   static String? texto(
     String? value, {
     required bool esRequerido,
     String nombreCampo = 'Campo',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
     final regex = RegExp(
         r'''[-_'"<>\~\^\*\$\!\¡\#\%\&\¿\?\/\=\+\|,;:\(\)\{\}\[\]\\]{1,}''');
-    if (regex.hasMatch(value)) return 'El campo $nombreCampo no permite símbolos especiales';
+
+    if (regex.hasMatch(value!)) return 'El campo $nombreCampo no permite símbolos especiales';
+
     return null;
   }
 
@@ -16,10 +19,10 @@ class FormFieldValidator {
     required bool esRequerido,
     String nombreCampo = 'Campo',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
     final regex = RegExp(
         r'''[_'"<>\~\^\*\$\!\¡\#\%\&\¿\?\/\=\+\|,;:\(\)\{\}\[\]\\]{1,}''');
-    if (regex.hasMatch(value)) return 'Caracteres inválidos detectados';
+    if (regex.hasMatch(value!)) return 'Caracteres inválidos detectados';
     return null;
   }
 
@@ -28,9 +31,9 @@ class FormFieldValidator {
     required bool esRequerido,
     String nombreCampo = 'Correo',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
     final regex = RegExp(r'''^[_\-\w.]+@[a-z]+\.[a-z\.]{2,7}$''');
-    if (!regex.hasMatch(value)) return 'Correo no válido';
+    if (!regex.hasMatch(value!)) return 'Correo no válido';
     return null;
   }
 
@@ -39,9 +42,9 @@ class FormFieldValidator {
     required bool esRequerido,
     String nombreCampo = 'Campo',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
     final regex = RegExp(r'''^[0-9]{1,}$''');
-    if (!regex.hasMatch(value)) return 'Solo se permiten números';
+    if (!regex.hasMatch(value!)) return 'Solo se permiten números';
     return null;
   }
 
@@ -50,9 +53,9 @@ class FormFieldValidator {
     required bool esRequerido,
     String nombreCampo = 'fecha',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
     final regex = RegExp(r'''^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$''');
-    if (!regex.hasMatch(value)) return 'Formato inválido. Ej: 2024-05-21';
+    if (!regex.hasMatch(value!)) return 'Formato inválido. Ej: 2024-05-21';
     return null;
   }
 
@@ -61,8 +64,8 @@ class FormFieldValidator {
     required bool esRequerido,
     String nombreCampo = 'Contraseña',
   }) {
-    if (value == null || value.isEmpty) return 'Campo: $nombreCampo es obilgatorio';
-    if (value.length < 8) return 'Debe tener al menos 8 caracteres';
+    if ((value == null || value.trim().isEmpty) && esRequerido) return 'Campo: $nombreCampo es obilgatorio';
+    if (value!.length < 8) return 'Debe tener al menos 8 caracteres';
     final regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$');
     if (!regex.hasMatch(value)) {
       return 'Debe tener al menos 1 mayúscula, 1 minúscula y 1 número';

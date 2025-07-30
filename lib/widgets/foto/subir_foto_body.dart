@@ -38,7 +38,9 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                         RegistroInput(
                           placeholder:
                               'Ponle rostro a tu cuenta. ¡Queremos verte!',
-                          readOnly: true,
+                          readOnly: true, validator: (String? value) {
+                            return null;
+                            }, onSaved: (String? newValue) {  },
                         ),
                       ],
                     ),

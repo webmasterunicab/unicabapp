@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+
 
 class RegistroLabel extends StatelessWidget {
   final String label;
@@ -12,7 +14,7 @@ class RegistroLabel extends StatelessWidget {
       style: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
-        fontSize: 13,
+        fontSize: 18.sp,
         color: Colors.orange,
         
       ),

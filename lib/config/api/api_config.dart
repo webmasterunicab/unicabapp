@@ -1,8 +1,13 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 
 class ApiConfig {
   static final String enviroment = 'dev';
   static final String development =
       'http://192.168.1.16/hostuniconecta/requests';
+  static final String developmentChrome =
+      'http://localhost/hostuniconecta/requests';
   static final String production = '';
   // Base URL de la API - Se adapta automáticamente según la plataforma
   static String get baseUrl {
@@ -13,8 +18,11 @@ class ApiConfig {
     } else {
       baseUrl = development;
     }
-
-    return baseUrl;
+    if (!kIsWeb) {
+      if (Platform.isAndroid) return baseUrl;
+      if (Platform.isIOS) return baseUrl;
+    }
+    return developmentChrome;
   }
 
   // URLs alternativas para debug
@@ -42,5 +50,4 @@ class ApiConfig {
 
   // Timeout por defecto (en segundos)
   static const Duration defaultTimeout = Duration(seconds: 30);
-  
 }

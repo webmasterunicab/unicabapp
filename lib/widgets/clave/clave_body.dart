@@ -54,7 +54,9 @@ class ClaveBody extends StatelessWidget {
                   ),
                   RegistroInput(
                       placeholder:
-                          'Algo fácil de recordar, pero difícil de adivinar.'),
+                          'Algo fácil de recordar, pero difícil de adivinar.', validator: (String? value) {
+                            return null;
+                            }, onSaved: (String? newValue) {  },),
                   espaciado,
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -70,7 +72,9 @@ class ClaveBody extends StatelessWidget {
                   ),
                   RegistroInput(
                       placeholder:
-                          'Solo para estar seguro de que la escribiste bien'),
+                          'Solo para estar seguro de que la escribiste bien', validator: (String? value) {
+                            return null;
+                            }, onSaved: (String? newValue) {  },),
                 ],
               )),
           Container(
