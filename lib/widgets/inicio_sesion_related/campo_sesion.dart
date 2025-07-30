@@ -69,15 +69,9 @@ class _CampoSesionState extends State<CampoSesion> {
             onChanged: (value) {
               String? validatedValue = widget.fieldChecking(value, esRequerido: true);
 
-              if (validatedValue != null) {
-                setState(() {
-                  errorText = validatedValue;
-                });
-              } else {
-                setState(() {
-                  errorText = null;
-                });
-              }
+              setState(() {
+                errorText = validatedValue;
+              });
             },
 
             decoration: InputDecoration(
