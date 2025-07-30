@@ -5,7 +5,7 @@ import 'package:uniconecta/models/registro/rol_modelo.dart';
 
 class RolesRepository {
   Future<List<RolModelo>> obtenerRoles() async {
-    final url = Uri.parse('${ApiConfig.baseUrl}/registro/roles.php');
+    final url = Uri.parse(ApiConfig.usuariosRoles);
 
      final response = await http.get(
             url,
@@ -15,9 +15,7 @@ class RolesRepository {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      print(data);
       final List registros = data['registros'];
-      print(registros);
       return registros.map((e) => RolModelo.fromJson(e)).toList();
     } else {
       print('Error: ${response.statusCode}');

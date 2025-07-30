@@ -23,7 +23,10 @@ class RegistroInput extends StatelessWidget {
         readOnly: readOnly,
         decoration: InputDecoration(
           errorStyle: TextStyle(
-          fontSize: 18.sp,
+          fontSize: 16.sp,
+          fontFamily: 'Roboto',
+          leadingDistribution: TextLeadingDistribution.proportional,
+          overflow: TextOverflow.clip
           ),
           hintText: placeholder,
           hintMaxLines: 2,

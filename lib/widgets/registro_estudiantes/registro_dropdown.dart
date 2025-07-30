@@ -38,10 +38,10 @@ class RegistroDropdown extends StatelessWidget {
             color: Colors.grey,
             fontSize: 18.sp,
             fontFamily: 'Roboto',
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.normal,
           ),
           errorStyle: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 16.sp,
             fontFamily: 'Roboto',
           ),
           enabledBorder: UnderlineInputBorder(

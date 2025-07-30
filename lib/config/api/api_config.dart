@@ -32,7 +32,7 @@ class ApiConfig {
   //     'http://10.0.2.2:80/hostuniconecta/requests';
 
   // Endpoints específicos
-  // static String get opcionesUrl => '$baseUrl/general/opciones.php';
+  static String get usuariosRoles => '${ApiConfig.baseUrl}/registro/roles.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';

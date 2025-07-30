@@ -37,6 +37,10 @@ class _RegistroBodyState extends State<RegistroBody> {
 
   void _checkForm() {
     setState(() {
+      if (rolSeleccionado == null || rolSeleccionado == '') {
+        _isFormValid = false;
+      }
+
       _isFormValid = _formKey.currentState?.validate() ?? false;
     });
   }
@@ -45,7 +49,16 @@ class _RegistroBodyState extends State<RegistroBody> {
     if (_formKey.currentState?.validate() == true) {
       _formKey.currentState?.save();
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (_) => ClaveScreen()),
+        MaterialPageRoute(
+            builder: (_) => ClaveScreen(
+                  rol: rol,
+                  ciudad: ciudad,
+                  cumple: cumple,
+                  lugaresVisitados: lugaresVisitados,
+                  nombre: nombre,
+                  porqueUnicab: porqueUnicab,
+                  correo: correo,
+                )),
       );
     }
   }
@@ -89,8 +102,8 @@ class _RegistroBodyState extends State<RegistroBody> {
       ],
     );
 
-    final espaciadoElementosForm = SizedBox(
-      height: 25,
+    final espaciadoElementosForm = Padding(
+      padding: EdgeInsets.only(bottom: 25),
     );
 
     if (_cargando) {
@@ -106,15 +119,16 @@ class _RegistroBodyState extends State<RegistroBody> {
         children: [
           Container(
               width: 100.w,
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 35),
               decoration: decoracion,
               child: Form(
                 key: _formKey,
                 onChanged: _checkForm,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     RegistroLabel(
                       label: '¿Cómo te llamas?',
@@ -124,7 +138,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: true,
-                          nombreCampo: 'Nombre'),
+                          nombreCampo: 'nombre'),
                       onSaved: (newValue) => nombre = newValue!,
                     ),
                     espaciadoElementosForm,
@@ -150,7 +164,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: true,
-                          nombreCampo: 'Ciudad de recidencia'),
+                          nombreCampo: 'ciudad de recidencia'),
                       onSaved: (newValue) => ciudad = newValue!,
                     ),
                     espaciadoElementosForm,
@@ -180,7 +194,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.correo(
                           value,
                           esRequerido: true,
-                          nombreCampo: 'Correo'),
+                          nombreCampo: 'correo'),
                       onSaved: (newValue) => correo = newValue!,
                     ),
                     espaciadoElementosForm,
@@ -193,7 +207,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: false,
-                          nombreCampo: 'Ciudad de recidencia'),
+                          nombreCampo: 'lugares visitados'),
                       onSaved: (newValue) => lugaresVisitados = newValue!,
                     ),
                     espaciadoElementosForm,
@@ -201,13 +215,14 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: '¿Por qué elige a UNICAB?',
                     ),
                     RegistroInput(
-                        placeholder:
-                            'Cada historia es única. ¿Qué te trajo hasta aquí?',
-                          validator: (value) => CustomFormFieldValidator.texto(
+                      placeholder:
+                          'Cada historia es única. ¿Qué te trajo hasta aquí?',
+                      validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: false,
                           nombreCampo: 'Por qué UNICAB'),
-                      onSaved: (newValue) => ciudad = newValue!,),
+                      onSaved: (newValue) => ciudad = newValue!,
+                    ),
                   ],
                 ),
               )),
