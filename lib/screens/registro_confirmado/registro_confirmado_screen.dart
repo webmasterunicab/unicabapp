@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class RegistroConfirmadoScreen extends StatelessWidget {
   const RegistroConfirmadoScreen({super.key});
@@ -8,10 +9,10 @@ class RegistroConfirmadoScreen extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
-              child: Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(40),
+          Container(
+            width: Adaptive.w(100),
+            height: 50.h,
+            padding: EdgeInsets.all(15),
             decoration: BoxDecoration(
               color: Color.fromRGBO(11, 119, 179, 1),
               borderRadius: BorderRadius.only(
@@ -24,17 +25,17 @@ class RegistroConfirmadoScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 20,
+                  height: 2.h,
                 ),
                 Center(
                   child: Image.asset(
                     'assets/img/unicab-1.png',
-                    width: 100,
-                    height: 100,
+                    width: 30.w,
+                    height: 20.h,
                   ),
                 ),
                 SizedBox(
-                  height: 20,
+                  height:2.h,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20),
@@ -58,7 +59,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                         "¡Ya eres miembro de la comunidad!",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 14,
+                          fontSize: 16.sp,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.normal,
                         ),
@@ -70,7 +71,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                         "Uniconecta",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 35,
+                          fontSize: 25.sp,
                           fontFamily: 'Roboto',
                           fontWeight: FontWeight.w200, // ExtraLight
                         ),
@@ -80,7 +81,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                 )
               ],
             ),
-          )),
+          ),
           Expanded(
             child: Placeholder(),
           ),

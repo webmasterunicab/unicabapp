@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class RegistroInput extends StatelessWidget {
   final String placeholder;
   final bool readOnly;
-  const RegistroInput({super.key, required this.placeholder, this.readOnly = false});
+
+  final FormFieldSetter<String> onSaved;
+  final FormFieldValidator<String>? validator;
+
+  const RegistroInput({super.key, required this.placeholder, this.readOnly = false, required this.validator, required this.onSaved});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity, // Ocupa todo el ancho disponible
-      child: TextField(
+      child: TextFormField(
+        validator: validator,
+        onSaved: onSaved,
+        minLines: 1,
+        maxLines: null,
+        keyboardType: TextInputType.multiline,
         readOnly: readOnly,
         decoration: InputDecoration(
+          errorStyle: TextStyle(
+          fontSize: 16.sp,
+          fontFamily: 'Roboto',
+          leadingDistribution: TextLeadingDistribution.proportional,
+          overflow: TextOverflow.clip
+          ),
           hintText: placeholder,
           hintMaxLines: 2,
           hintStyle:
-              TextStyle(color: Colors.grey, fontSize: 10), // Placeholder gris
+              TextStyle(color: Colors.grey, fontSize: 18.sp), // Placeholder gris
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey), // Borde inferior gris
           ),
@@ -30,7 +46,7 @@ class RegistroInput extends StatelessWidget {
         ),
         style: TextStyle(
           color: Colors.black, // Texto en negro
-          fontSize: 16,
+          fontSize: 18.sp,
         ),
         cursorColor: Colors.grey,
       ),

@@ -1,11 +1,88 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:uniconecta/models/registro/rol_modelo.dart';
+import 'package:uniconecta/repositories/roles_repository.dart';
 import 'package:uniconecta/screens/clave/clave_screen.dart';
+import 'package:uniconecta/util/custom_form_field_validator.dart';
+import 'package:uniconecta/widgets/registro_estudiantes/registro_dropdown.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
-class RegistroBody extends StatelessWidget {
+class RegistroBody extends StatefulWidget {
   const RegistroBody({super.key});
+
+  @override
+  State<RegistroBody> createState() => _RegistroBodyState();
+}
+
+class _RegistroBodyState extends State<RegistroBody> {
+  final RolesRepository _repo = RolesRepository();
+
+  final _formKey = GlobalKey<FormState>();
+  String nombre = '';
+  String correo = '';
+  String cumple = ''; //Formato fecha YYYY-MM-DD
+  String ciudad = '';
+  String rol = '';
+  String lugaresVisitados = '';
+  String porqueUnicab = '';
+  String? rolSeleccionado;
+
+  List<RolModelo> _registros = [];
+  String? _error;
+
+  bool _cargando = true;
+  bool _isFormValid = false;
+
+  void _checkForm() {
+    setState(() {
+      if (rolSeleccionado == null || rolSeleccionado == '') {
+        _isFormValid = false;
+      }
+
+      _isFormValid = _formKey.currentState?.validate() ?? false;
+    });
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() == true) {
+      _formKey.currentState?.save();
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (_) => ClaveScreen(
+                  rol: rol,
+                  ciudad: ciudad,
+                  cumple: cumple,
+                  lugaresVisitados: lugaresVisitados,
+                  nombre: nombre,
+                  porqueUnicab: porqueUnicab,
+                  correo: correo,
+                )),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _cargarRegistros();
+  }
+
+  Future<void> _cargarRegistros() async {
+    try {
+      final data = await _repo.obtenerRoles();
+      setState(() {
+        _registros = data;
+        _cargando = false;
+      });
+    } catch (e) {
+      setState(() {
+        _error = e.toString();
+        _cargando = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,80 +102,139 @@ class RegistroBody extends StatelessWidget {
       ],
     );
 
-    final espaciado = SizedBox(
-                    height: 25.0 ,
-                  );
+    final espaciadoElementosForm = Padding(
+      padding: EdgeInsets.only(bottom: 25),
+    );
+
+    if (_cargando) {
+      return Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
+    if (_error != null) {
+      return Scaffold(body: Center(child: Text('Error: $_error')));
+    }
+
     return SingleChildScrollView(
       child: Column(
         children: [
           Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+              width: 100.w,
+              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 35),
               decoration: decoracion,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  RegistroLabel(
-                    label: '¿Cómo te llamas?',
-                  ),
-                  RegistroInput(
-                      placeholder: 'Tal como te conocen en casa y en UNICAB.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Cuándo es tu cumpleaños?',
-                  ),
-                  RegistroInput(
+              child: Form(
+                key: _formKey,
+                onChanged: _checkForm,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    RegistroLabel(
+                      label: '¿Cómo te llamas?',
+                    ),
+                    RegistroInput(
+                      placeholder: 'Tal como te conocen en casa y en UNICAB.',
+                      validator: (value) => CustomFormFieldValidator.texto(
+                          value,
+                          esRequerido: true,
+                          nombreCampo: 'nombre'),
+                      onSaved: (newValue) => nombre = newValue!,
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: '¿Cuándo es tu cumpleaños?',
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'No prometemos pastel, pero nos gusta saberlo.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Desde dónde te conectas?',
-                  ),
-                  RegistroInput(
+                          'No prometemos pastel, pero nos gusta saberlo.',
+                      validator: (value) => CustomFormFieldValidator.fecha(
+                          value,
+                          esRequerido: true,
+                          nombreCampo: 'fecha Cumpleaños'),
+                      onSaved: (newValue) => cumple = newValue!,
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: 'Ciudad de residencia',
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'UNICAB es virtual, pero tú tienes un mundo propio.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Cuál es tu rol?',
-                  ),
-                  RegistroInput(
+                          'UNICAB es virtual, pero tú tienes un mundo propio.',
+                      validator: (value) => CustomFormFieldValidator.texto(
+                          value,
+                          esRequerido: true,
+                          nombreCampo: 'ciudad de recidencia'),
+                      onSaved: (newValue) => ciudad = newValue!,
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: '¿Cuál es tu rol?',
+                    ),
+                    RegistroDropdown(
+                      registros: _registros,
+                      valorSeleccionado: rolSeleccionado,
+                      validator: (value) => CustomFormFieldValidator.texto(
+                          value,
+                          esRequerido: true,
+                          nombreCampo: 'Rol'),
+                      onChanged: (value) {
+                        setState(() {
+                          rolSeleccionado = value!;
+                        });
+                      },
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: 'Correo',
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'Dinos si eres estudiante, maestro mediador, padre de familia...'),
-                  espaciado,
-                  RegistroLabel(
-                    label: 'Tu correo en UNICAB',
-                  ),
-                  RegistroInput(
+                          'Para avisarte de cosas importantes. Nada de spam, lo prometemos.',
+                      validator: (value) => CustomFormFieldValidator.correo(
+                          value,
+                          esRequerido: true,
+                          nombreCampo: 'correo'),
+                      onSaved: (newValue) => correo = newValue!,
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: '¿Qué lugares has viajado o te gustaría visitar?',
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'Para avisarte de cosas importantes. Nada de spam, lo prometemos.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Qué lugares has viajado o te gustaría visitar?',
-                  ),
-                  RegistroInput(
+                          'El mundo es enorme, cuéntanos qué sitios ha explorado o sueñas conocer.',
+                      validator: (value) => CustomFormFieldValidator.texto(
+                          value,
+                          esRequerido: false,
+                          nombreCampo: 'lugares visitados'),
+                      onSaved: (newValue) => lugaresVisitados = newValue!,
+                    ),
+                    espaciadoElementosForm,
+                    RegistroLabel(
+                      label: '¿Por qué elige a UNICAB?',
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'El mundo es enorme, cuéntanos qué sitios ha explorado o sueñas conocer.'),
-                  espaciado,
-                  RegistroLabel(
-                    label: '¿Por qué elige a UNICAB?',
-                  ),
-                  RegistroInput(
-                      placeholder:
-                          'Cada historia es única. ¿Qué te trajo hasta aquí?'),
-                ],
+                          'Cada historia es única. ¿Qué te trajo hasta aquí?',
+                      validator: (value) => CustomFormFieldValidator.texto(
+                          value,
+                          esRequerido: false,
+                          nombreCampo: 'Por qué UNICAB'),
+                      onSaved: (newValue) => ciudad = newValue!,
+                    ),
+                  ],
+                ),
               )),
           Container(
-              margin: EdgeInsets.only(top: 22),
-              //TODO: Cambiar boton compartido para que acepte fontSize
+              margin: EdgeInsets.only(top: 55),
               child: OrangeButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ClaveScreen()),
-                  );
+                  if (_isFormValid) _submit();
                 },
                 buttonText: '¡Listo, sigamos!',
                 textWeight: FontWeight.w600,
+                fontSize: 16.sp,
               )),
           Container(
             margin: EdgeInsets.only(top: 55),
@@ -111,7 +247,7 @@ class RegistroBody extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: 6,
+                    fontSize: 14.sp,
                     color: Colors.black,
                   ),
                 )),

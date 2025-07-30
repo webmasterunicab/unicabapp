@@ -1,14 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
+import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
-class ClaveBody extends StatelessWidget {
-  const ClaveBody({super.key});
+class ClaveBody extends StatefulWidget {
+  final String nombre;
+  final String correo;
+  final String cumple; //Formato fecha YYYY-MM-DD
+  final String ciudad;
+  final String rol;
+  final String lugaresVisitados;
+  final String porqueUnicab;
+
+  const ClaveBody({
+    super.key,
+    required this.nombre,
+    required this.correo,
+    required this.cumple,
+    required this.ciudad,
+    required this.rol,
+    required this.lugaresVisitados,
+    required this.porqueUnicab,
+  });
 
   @override
+  State<ClaveBody> createState() => _ClaveBodyState();
+}
+
+class _ClaveBodyState extends State<ClaveBody> {
+  @override
   Widget build(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
+    String password = '';
+    String passwordRepetida = '';
+
+    bool _isFormValid = false;
+
+    void _checkForm() {
+      setState(() {
+        if (password != passwordRepetida) {
+          _isFormValid = false;
+        }
+        _isFormValid = _formKey.currentState?.validate() ?? false;
+      });
+    }
+
+    void _submit() {
+      if (_formKey.currentState?.validate() == true) {
+        _formKey.currentState?.save();
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => SubirFotoScreen()),
+        );
+      }
+    }
+
     final decoracion = BoxDecoration(
       color: Colors.white,
       boxShadow: [
@@ -28,6 +76,7 @@ class ClaveBody extends StatelessWidget {
     final espaciado = SizedBox(
       height: 25.0,
     );
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -36,42 +85,58 @@ class ClaveBody extends StatelessWidget {
               margin: EdgeInsets.only(top: 75),
               padding: EdgeInsets.symmetric(vertical: 46, horizontal: 40),
               decoration: decoracion,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RegistroLabel(label: 'Elige tu clave secreta'),
-                      SizedBox(width: 8), // Espacio entre texto e icono
-                      Icon(
-                        Icons.lock_outline,
-                        size: 20,
-                        color: const Color.fromRGBO(255, 152, 5, 1),
-                      ),
-                    ],
-                  ),
-                  RegistroInput(
+              child: Form(
+                key: _formKey,
+                onChanged: _checkForm,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RegistroLabel(label: 'Elige tu clave secreta'),
+                        SizedBox(width: 8), // Espacio entre texto e icono
+                        Icon(
+                          Icons.lock_outline,
+                          size: 18.sp,
+                          color: const Color.fromRGBO(255, 152, 5, 1),
+                        ),
+                      ],
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'Algo fácil de recordar, pero difícil de adivinar.'),
-                  espaciado,
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      RegistroLabel(label: 'Confirma tu clave'),
-                      SizedBox(width: 8), // Espacio entre texto e icono
-                      Icon(
-                        Icons.lock_outline,
-                        size: 20,
-                        color: const Color.fromRGBO(255, 152, 5, 1),
-                      ),
-                    ],
-                  ),
-                  RegistroInput(
+                          'Algo fácil de recordar, pero difícil de adivinar.',
+                      validator: (value) => CustomFormFieldValidator.password(value, 
+                      esRequerido: true,
+                      nombreCampo: 'contraseña'),
+                      onSaved: (newValue) => password = newValue!,
+                    ),
+                    espaciado,
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        RegistroLabel(label: 'Confirma tu clave'),
+                        SizedBox(width: 8), // Espacio entre texto e icono
+                        Icon(
+                          Icons.lock_outline,
+                          size: 18.sp,
+                          color: const Color.fromRGBO(255, 152, 5, 1),
+                        ),
+                      ],
+                    ),
+                    RegistroInput(
                       placeholder:
-                          'Solo para estar seguro de que la escribiste bien'),
-                ],
+                          'Solo para estar seguro de que la escribiste bien',
+                      validator: (value) => CustomFormFieldValidator.password(
+                      value, 
+                      esRequerido: true,
+                      nombreCampo: 'confirma contraseña'),
+                      onSaved: (newValue) => passwordRepetida = newValue!,
+                    ),
+                  ],
+                ),
               )),
           Container(
             margin: EdgeInsets.symmetric(vertical: 38, horizontal: 38),
@@ -89,9 +154,7 @@ class ClaveBody extends StatelessWidget {
               margin: EdgeInsets.only(top: 22),
               child: OrangeButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => SubirFotoScreen()),
-                  );
+                  if (_isFormValid) _submit();
                 },
                 buttonText: '¡Listo, sigamos!',
                 textWeight: FontWeight.w600,
