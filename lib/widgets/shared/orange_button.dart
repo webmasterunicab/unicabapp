@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class OrangeButton extends StatelessWidget {
   const OrangeButton({
@@ -10,7 +11,7 @@ class OrangeButton extends StatelessWidget {
     this.width,
     this.height, 
     this.padding = const EdgeInsets.all(20),
-    this.fontSize = 13, 
+    this.fontSize = 15, 
     required this.textWeight, 
   });
 
@@ -56,7 +57,7 @@ class OrangeButton extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Colors.white,
-                fontSize: fontSize,
+                fontSize: fontSize!.sp,
                 fontWeight: textWeight
               ),
             ),

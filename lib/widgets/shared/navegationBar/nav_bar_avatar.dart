@@ -33,12 +33,7 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
   void didPushNext() {
     _closeDropdown();
   }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  
   void _getDropdownVariables() {
     RenderBox? box = action.currentContext?.findRenderObject() as RenderBox?;
 
