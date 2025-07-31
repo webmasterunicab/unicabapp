@@ -48,17 +48,20 @@ class _RegistroBodyState extends State<RegistroBody> {
   void _submit() {
     if (_formKey.currentState?.validate() == true) {
       _formKey.currentState?.save();
+
+      Map<String, dynamic> datosRegistro = {
+        'nombre': nombre,
+        'correo': correo,
+        'cumple': cumple, // Formato YYYY-MM-DD
+        'ciudad': ciudad,
+        'rol': rol,
+        'lugaresVisitados': lugaresVisitados,
+        'porqueUnicab': porqueUnicab,
+      };
+
       Navigator.of(context).push(
         MaterialPageRoute(
-            builder: (_) => ClaveScreen(
-                  rol: rol,
-                  ciudad: ciudad,
-                  cumple: cumple,
-                  lugaresVisitados: lugaresVisitados,
-                  nombre: nombre,
-                  porqueUnicab: porqueUnicab,
-                  correo: correo,
-                )),
+            builder: (_) => ClaveScreen(datosRegistro: datosRegistro)),
       );
     }
   }
@@ -72,11 +75,14 @@ class _RegistroBodyState extends State<RegistroBody> {
   Future<void> _cargarRegistros() async {
     try {
       final data = await _repo.obtenerRoles();
+      // asegura que el widget aún está en pantalla
+      if (!mounted) return;
       setState(() {
         _registros = data;
         _cargando = false;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         _error = e.toString();
         _cargando = false;
@@ -123,8 +129,8 @@ class _RegistroBodyState extends State<RegistroBody> {
               decoration: decoracion,
               child: Form(
                 key: _formKey,
-                onChanged: _checkForm,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                // onChanged: _checkForm,
+                autovalidateMode: AutovalidateMode.disabled,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -151,7 +157,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.fecha(
                           value,
                           esRequerido: true,
-                          nombreCampo: 'fecha Cumpleaños'),
+                          nombreCampo: 'fecha cumpleaños'),
                       onSaved: (newValue) => cumple = newValue!,
                     ),
                     espaciadoElementosForm,
@@ -183,14 +189,14 @@ class _RegistroBodyState extends State<RegistroBody> {
                           rolSeleccionado = value!;
                         });
                       },
+                      onSaved: (newValue) => rol = newValue!,
                     ),
                     espaciadoElementosForm,
                     RegistroLabel(
                       label: 'Correo',
                     ),
                     RegistroInput(
-                      placeholder:
-                          'Para avisarte de cosas importantes. Nada de spam, lo prometemos.',
+                      placeholder: 'Para avisarte de cosas importantes.',
                       validator: (value) => CustomFormFieldValidator.correo(
                           value,
                           esRequerido: true,
@@ -203,7 +209,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                     ),
                     RegistroInput(
                       placeholder:
-                          'El mundo es enorme, cuéntanos qué sitios ha explorado o sueñas conocer.',
+                          '¿Qué sitios has explorado o sueñas conocer?',
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: false,
@@ -220,8 +226,8 @@ class _RegistroBodyState extends State<RegistroBody> {
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
                           esRequerido: false,
-                          nombreCampo: 'Por qué UNICAB'),
-                      onSaved: (newValue) => ciudad = newValue!,
+                          nombreCampo: '¿por qué UNICAB?'),
+                      onSaved: (newValue) => porqueUnicab = newValue!,
                     ),
                   ],
                 ),
@@ -230,6 +236,7 @@ class _RegistroBodyState extends State<RegistroBody> {
               margin: EdgeInsets.only(top: 55),
               child: OrangeButton(
                 onPressed: () {
+                  _checkForm();
                   if (_isFormValid) _submit();
                 },
                 buttonText: '¡Listo, sigamos!',

@@ -14,7 +14,7 @@ class RegistroLabel extends StatelessWidget {
       style: TextStyle(
         fontFamily: 'Roboto',
         fontWeight: FontWeight.w500,
-        fontSize: 18.sp,
+        fontSize: 16.sp,
         color: Colors.orange,
         
       ),

@@ -7,23 +7,11 @@ import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class ClaveBody extends StatefulWidget {
-  final String nombre;
-  final String correo;
-  final String cumple; //Formato fecha YYYY-MM-DD
-  final String ciudad;
-  final String rol;
-  final String lugaresVisitados;
-  final String porqueUnicab;
+  final Map<String, dynamic> datosRegistro;
 
   const ClaveBody({
     super.key,
-    required this.nombre,
-    required this.correo,
-    required this.cumple,
-    required this.ciudad,
-    required this.rol,
-    required this.lugaresVisitados,
-    required this.porqueUnicab,
+    required this.datosRegistro,
   });
 
   @override
@@ -31,32 +19,36 @@ class ClaveBody extends StatefulWidget {
 }
 
 class _ClaveBodyState extends State<ClaveBody> {
+  final _formKey = GlobalKey<FormState>();
+  String password = '';
+  String passwordRepetida = '';
+
+  bool _isFormValid = false;
+
+  void _checkForm() {
+    setState(() {
+      _isFormValid = _formKey.currentState?.validate() ?? false;
+
+      if (password != passwordRepetida) {
+        _isFormValid = false;
+      }
+    });
+  }
+
+  void _submit() {
+    if (_formKey.currentState?.validate() == true) {
+      _formKey.currentState?.save();
+
+      widget.datosRegistro['pass'] = password;
+
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => SubirFotoScreen(datosRegistro: widget.datosRegistro,)),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    String password = '';
-    String passwordRepetida = '';
-
-    bool _isFormValid = false;
-
-    void _checkForm() {
-      setState(() {
-        if (password != passwordRepetida) {
-          _isFormValid = false;
-        }
-        _isFormValid = _formKey.currentState?.validate() ?? false;
-      });
-    }
-
-    void _submit() {
-      if (_formKey.currentState?.validate() == true) {
-        _formKey.currentState?.save();
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => SubirFotoScreen()),
-        );
-      }
-    }
-
     final decoracion = BoxDecoration(
       color: Colors.white,
       boxShadow: [
@@ -87,8 +79,8 @@ class _ClaveBodyState extends State<ClaveBody> {
               decoration: decoracion,
               child: Form(
                 key: _formKey,
-                onChanged: _checkForm,
-                autovalidateMode: AutovalidateMode.onUserInteraction,
+                // onChanged: _checkForm,
+                // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -108,10 +100,14 @@ class _ClaveBodyState extends State<ClaveBody> {
                     RegistroInput(
                       placeholder:
                           'Algo fácil de recordar, pero difícil de adivinar.',
-                      validator: (value) => CustomFormFieldValidator.password(value, 
-                      esRequerido: true,
-                      nombreCampo: 'contraseña'),
+                      validator: (value) {
+                        password = value!;
+
+                        return CustomFormFieldValidator.password(value,
+                            esRequerido: true, nombreCampo: 'contraseña');
+                      },
                       onSaved: (newValue) => password = newValue!,
+                      readOnly: false,
                     ),
                     espaciado,
                     Row(
@@ -129,11 +125,13 @@ class _ClaveBodyState extends State<ClaveBody> {
                     RegistroInput(
                       placeholder:
                           'Solo para estar seguro de que la escribiste bien',
-                      validator: (value) => CustomFormFieldValidator.password(
-                      value, 
-                      esRequerido: true,
-                      nombreCampo: 'confirma contraseña'),
+                      validator: (value) {
+                        passwordRepetida = value!;
+                        return CustomFormFieldValidator.passwordConfirmation(
+                            password, passwordRepetida);
+                      },
                       onSaved: (newValue) => passwordRepetida = newValue!,
+                      readOnly: false,
                     ),
                   ],
                 ),
@@ -145,7 +143,7 @@ class _ClaveBodyState extends State<ClaveBody> {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.normal,
-                fontSize: 10,
+                fontSize: 13.sp,
                 color: Color.fromRGBO(14, 14, 14, 1),
               ),
             ),
@@ -154,10 +152,12 @@ class _ClaveBodyState extends State<ClaveBody> {
               margin: EdgeInsets.only(top: 22),
               child: OrangeButton(
                 onPressed: () {
+                  _checkForm();
                   if (_isFormValid) _submit();
                 },
                 buttonText: '¡Listo, sigamos!',
                 textWeight: FontWeight.w600,
+                fontSize: 16.sp,
               )),
           Container(
             margin: EdgeInsets.only(top: 55),
@@ -170,7 +170,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     fontWeight: FontWeight.w400,
-                    fontSize: 6,
+                    fontSize: 14.sp,
                     color: Colors.black,
                   ),
                 )),

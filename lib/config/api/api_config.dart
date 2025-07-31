@@ -8,7 +8,7 @@ class ApiConfig {
       'http://192.168.1.16/hostuniconecta/requests';
   static final String developmentChrome =
       'http://localhost/hostuniconecta/requests';
-  static final String production = '';
+  static final String production = 'https://unicab.org/uniconecta';
   // Base URL de la API - Se adapta automáticamente según la plataforma
   static String get baseUrl {
     String baseUrl = '';
@@ -33,6 +33,8 @@ class ApiConfig {
 
   // Endpoints específicos
   static String get usuariosRoles => '${ApiConfig.baseUrl}/registro/roles.php';
+  static String get subirImagen => '${production}/imagen_putdat1.php';
+  static String get insertarRegistro => '${ApiConfig.baseUrl}/registro/registrar_usuario.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';
