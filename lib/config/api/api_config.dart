@@ -33,7 +33,7 @@ class ApiConfig {
 
   // Endpoints específicos
   static String get usuariosRoles => '${ApiConfig.baseUrl}/registro/roles.php';
-  static String get subirImagen => '${production}/imagen_putdat1.php';
+  static String get subirImagen => '$production/imagen_putdat1.php';
   static String get insertarRegistro => '${ApiConfig.baseUrl}/registro/registrar_usuario.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';

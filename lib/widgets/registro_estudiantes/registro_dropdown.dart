@@ -23,6 +23,7 @@ class RegistroDropdown extends StatelessWidget {
     return SizedBox(
       width: double.infinity, // Asegura uso de todo el ancho
       child: DropdownButtonFormField<String>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         value: valorSeleccionado,
         onChanged: onChanged,
         validator: validator,

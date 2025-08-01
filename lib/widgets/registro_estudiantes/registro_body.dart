@@ -7,6 +7,7 @@ import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_dropdown.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
+import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class RegistroBody extends StatefulWidget {
@@ -113,7 +114,7 @@ class _RegistroBodyState extends State<RegistroBody> {
     );
 
     if (_cargando) {
-      return Scaffold(body: Center(child: CircularProgressIndicator()));
+      return Loading();
     }
 
     if (_error != null) {

@@ -7,7 +7,10 @@ class RegistroAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final bool mostrarTexto;
   final Color color;
-  const RegistroAppBar({super.key, required this.mostrarTexto, this.color = const Color.fromRGBO(250, 249, 248, 1)});
+  const RegistroAppBar(
+      {super.key,
+      required this.mostrarTexto,
+      this.color = const Color.fromRGBO(250, 249, 248, 1)});
 
   @override
   Widget build(BuildContext context) {

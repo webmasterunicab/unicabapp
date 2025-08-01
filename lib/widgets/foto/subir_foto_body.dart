@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/models/registro/subida_imagen_response.dart';
 import 'package:uniconecta/repositories/registro_service.dart';
 import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
+import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class SubirFotoBody extends StatefulWidget {
@@ -21,11 +21,11 @@ class SubirFotoBody extends StatefulWidget {
 class _SubirFotoBodyState extends State<SubirFotoBody> {
   final Color colorBotones = Color.fromRGBO(11, 119, 179, 1);
   final _service = RegistroService();
+
   bool terminosAceptados = false;
   String _nombreArchivo = '';
-
-  SubidaImagenResponse response =
-      SubidaImagenResponse(status: '', mensaje: '', url: '');
+  String? _error;
+  bool _cargando = false;
 
   File? _imagen;
   final ImagePicker _picker = ImagePicker();
@@ -45,36 +45,71 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
   }
 
   void _submit() async {
-    if (!terminosAceptados) return;
+    if (!terminosAceptados) {
+      setState(() {
+        _error = 'Debes aceptar los terminos y condiciones';
+      });
+      return;
+    }
+
+    _cargando = true;
 
     widget.datosRegistro['aceptoTerminos'] = 1;
 
+    if (_imagen == null) {
+      widget.datosRegistro['fotoPerfil'] = '';
+    } else {
+      final respuestaSubida = await _service.subirImagen(_imagen);
 
-    final respuestaSubida = await _service.subirImagen(_imagen);
+      setState(() {
+        _error = respuestaSubida.mensaje;
+        if (respuestaSubida.status == 'success') {
+          widget.datosRegistro['fotoPerfil'] = respuestaSubida.url;
+        }
+      });
 
+      if (respuestaSubida.status != 'success') return;
+    }
 
-    setState(() {
-      response = respuestaSubida;
-      if (response.status == 'success') {
-        widget.datosRegistro['fotoPerfil'] = response.url;
-      }
-    });
+    _subirRegistros();
+  }
 
+  Future<void> _subirRegistros() async {
+    try {
+      final responseUsuario =
+          await _service.subirDatosRegistro(widget.datosRegistro);
 
-    if (response.status != 'success') return;
+      // asegura que el widget aún está en pantalla
+      if (!mounted) return;
 
-    // Subes los datos del registro
-    await _service.subirDatosRegistro(widget.datosRegistro);
+      setState(() {
+        if (responseUsuario.status == 'error') {
+          _error = responseUsuario.mensaje;
+          _cargando = false;
+        }
+      });
 
-    // Navegas a la siguiente pantalla
-    if (!mounted) return; // buena práctica para evitar errores al navegar
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => RegistroConfirmadoScreen()),
-    );
+      if (responseUsuario.status == 'error') return;
+
+      if (!mounted) return;
+      
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => RegistroConfirmadoScreen()),
+        (Route<dynamic> route) =>
+            false, // Esto elimina todas las rutas anteriores
+      );
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _error = e.toString();
+        _cargando = false;
+      });
+    }
   }
 
   Widget _mostrarError() {
-    if (response.status == 'error') {
+    if (_error != null) {
       return Container(
         margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
         padding: EdgeInsets.all(12.sp),
@@ -89,7 +124,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                 color: Colors.redAccent.shade700, size: 20.sp),
             SizedBox(height: 10.sp),
             Text(
-              response.mensaje,
+              _error!,
               softWrap: true,
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -102,7 +137,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
         ),
       );
     } else {
-      return SizedBox.shrink(); // o Container() si prefieres
+      return SizedBox.shrink();
     }
   }
 
@@ -146,6 +181,10 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
 
   @override
   Widget build(BuildContext context) {
+    if (_cargando) {
+      return Loading();
+    }
+
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -240,7 +279,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/img/pictureIcon.png',
+                          'assets/img/camara.jpg',
                           width: 4.w,
                           height: 4.h,
                           color: Colors.white,
@@ -252,7 +291,6 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
                             fontSize: 16.sp,
-                            color: Colors.white,
                           ),
                         )
                       ],
