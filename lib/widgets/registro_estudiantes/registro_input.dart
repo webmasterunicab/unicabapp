@@ -31,7 +31,7 @@ class RegistroInput extends StatelessWidget {
           hintText: placeholder,
           // hintMaxLines: 2,
           hintStyle:
-              TextStyle(color: Colors.grey, fontSize: 12.sp), // Placeholder gris
+              TextStyle(color: Colors.grey, fontSize: 13.sp), // Placeholder gris
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey), // Borde inferior gris
           ),

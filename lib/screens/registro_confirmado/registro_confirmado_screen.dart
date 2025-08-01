@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uniconecta/screens/inicio_sesion/inicio_sesion_screen.dart';
+import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class RegistroConfirmadoScreen extends StatelessWidget {
   const RegistroConfirmadoScreen({super.key});
@@ -25,17 +27,17 @@ class RegistroConfirmadoScreen extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(
-                  height: 2.h,
+                  height: 4.h,
                 ),
                 Center(
                   child: Image.asset(
                     'assets/img/unicab-1.png',
                     width: 30.w,
-                    height: 20.h,
+                    height: 30.w,
                   ),
                 ),
                 SizedBox(
-                  height:2.h,
+                  height: 6.h,
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 20),
@@ -44,7 +46,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                     color: Colors.transparent, // fondo transparente
                     border: Border.all(
                       color: Colors.white, // color del borde
-                      width: 2.0,
+                      width: 1.0,
                     ),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(35),
@@ -65,7 +67,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 1.h,
                       ),
                       Text(
                         "Uniconecta",
@@ -83,7 +85,31 @@ class RegistroConfirmadoScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Placeholder(),
+            child: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: 12.h),
+                  child: OrangeButton(
+                    buttonText: '¡Listo, ya eres parte!',
+                    fontSize: 18.sp,
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (context) => InicioSesion()),
+                        (Route<dynamic> route) =>
+                            false, // Esto elimina todas las rutas anteriores
+                      );
+                    },
+                    textWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(height: 5.h,),
+                Image.asset('assets/img/pictureIcon.png',
+                width: 20.w,
+                height: 20.w,
+                fit: BoxFit.contain,)
+              ],
+            ),
           ),
         ],
       ),

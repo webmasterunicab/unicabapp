@@ -14,7 +14,7 @@ class Loading extends StatelessWidget {
           'assets/img/cargar.gif',
           width: double.infinity,
           height: double.infinity,
-          fit: BoxFit.contain,
+          fit: BoxFit.cover,
         ),
       ),
     );

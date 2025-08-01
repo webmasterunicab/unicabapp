@@ -40,7 +40,7 @@ class RegistroDropdown extends StatelessWidget {
           hintMaxLines: 2,
           hintStyle: TextStyle(
             color: Colors.grey,
-            fontSize: 12.sp,
+            fontSize: 13.sp,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.normal,
           ),

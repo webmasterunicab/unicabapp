@@ -62,13 +62,16 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
       final respuestaSubida = await _service.subirImagen(_imagen);
 
       setState(() {
-        _error = respuestaSubida.mensaje;
         if (respuestaSubida.status == 'success') {
           widget.datosRegistro['fotoPerfil'] = respuestaSubida.url;
         }
       });
 
-      if (respuestaSubida.status != 'success') return;
+      if (respuestaSubida.status != 'success') {
+        _error = respuestaSubida.mensaje;
+        _cargando = false;
+        return;
+      }
     }
 
     _subirRegistros();
@@ -92,7 +95,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
       if (responseUsuario.status == 'error') return;
 
       if (!mounted) return;
-      
+
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => RegistroConfirmadoScreen()),
@@ -102,7 +105,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = "Ah ocurrido un error inesperado, intentalo mas tarde!";
         _cargando = false;
       });
     }
@@ -282,7 +285,6 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                           'assets/img/camara.jpg',
                           width: 4.w,
                           height: 4.h,
-                          color: Colors.white,
                         ),
                         SizedBox(width: 8),
                         Text(
@@ -291,6 +293,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                             fontFamily: 'Roboto',
                             fontWeight: FontWeight.w400,
                             fontSize: 16.sp,
+                            color: Colors.white,
                           ),
                         )
                       ],
