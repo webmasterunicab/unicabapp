@@ -22,10 +22,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
   final Color colorBotones = Color.fromRGBO(11, 119, 179, 1);
   final _service = RegistroService();
 
-  bool terminosAceptados = false;
   String _nombreArchivo = '';
-  String? _error;
-  bool _cargando = false;
 
   File? _imagen;
   final ImagePicker _picker = ImagePicker();
@@ -45,104 +42,35 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
   }
 
   void _submit() async {
-    if (!terminosAceptados) {
-      setState(() {
-        _error = 'Debes aceptar los terminos y condiciones';
-      });
-      return;
-    }
 
-    _cargando = true;
 
-    widget.datosRegistro['aceptoTerminos'] = 1;
 
-    if (_imagen == null) {
-      widget.datosRegistro['fotoPerfil'] = '';
-    } else {
-      final respuestaSubida = await _service.subirImagen(_imagen);
 
-      setState(() {
-        if (respuestaSubida.status == 'success') {
-          widget.datosRegistro['fotoPerfil'] = respuestaSubida.url;
-        }
-      });
+    // if (_imagen == null) {
+    // // El usuario decide continuar sin elegir foto de perfil
+    //   widget.datosRegistro['fotoPerfil'] = '';
+    // } else {
+    //   final respuestaSubida = await _service.subirImagen(_imagen);
 
-      if (respuestaSubida.status != 'success') {
-        _error = respuestaSubida.mensaje;
-        _cargando = false;
-        return;
-      }
-    }
+    //   setState(() {
+    //     if (respuestaSubida.status == 'success') {
+    //       widget.datosRegistro['fotoPerfil'] = respuestaSubida.url;
+    //     }
+    //   });
 
-    _subirRegistros();
+    //   if (respuestaSubida.status != 'success') {
+    //     _error = respuestaSubida.mensaje;
+    //     _cargando = false;
+    //     return;
+    //   }
+    // }
+
+    // _subirRegistros();
   }
 
-  Future<void> _subirRegistros() async {
-    try {
-      final responseUsuario =
-          await _service.subirDatosRegistro(widget.datosRegistro);
 
-      // asegura que el widget aún está en pantalla
-      if (!mounted) return;
 
-      setState(() {
-        if (responseUsuario.status == 'error') {
-          _error = responseUsuario.mensaje;
-          _cargando = false;
-        }
-      });
 
-      if (responseUsuario.status == 'error') return;
-
-      if (!mounted) return;
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => RegistroConfirmadoScreen()),
-        (Route<dynamic> route) =>
-            false, // Esto elimina todas las rutas anteriores
-      );
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _error = "Ah ocurrido un error inesperado, intentalo mas tarde!";
-        _cargando = false;
-      });
-    }
-  }
-
-  Widget _mostrarError() {
-    if (_error != null) {
-      return Container(
-        margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
-        padding: EdgeInsets.all(12.sp),
-        decoration: BoxDecoration(
-          color: Colors.redAccent.shade100,
-          borderRadius: BorderRadius.circular(8.sp),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.warning_rounded,
-                color: Colors.redAccent.shade700, size: 20.sp),
-            SizedBox(height: 10.sp),
-            Text(
-              _error!,
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.redAccent.shade700,
-                fontFamily: 'Roboto',
-              ),
-            ),
-          ],
-        ),
-      );
-    } else {
-      return SizedBox.shrink();
-    }
-  }
 
   Widget _mostrarImagenSeleccionada() {
     double size =
@@ -184,9 +112,9 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
 
   @override
   Widget build(BuildContext context) {
-    if (_cargando) {
-      return Loading();
-    }
+    // if (_cargando) {
+    //   return Loading();
+    // }
 
     return SingleChildScrollView(
       child: Column(
@@ -299,7 +227,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                       ],
                     ))),
           ),
-          _mostrarError(),
+          // _mostrarError(),
           Container(
               margin: EdgeInsets.only(top: 22),
               child: OrangeButton(
@@ -311,34 +239,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                 width: 140,
                 fontSize: 16.sp,
               )),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 40),
-            child: Align(
-              alignment: Alignment.center,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 300),
-                child: CheckboxListTile(
-                  value: terminosAceptados,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      terminosAceptados = value ?? false;
-                    });
-                  },
-                  title: Text(
-                    "Acepto los términos y la política de tratamiento de datos de UNICAB. Tus datos están seguros con nosotros. Solo los usaremos para mejorar tu experiencia en UNICAB.",
-                    style: TextStyle(
-                      fontFamily: 'Roboto',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 12.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                  controlAffinity: ListTileControlAffinity.leading,
-                  contentPadding: EdgeInsets.zero,
-                ),
-              ),
-            ),
-          ),
+
           Container(
             margin: EdgeInsets.only(top: 55),
             child: TextButton(

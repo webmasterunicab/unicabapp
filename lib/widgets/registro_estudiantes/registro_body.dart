@@ -51,13 +51,13 @@ class _RegistroBodyState extends State<RegistroBody> {
       _formKey.currentState?.save();
 
       Map<String, dynamic> datosRegistro = {
-        'nombre': nombre,
-        'correo': correo,
-        'cumple': cumple, // Formato YYYY-MM-DD
-        'ciudad': ciudad,
-        'rol': rol,
-        'lugaresVisitados': lugaresVisitados,
-        'porqueUnicab': porqueUnicab,
+        'nombre': nombre.trim(),
+        'correo': correo.trim(),
+        'cumple': cumple.trim(), // Formato YYYY-MM-DD
+        'ciudad': ciudad.trim(),
+        'rol': rol.trim(),
+        'lugaresVisitados': lugaresVisitados.trim(),
+        'porqueUnicab': porqueUnicab.trim(),
       };
 
       Navigator.of(context).push(

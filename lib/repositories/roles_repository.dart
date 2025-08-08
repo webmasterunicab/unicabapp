@@ -5,6 +5,7 @@ import 'package:uniconecta/models/registro/rol_modelo.dart';
 
 class RolesRepository {
   Future<List<RolModelo>> obtenerRoles() async {
+    // final urlLocal = Uri.parse(ApiConfig.usuariosRolesL);
     final url = Uri.parse(ApiConfig.usuariosRoles);
 
      final response = await http.get(

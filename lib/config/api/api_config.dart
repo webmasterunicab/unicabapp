@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 class ApiConfig {
   static final String enviroment = 'dev';
   static final String development =
-      'http://192.168.1.16/hostuniconecta/requests';
+      'http://192.168.1.13/hostuniconecta/requests';
   static final String developmentChrome =
       'http://localhost/hostuniconecta/requests';
   static final String production = 'https://unicab.org/uniconecta';
@@ -13,15 +13,12 @@ class ApiConfig {
   static String get baseUrl {
     String baseUrl = '';
 
-    if (enviroment == 'prod') {
-      baseUrl = production;
-    } else {
-      baseUrl = development;
-    }
+    baseUrl = development;
     if (!kIsWeb) {
       if (Platform.isAndroid) return baseUrl;
       if (Platform.isIOS) return baseUrl;
     }
+
     return developmentChrome;
   }
 
@@ -32,9 +29,11 @@ class ApiConfig {
   //     'http://10.0.2.2:80/hostuniconecta/requests';
 
   // Endpoints específicos
-  static String get usuariosRoles => '${ApiConfig.baseUrl}/registro/roles.php';
+  static String get usuariosRolesL => '${ApiConfig.baseUrl}/registro/roles.php';
+  static String get registrarUsuarioL => '${ApiConfig.baseUrl}/registro/registrar_usuario.php';
   static String get subirImagen => '$production/imagen_putdat1.php';
-  static String get insertarRegistro => '${ApiConfig.baseUrl}/registro/registrar_usuario.php';
+  static String get registrarUsuario => '$production/registro_putdat1.php';
+  static String get usuariosRoles => '$production/roles_getdat1.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';
