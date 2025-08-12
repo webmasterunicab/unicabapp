@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uniconecta/repositories/registro_service.dart';
-import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
-import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class SubirFotoBody extends StatefulWidget {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uniconecta/repositories/registro_service.dart';
-import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
 import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
