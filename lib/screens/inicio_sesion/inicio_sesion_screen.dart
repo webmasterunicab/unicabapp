@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:uniconecta/repositories/inicio_sesion_repository.dart';
+import 'package:uniconecta/models/inicio_sesion/response_login.dart';
 import 'package:uniconecta/screens/general/general_screen.dart';
-import 'package:uniconecta/widgets/inicio_sesion/campo_sesion.dart';
-import 'package:uniconecta/widgets/inicio_sesion/custom_button_sesion.dart';
+import 'package:uniconecta/screens/recuperar_contrasena/recuperar_contrasena_screen.dart';
+import 'package:uniconecta/util/custom_form_field_validator.dart';
+import 'package:uniconecta/widgets/inicio_sesion_related/campo_sesion.dart';
+import 'package:uniconecta/widgets/inicio_sesion_related/custom_button_sesion.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
@@ -10,6 +15,8 @@ class InicioSesion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
       body: LayoutBuilder(
@@ -20,51 +27,152 @@ class InicioSesion extends StatelessWidget {
                 minHeight: constraints.maxHeight,
               ),
               child: IntrinsicHeight(
-                child: Column(
-                  children: [
-                    MainNavegationBar(navType: NavBarTypes.noBody),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 51),
-                            child: Image.asset(
-                              'assets/img/LOGO UNICONECTA.png',
-                              width: 154,
-                              height: 54,
-                            ),
-                          ),
-                          const SizedBox(height: 138),
-      
-                          CampoSesion(fieldLabel: "Usuario"),
-                          const SizedBox(height: 47),
-      
-                          CampoSesion(fieldLabel: "Contraseña"),
-                          const SizedBox(height: 36),
-      
-                          OrangeButton(
-                            buttonText: "Iniciar Sesión",
-                            onPressed: () {
-                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen()), (Route<dynamic> route) => false);
-                            },
-                            textWeight: FontWeight.w600,
-                          ),
-                          const SizedBox(height: 42),
-      
-                          CustomButtonSesion(
-                            buttonText: "Olvide mi contraseña",
-                            onPressed: () {},
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                child: _InicioBody(),
               ),
             ),
           );
         },
       ),
     );
+  }
+}
+
+class _InicioBody extends StatelessWidget {
+  const _InicioBody();
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        MainNavegationBar(navType: NavBarTypes.noBody),
+        Expanded(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 51),
+                child: Image.asset(
+                  'assets/img/LOGO UNICONECTA.png',
+                  height: 54,
+                  width: 154,
+                ),
+              ),
+              SizedBox(height: 100),
+    
+              _MainForm(),
+    
+              SizedBox(height: 42),
+          
+              CustomButtonSesion(
+                buttonText: "Olvide mi contraseña",
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => RecuperarContrasenaScreen()));
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _MainForm extends StatefulWidget {
+  const _MainForm();
+
+  @override
+  State<_MainForm> createState() => _MainFormState();
+}
+
+class _MainFormState extends State<_MainForm> {
+  String? error;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
+    return Form(
+      child: Column(
+      children: [
+        CampoSesion(
+          fieldLabel: "Usuario (Correo)", 
+          fieldChecking: CustomFormFieldValidator.correo, 
+
+          controller: emailController, 
+          validator: (String? value) {
+            if (value != null && value.isEmpty) {
+              return "Ingresa un valor.";
+            } else { 
+              return CustomFormFieldValidator.correo(value, esRequerido: true);
+            }
+          }
+        ),
+
+        SizedBox(height: 47),
+      
+        CampoSesion(
+          fieldLabel: "Contraseña", 
+          fieldChecking: CustomFormFieldValidator.password,
+
+          controller: passwordController, 
+          validator: (String? value) {
+            if (value != null && value.isEmpty) {
+              return "Ingresa un valor.";
+            } else { 
+              return CustomFormFieldValidator.password(value, esRequerido: true);
+            }
+          }
+        ),
+
+        SizedBox(height: 30),
+
+        if (error != null)
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp), 
+            padding: EdgeInsets.all(12.sp),
+            decoration: BoxDecoration(
+              color: Colors.redAccent.shade100,
+              borderRadius: BorderRadius.circular(8.sp)
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.warning_rounded, color: Colors.redAccent.shade700, size: 20.sp),
+                SizedBox(height: 10.sp),
+                Text(error!, softWrap: true, textAlign: TextAlign.center, style: TextStyle(fontSize: 16.sp, color: Colors.redAccent.shade700, fontFamily: 'Roboto')),
+              ],
+            )
+          ),
+
+        Builder(
+          builder: (context) {
+            return OrangeButton(
+              buttonText: "Iniciar Sesión",
+              onPressed: () async {
+                if (Form.of(context).validate()) {
+                  final String email = emailController.text.trim();
+                  ResponseLogin loginResponse = await InicioSesionRepository.sendLoginRequest(
+                    email, 
+                    passwordController.text.trim(),
+                    context: context
+                  );
+                  
+                  if (!context.mounted) return;
+
+                  if (loginResponse.canLogin) {
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen(userEmail: email)), (Route<dynamic> route) => false);
+                  } else {
+                    setState(() {
+                      error = loginResponse.message;
+                    });
+                  }
+                }
+              },
+              textWeight: FontWeight.w600,
+            );
+          }
+        ),
+      ],
+    ));
   }
 }

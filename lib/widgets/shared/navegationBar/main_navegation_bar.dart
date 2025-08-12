@@ -45,7 +45,13 @@ class MainNavegationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: navBodyBuilder(type: navType, context: context, canGetBackHere: canGetBackHere, nextScreen: nextScreen),
+          children: navBodyBuilder(
+            type: navType, 
+            context: context, 
+            canGetBackHere: 
+            canGetBackHere, 
+            nextScreen: nextScreen
+          ),
         ),
       ),
     );
