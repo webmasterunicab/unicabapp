@@ -3,12 +3,14 @@ import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/screens/seguimiento_acuerdos/seguimiento_acuerdos_screen.dart';
-import 'package:uniconecta/widgets/general/see_more_container.dart';
+//import 'package:uniconecta/widgets/general/see_more_container.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class GeneralScreen extends StatelessWidget {
-  const GeneralScreen({super.key});
+  const GeneralScreen({super.key, this.userEmail = ''});
+  
+  final String userEmail;
 
   @override
   Widget build(BuildContext context) {
@@ -77,9 +79,9 @@ class GeneralScreen extends StatelessWidget {
             textWeight: FontWeight.normal,
             onPressed: () {}
           ),
-          SizedBox(height: buttonSpacing),
+          //SizedBox(height: buttonSpacing),
 
-          SeeMoreContainer(),
+          //SeeMoreContainer(),
         ],
       )),
     );

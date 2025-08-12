@@ -1,14 +1,19 @@
+import 'package:uniconecta/models/shared/user.dart';
+
 class ResponseLogin {
 
-  ResponseLogin({required this.canLogin, required this.message});
+  ResponseLogin({this.user, required this.canLogin, required this.message});
   
   final bool canLogin;
   final String message;
+  final User? user;
 
   factory ResponseLogin.fromJson(Map<String, dynamic> json) {
+    print(json);
     return ResponseLogin(
-      canLogin: bool.parse(json['canLogIn']),
-      message: json['message'] ?? '',
+      canLogin: (json['status'] == 'success') ? true : false,
+      message: json['mensaje'] ?? '',
+      user: (json['registro'] != null) ? User.fromJson(json['registro']) : null,
     );
   }
   

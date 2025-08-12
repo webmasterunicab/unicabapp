@@ -4,11 +4,11 @@ import 'package:sizer/sizer.dart';
 class CampoSesion extends StatefulWidget {
   const CampoSesion({
     super.key, 
-    this.fieldPlaceholder, 
     required this.fieldLabel, 
     required this.validator, 
     required this.fieldChecking,
     this.controller, 
+    this.fieldPlaceholder, 
   });
 
   final String fieldLabel;
@@ -39,6 +39,7 @@ class _CampoSesionState extends State<CampoSesion> {
       borderRadius: BorderRadius.circular(16.sp),
 
     );
+    final FocusNode focusNode = FocusNode();
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -65,6 +66,11 @@ class _CampoSesionState extends State<CampoSesion> {
             key: fieldKey,
             controller: widget.controller,
             validator: widget.validator,
+            focusNode: focusNode,
+
+            onTapOutside: (event) {
+              focusNode.unfocus();
+            },
 
             onChanged: (value) {
               String? validatedValue = widget.fieldChecking(value, esRequerido: true);

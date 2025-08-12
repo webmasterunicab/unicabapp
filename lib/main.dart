@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uniconecta/config/theme/app_theme.dart';
+import 'package:uniconecta/providers/user_provider.dart';
+import 'package:uniconecta/screens/inicio/inicio_screen.dart';
 import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
@@ -29,16 +32,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Sizer(
-      builder: (context, orientation, screenType) {
-        return MaterialApp(
-          navigatorObservers: [routeObserver],
-          title: 'UNICONECTA',
-          debugShowCheckedModeBanner: false,
-          theme: AppTheme().theme(),
-          home: VideoInicioScreen(),
-        );
-      }
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => UserProvider())
+      ],
+
+      child: Sizer(
+        builder: (context, orientation, screenType) {
+          return MaterialApp(
+            navigatorObservers: [routeObserver],
+            title: 'UNICONECTA',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme().theme(),
+            home: InicioScreen() //VideoInicioScreen(),
+          );
+        }
+      ),
     );
   }
 }

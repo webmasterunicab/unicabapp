@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/helpers/inicio_sesion_helper.dart';
+import 'package:uniconecta/repositories/inicio_sesion_repository.dart';
 import 'package:uniconecta/models/inicio_sesion/response_login.dart';
 import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/screens/recuperar_contrasena/recuperar_contrasena_screen.dart';
@@ -56,7 +56,7 @@ class _InicioBody extends StatelessWidget {
                   width: 154,
                 ),
               ),
-              SizedBox(height: 138),
+              SizedBox(height: 100),
     
               _MainForm(),
     
@@ -124,12 +124,24 @@ class _MainFormState extends State<_MainForm> {
           }
         ),
 
-        SizedBox(height: 34),
+        SizedBox(height: 30),
 
         if (error != null)
           Container(
-            margin: EdgeInsets.symmetric(vertical: 10), 
-            child: Text(error!, style: TextStyle(fontSize: 16.sp, color: Colors.redAccent.shade100, fontFamily: 'Roboto'))
+            margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp), 
+            padding: EdgeInsets.all(12.sp),
+            decoration: BoxDecoration(
+              color: Colors.redAccent.shade100,
+              borderRadius: BorderRadius.circular(8.sp)
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.warning_rounded, color: Colors.redAccent.shade700, size: 20.sp),
+                SizedBox(height: 10.sp),
+                Text(error!, softWrap: true, textAlign: TextAlign.center, style: TextStyle(fontSize: 16.sp, color: Colors.redAccent.shade700, fontFamily: 'Roboto')),
+              ],
+            )
           ),
 
         Builder(
@@ -138,16 +150,17 @@ class _MainFormState extends State<_MainForm> {
               buttonText: "Iniciar Sesión",
               onPressed: () async {
                 if (Form.of(context).validate()) {
-                  InicioSesionHelper helper = InicioSesionHelper();
-                  ResponseLogin loginResponse = await helper.sendLoginRequest(
-                    emailController.text.trim(), 
-                    passwordController.text.trim()
+                  final String email = emailController.text.trim();
+                  ResponseLogin loginResponse = await InicioSesionRepository.sendLoginRequest(
+                    email, 
+                    passwordController.text.trim(),
+                    context: context
                   );
                   
                   if (!context.mounted) return;
 
                   if (loginResponse.canLogin) {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen()), (Route<dynamic> route) => false);
+                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen(userEmail: email)), (Route<dynamic> route) => false);
                   } else {
                     setState(() {
                       error = loginResponse.message;

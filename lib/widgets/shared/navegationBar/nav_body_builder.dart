@@ -1,8 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uniconecta/models/shared/user.dart';
+import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/nav_bar_avatar.dart';
 
 List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext context, Widget? nextScreen, bool canGetBackHere = false}) {
+  
+  final User? userProvider = context.watch<UserProvider>().user;
+
+  String? name = '';
+  Image? picture;
+
+  if (userProvider != null) {
+    name = userProvider.name;
+
+    if (userProvider.profilePicture.isNotEmpty) {
+      picture = Image.network(userProvider.profilePicture);
+    }
+  }
+
   switch (type) {
     case NavBarTypes.normal:
       return [
@@ -19,7 +36,7 @@ List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext co
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text("Juanita Perez", style: TextStyle(
+                Text(name, style: TextStyle(
                   fontSize: 13,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w600,
@@ -39,7 +56,7 @@ List<Widget> navBodyBuilder({required NavBarTypes type, required BuildContext co
             ),
             SizedBox(width: 18),
 
-            NavBarAvatar()
+            NavBarAvatar(userAvatar: (picture != null) ? picture : const Icon(Icons.person, color: Color.fromRGBO(145, 145, 145, 1), size: 60))
           ],
         ),
       ];

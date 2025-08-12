@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uniconecta/repositories/inicio_sesion_repository.dart';
+import 'package:uniconecta/models/inicio_sesion/response_recover_pass.dart';
+import 'package:uniconecta/screens/recuperar_contrasena/recuperar_contrasena_exito_screen.dart';
 import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/inicio_sesion_related/campo_sesion.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
@@ -38,9 +41,16 @@ class RecuperarContrasenaScreen extends StatelessWidget {
   }
 }
 
-class _ScreenBody extends StatelessWidget {
+class _ScreenBody extends StatefulWidget {
   const _ScreenBody();
 
+  @override
+  State<_ScreenBody> createState() => _ScreenBodyState();
+}
+
+class _ScreenBodyState extends State<_ScreenBody> {
+  String? errorMsg;
+  
   @override
   Widget build(BuildContext context) {
     final TextEditingController emailController = TextEditingController();
@@ -79,13 +89,53 @@ class _ScreenBody extends StatelessWidget {
                 }
               }
             ),
-            SizedBox(height: 75),
-    
-            OrangeButton(buttonText: "Enviar", textWeight: FontWeight.w600, padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h), onPressed: () {
-              if (Form.of(context).validate()) {
+
+            (errorMsg != null) 
+              ? Container(
+                margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp), 
+                padding: EdgeInsets.all(12.sp),
+                decoration: BoxDecoration(
+                  color: Colors.redAccent.shade100,
+                  borderRadius: BorderRadius.circular(8.sp)
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.warning_rounded, color: Colors.redAccent.shade700, size: 20.sp),
+                    SizedBox(height: 10.sp),
+                    Text(errorMsg!, softWrap: true, textAlign: TextAlign.center, style: TextStyle(fontSize: 16.sp, color: Colors.redAccent.shade700, fontFamily: 'Roboto')),
+                  ],
+                )
+              ) 
+              : SizedBox(height: 75),
+
+            Builder(
+              builder: (context) {
+                return OrangeButton(
+                  buttonText: "Enviar", 
+                  textWeight: FontWeight.w600, 
+                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h), 
                 
+                  onPressed: () async {
+                    if (Form.of(context).validate()) {
+                      ResponseRecoverPass response = await InicioSesionRepository.sendRecoveryRequest(
+                        emailController.text.trim(), 
+                      );
+                
+                      if (!context.mounted) return;
+                
+                      if (response.recoverStatus) {
+                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => RecuperarContrasenaExitoScreen()), (Route<dynamic> route) => false);
+                      } else {
+                        setState(() {
+                          errorMsg = response.message;
+                        });
+                      }
+                    }
+                  }
+                );
               }
-            })
+            )
           ],
         ))
       ],

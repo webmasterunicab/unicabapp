@@ -4,8 +4,8 @@ import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_nav.dart';
 
 class NavBarAvatar extends StatefulWidget {
-  const NavBarAvatar({super.key, this.userAvatar = const Icon(Icons.person, color: Color.fromRGBO(145, 145, 145, 1), size: 60)});
-  final Widget? userAvatar;
+  const NavBarAvatar({super.key, required this.userAvatar});
+  final Widget userAvatar;
 
   @override
   State<NavBarAvatar> createState() => _DropdownManager();
