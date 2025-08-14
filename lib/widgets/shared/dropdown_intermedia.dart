@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/models/calificaciones/estudiante_modelo.dart';
-import 'package:uniconecta/models/calificaciones/grado_modelo.dart';
+import 'package:uniconecta/models/intermedia_screen/estudiante_modelo.dart';
+import 'package:uniconecta/models/intermedia_screen/grado_modelo.dart';
 
-class DropdownCalificaciones extends StatelessWidget {
+class DropdownIntermedia extends StatelessWidget {
   final List<GradoModelo> grados;
   final List<EstudianteModelo> estudiantes;
   final String hintText;
@@ -12,7 +12,7 @@ class DropdownCalificaciones extends StatelessWidget {
   final String? valorSeleccionado;
   final Function(String?)? onChanged;
 
-  const DropdownCalificaciones(
+  const DropdownIntermedia(
       {super.key,
       this.grados = const [],
       this.estudiantes = const [],

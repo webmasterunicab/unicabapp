@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/models/calificaciones/estudiante_modelo.dart';
-import 'package:uniconecta/models/calificaciones/grado_modelo.dart';
-import 'package:uniconecta/repositories/calificaciones_repository.dart';
+import 'package:uniconecta/models/intermedia_screen/estudiante_modelo.dart';
+import 'package:uniconecta/models/intermedia_screen/grado_modelo.dart';
+import 'package:uniconecta/repositories/intermedia_repository.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
-import 'package:uniconecta/widgets/calificaciones/dropdown_calificaciones.dart';
+import 'package:uniconecta/widgets/shared/dropdown_intermedia.dart';
 
 class DropdownsIntermedia extends StatefulWidget {
   final int rol;
@@ -23,7 +23,7 @@ class DropdownsIntermedia extends StatefulWidget {
 }
 
 class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
-  final CalificacionesRepository _repo = CalificacionesRepository();
+  final IntermediaRepository _repo = IntermediaRepository();
   List<GradoModelo> _grados = [];
   List<EstudianteModelo> _estudiantes = [];
 
@@ -134,7 +134,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
     if (_estudiantes.isNotEmpty) {
       return SizedBox(
         width: 80.w,
-        child: DropdownCalificaciones(
+        child: DropdownIntermedia(
           estudiantes: _estudiantes,
           hintText: "Selecciona un estudiante",
           validator: (String? value) {
@@ -171,7 +171,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
     if (widget.rol != 1 && widget.rol != 2) {
       return SizedBox(
         width: 80.w, // ajusta ancho
-        child: DropdownCalificaciones(
+        child: DropdownIntermedia(
           grados: _grados,
           hintText: "Selecciona un Grado",
           validator: (String? value) {

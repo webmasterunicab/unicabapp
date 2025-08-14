@@ -1,4 +1,4 @@
-import 'package:uniconecta/models/calificaciones/estudiante_modelo.dart';
+import 'package:uniconecta/models/intermedia_screen/estudiante_modelo.dart';
 
 class EstudiantesAcudienteResponse {
   final String status;

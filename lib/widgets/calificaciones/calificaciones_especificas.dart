@@ -58,7 +58,7 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
     // Lista final filtrada
     final List<LineaCalificacion> filtradas = mejoresPorPeriodo.values.toList();
 
-    Color _colorNota(double nota) {
+    Color colorNota(double nota) {
       if (nota <= 3.4) return Colors.red;
       if (nota <= 3.9) return Colors.orange;
       if (nota <= 4.6) return Colors.green;
@@ -86,7 +86,7 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
             final String retro = "${_capitalizar(cal.criterioEvaluacion)}\n\n"
                 "${_capitalizar(cal.descripcionValoracionInstitucional)}";
 
-            final Color color = _colorNota(nota);
+            final Color color = colorNota(nota);
 
             return _buildPanel(
               index: i,

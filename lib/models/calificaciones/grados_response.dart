@@ -1,4 +1,4 @@
-import 'package:uniconecta/models/calificaciones/grado_modelo.dart';
+import 'package:uniconecta/models/intermedia_screen/grado_modelo.dart';
 
 class GradosResponse {
   final String status;
