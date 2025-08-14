@@ -51,7 +51,7 @@ class RegistroService {
       urlLocal,
       headers: ApiConfig.defaultHeaders,
       body: jsonEncode(datosEnvio),
-    );
+    ).timeout(ApiConfig.defaultTimeout);
 
     final dataL = jsonDecode(responseLocal.body);
 

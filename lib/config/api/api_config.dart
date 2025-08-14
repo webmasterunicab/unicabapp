@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 class ApiConfig {
   static final String enviroment = 'dev';
   static final String development =
-      'http://192.168.1.16/hostuniconecta/requests';
+      'http://192.168.1.12/hostuniconecta/requests';
   static final String developmentChrome =
       'http://localhost/hostuniconecta/requests';
   static final String https = 'unicab.org';
@@ -40,6 +40,8 @@ class ApiConfig {
   static String get sesionVerify => 'uniconecta/login_getdat1.php';
   static String get recoverPassword => 'uniconecta/olvido_password.php';
   static String get getRemarks => 'uniconecta/getUser.php';
+  static String get estudiantesAcudiente => '$production/estudiantes_acudiente_getdat1.php';
+  static String get estudiantesCalificaciones => '$production/calificaciones_getdat1.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';

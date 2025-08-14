@@ -44,7 +44,7 @@ class DropdownCalificaciones extends StatelessWidget {
       ),
       items: [
         DropdownMenuItem<String>(
-          value: 'NA',
+          value: 'NINGUNO',
           child: Text(
             hintText,
             overflow: TextOverflow.visible,

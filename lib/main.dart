@@ -3,10 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:uniconecta/config/theme/app_theme.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/screens/inicio/inicio_screen.dart';
-import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/screens/inicio/inicio_screen.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 

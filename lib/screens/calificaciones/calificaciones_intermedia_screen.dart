@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:uniconecta/widgets/calificaciones/dropdowns_calificaciones.dart';
+import 'package:uniconecta/widgets/shared/dropdowns_intermedia.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class CalificacionesIntermediaScreen extends StatelessWidget {
-  const CalificacionesIntermediaScreen({super.key});
+
+  final int rol;
+  final String email;
+
+  const CalificacionesIntermediaScreen({super.key, required this.rol, required this.email});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,7 @@ class CalificacionesIntermediaScreen extends StatelessWidget {
           SizedBox(height: 25),
           ScreenNameDisplay(name: "CALIFICACIONES"),
           SizedBox(height: 25),
-          DropdownsCalificaciones(),
+          DropdownsIntermedia(rol: rol, email: email, siguientePantalla: 'calificaciones',),
         ],
       ),
     );

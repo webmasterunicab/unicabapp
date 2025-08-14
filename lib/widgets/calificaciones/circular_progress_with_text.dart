@@ -52,9 +52,10 @@ class _CircularTextPainter extends CustomPainter {
 
     // Fondo
     final backgroundPaint = Paint()
-      ..color = color.withValues(alpha: 0.2)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 8;
+      // ..color = color.withValues(alpha: 0.2)
+      ..color = Colors.white
+      ..style = PaintingStyle.fill
+      ..strokeWidth = 5;
 
     canvas.drawCircle(center, radius, backgroundPaint);
 
@@ -62,8 +63,8 @@ class _CircularTextPainter extends CustomPainter {
     final progressPaint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 8;
+      ..strokeCap = StrokeCap.butt
+      ..strokeWidth = 5;
 
     final sweepAngle = 2 * 3.1415926 * value;
     canvas.drawArc(

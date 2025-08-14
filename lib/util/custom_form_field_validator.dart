@@ -80,7 +80,7 @@ class CustomFormFieldValidator {
       return 'Campo: $nombreCampo es obligatorio';
     }
 
-    final regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10}$');
+    final regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10,12}$');
 
     if (!regex.hasMatch(value!)) {
       return 'Debe tener 10 caracteres, con al menos:\n'
