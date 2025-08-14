@@ -7,13 +7,15 @@ class RegistroDropdown extends StatelessWidget {
   final FormFieldValidator<String>? validator;
   final String? valorSeleccionado;
   final Function(String?)? onChanged;
+  final FormFieldSetter<String> onSaved;
+
 
   const RegistroDropdown({
     super.key,
     required this.registros,
     required this.validator,
     required this.onChanged,
-    required this.valorSeleccionado,
+    required this.valorSeleccionado, required this.onSaved,
   });
 
   @override
@@ -21,12 +23,14 @@ class RegistroDropdown extends StatelessWidget {
     return SizedBox(
       width: double.infinity, // Asegura uso de todo el ancho
       child: DropdownButtonFormField<String>(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         value: valorSeleccionado,
         onChanged: onChanged,
         validator: validator,
+        onSaved: onSaved,
         isExpanded: true, // Muy importante para evitar truncamientos
         style: TextStyle(
-          fontSize: 18.sp,
+          fontSize: 16.sp,
           color: Colors.black,
           fontFamily: 'Roboto',
           fontWeight: FontWeight.w400,
@@ -36,12 +40,12 @@ class RegistroDropdown extends StatelessWidget {
           hintMaxLines: 2,
           hintStyle: TextStyle(
             color: Colors.grey,
-            fontSize: 18.sp,
+            fontSize: 13.sp,
             fontFamily: 'Roboto',
             fontWeight: FontWeight.normal,
           ),
           errorStyle: TextStyle(
-            fontSize: 16.sp,
+            fontSize: 14.sp,
             fontFamily: 'Roboto',
           ),
           enabledBorder: UnderlineInputBorder(
@@ -55,20 +59,34 @@ class RegistroDropdown extends StatelessWidget {
           ),
           contentPadding: EdgeInsets.symmetric(vertical: 20),
         ),
-        items: registros.map((rol) {
-          return DropdownMenuItem<String>(
-            value: rol.nombreRol,
+        items: [
+          DropdownMenuItem<String>(
+            value: 'NA',
             child: Text(
-              rol.nombreRol,
+              'Selecciona un rol',
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                fontSize: 18.sp,
+                fontSize: 16.sp,
                 fontFamily: 'Roboto',
-                color: Colors.black,
+                color: Colors.grey,
               ),
             ),
-          );
-        }).toList(),
+          ),
+          ...registros.map((rol) {
+            return DropdownMenuItem<String>(
+              value: rol.id,
+              child: Text(
+                rol.nombreRol,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 16.sp,
+                  fontFamily: 'Roboto',
+                  color: Colors.black,
+                ),
+              ),
+            );
+          }),
+        ],
       ),
     );
   }

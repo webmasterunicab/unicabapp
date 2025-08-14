@@ -11,7 +11,7 @@ class InicioSesionRepository {
 
   static Future<ResponseRecoverPass> sendRecoveryRequest(String email) async {
     // uri parse for the post
-    Uri url = Uri.https(ApiConfig.production, ApiConfig.recoverPassword, {'email': email});
+    Uri url = Uri.https(ApiConfig.https, ApiConfig.recoverPassword, {'email': email});
 
     //post to the url with the api config.
     Response response = await get(
@@ -33,7 +33,7 @@ class InicioSesionRepository {
 
   static Future<ResponseLogin> sendLoginRequest(String email, String password, {required BuildContext context}) async {
     // uri parse for the post
-    Uri url = Uri.https(ApiConfig.production, ApiConfig.sesionVerify);
+    Uri url = Uri.https(ApiConfig.https, ApiConfig.sesionVerify);
 
     //post to the url with the api config.
     Response response = await post(

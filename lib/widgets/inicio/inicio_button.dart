@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uniconecta/screens/inicio_sesion/inicio_sesion_screen.dart';
 import 'package:uniconecta/screens/registro_estudiante/registro_screen.dart';
 
@@ -37,7 +38,7 @@ class InicioButton extends StatelessWidget {
             btnNombre,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16,
+              fontSize: 16.sp,
             ),
           ),
         ),

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uniconecta/providers/user_provider.dart';
+import 'package:uniconecta/screens/calificaciones/calificaciones_intermedia_screen.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
@@ -16,6 +19,10 @@ class GeneralScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const double buttonSpacing = 13;
 
+    final UserProvider provider = context.watch<UserProvider>();
+    final rol = provider.user!.userRole;
+    final email = provider.user!.email;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(child: Column(
@@ -30,7 +37,13 @@ class GeneralScreen extends StatelessWidget {
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen()));
+              if(rol == 1){
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen(rol: rol, email: email)));
+              }else {
+
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesIntermediaScreen(rol: rol, email: email,)));
+              }
+
             }
           ),
           SizedBox(height: buttonSpacing),

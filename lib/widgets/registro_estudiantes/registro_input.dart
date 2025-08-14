@@ -15,23 +15,23 @@ class RegistroInput extends StatelessWidget {
     return SizedBox(
       width: double.infinity, // Ocupa todo el ancho disponible
       child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         onSaved: onSaved,
-        minLines: 1,
-        maxLines: null,
-        keyboardType: TextInputType.multiline,
+        // minLines: 1,
+        // maxLines: null,
         readOnly: readOnly,
         decoration: InputDecoration(
           errorStyle: TextStyle(
-          fontSize: 16.sp,
+          fontSize: 14.sp,
           fontFamily: 'Roboto',
           leadingDistribution: TextLeadingDistribution.proportional,
           overflow: TextOverflow.clip
           ),
           hintText: placeholder,
-          hintMaxLines: 2,
+          // hintMaxLines: 2,
           hintStyle:
-              TextStyle(color: Colors.grey, fontSize: 18.sp), // Placeholder gris
+              TextStyle(color: Colors.grey, fontSize: 13.sp), // Placeholder gris
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey), // Borde inferior gris
           ),
@@ -46,7 +46,7 @@ class RegistroInput extends StatelessWidget {
         ),
         style: TextStyle(
           color: Colors.black, // Texto en negro
-          fontSize: 18.sp,
+          fontSize: 16.sp,
         ),
         cursorColor: Colors.grey,
       ),
