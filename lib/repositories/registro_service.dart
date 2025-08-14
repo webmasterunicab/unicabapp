@@ -44,18 +44,18 @@ class RegistroService {
   Future<UsuarioRegistradoResponse> subirDatosRegistro(
       Map<String, dynamic> datosEnvio) async {
     // POST de toda la data registrada
-    final urlLocal = Uri.parse(ApiConfig.registrarUsuarioL);
+    // final urlLocal = Uri.parse(ApiConfig.registrarUsuarioL);
     final url = Uri.parse(ApiConfig.registrarUsuario);
 
-    final responseLocal = await http.post(
-      urlLocal,
-      headers: ApiConfig.defaultHeaders,
-      body: jsonEncode(datosEnvio),
-    ).timeout(ApiConfig.defaultTimeout);
+    // final responseLocal = await http.post(
+    //   urlLocal,
+    //   headers: ApiConfig.defaultHeaders,
+    //   body: jsonEncode(datosEnvio),
+    // ).timeout(ApiConfig.defaultTimeout);
 
-    final dataL = jsonDecode(responseLocal.body);
+    // final dataL = jsonDecode(responseLocal.body);
 
-    print(UsuarioRegistradoResponse.fromJson(dataL));
+    // print(UsuarioRegistradoResponse.fromJson(dataL));
 
     final response = await http.post(
       url,

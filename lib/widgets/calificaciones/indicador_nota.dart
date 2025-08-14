@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uniconecta/widgets/calificaciones/custom_battery_indicator.dart';
 //import 'package:battery_indicator/battery_indicator.dart';
 
@@ -69,7 +70,9 @@ class IndicadorNota extends StatelessWidget {
                     "Nota: ${nota.toStringAsFixed(1)}",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Text(estado, softWrap: true,),
+                  Text(estado,
+                      softWrap: true,
+                      style: TextStyle(fontSize: 14.sp)),
                 ],
               ),
             )
