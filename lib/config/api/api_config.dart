@@ -35,7 +35,7 @@ class ApiConfig {
   static String get usuariosRoles => '${ApiConfig.baseUrl}/registro/roles.php';
   static String get sesionVerify => 'uniconecta/login_getdat1.php';
   static String get recoverPassword => 'uniconecta/olvido_password.php';
-  static String get getRemarks => 'uniconecta/getUser.php';
+  static String get getRemarks => 'uniconecta/observador_getdat1.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';

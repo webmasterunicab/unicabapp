@@ -50,11 +50,22 @@ class _ScreenBody extends StatefulWidget {
 
 class _ScreenBodyState extends State<_ScreenBody> {
   String? errorMsg;
+  late TextEditingController mainController;
   
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
+  void initState() {
+    super.initState();
+    mainController = TextEditingController();
+  }
 
+  @override
+  void dispose() {
+    mainController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
@@ -80,7 +91,7 @@ class _ScreenBodyState extends State<_ScreenBody> {
               fieldPlaceholder: "¡Para enviarte un codigo secreto!", 
               
               fieldChecking: CustomFormFieldValidator.correo,
-              controller: emailController,
+              controller: mainController,
               validator: (String? value) {
                 if (value != null && value.isEmpty) {
                   return "Ingresa un valor.";
@@ -119,7 +130,7 @@ class _ScreenBodyState extends State<_ScreenBody> {
                   onPressed: () async {
                     if (Form.of(context).validate()) {
                       ResponseRecoverPass response = await InicioSesionRepository.sendRecoveryRequest(
-                        emailController.text.trim(), 
+                        mainController.text.trim(), 
                       );
                 
                       if (!context.mounted) return;

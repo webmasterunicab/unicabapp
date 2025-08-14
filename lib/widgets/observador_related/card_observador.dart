@@ -1,0 +1,67 @@
+import 'package:flutter/material.dart';
+import 'package:uniconecta/widgets/shared/text_area.dart';
+
+class CardObservador extends StatelessWidget {
+  const CardObservador({
+    super.key, 
+    required this.dependency, 
+    required this.charge, 
+    required this.date, 
+    required this.cardInfo, 
+    required this.type,
+    this.studentName, 
+    this.readOnly = true, 
+    this.fontSize, 
+    this.fieldHeight = 90, 
+  });
+
+  final double? fontSize;
+
+  final String? studentName;
+  final bool? readOnly;
+  final String type;
+  final String dependency;
+  final String charge;
+  final String date;
+
+  final String cardInfo;
+  final double? fieldHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 24),
+
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(horizontal: 33),
+      
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (studentName != null) 
+                  Text(studentName!, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 10)),
+
+                Text(type, style: TextStyle(fontFamily: 'Roboto', fontSize: 13, fontWeight: FontWeight.bold)),
+                Text(dependency, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 13)),
+                Text(charge, style: TextStyle(fontFamily: 'Roboto', fontStyle: FontStyle.italic, fontSize: 10, color: Color.fromRGBO(11, 119, 179, 1))),
+                Text(date, style: TextStyle(fontFamily: 'Roboto', fontSize: 7)),
+              ],
+            ),
+          ),
+          SizedBox(height: 4),
+      
+          Container(margin: EdgeInsets.symmetric(horizontal: 33), child: TextArea(
+            fieldHeight: fieldHeight, 
+            readOnly: readOnly,
+            fieldBody: cardInfo,
+            fontSize: fontSize,
+          )),
+        ],
+      ),
+    );
+  }
+}

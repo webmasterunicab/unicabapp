@@ -9,7 +9,6 @@ class ResponseLogin {
   final User? user;
 
   factory ResponseLogin.fromJson(Map<String, dynamic> json) {
-    print(json);
     return ResponseLogin(
       canLogin: (json['status'] == 'success') ? true : false,
       message: json['mensaje'] ?? '',
