@@ -53,7 +53,7 @@ class _RegistroBodyState extends State<RegistroBody> {
       Map<String, dynamic> datosRegistro = {
         'nombre': nombre.trim(),
         'correo': correo.trim(),
-        'cumple': cumple.trim(), // Formato YYYY-MM-DD
+        'cumpleaños': cumple.trim(), // Formato YYYY-MM-DD
         'ciudad': ciudad.trim(),
         'rol': rol.trim(),
         'lugaresVisitados': lugaresVisitados.trim(),

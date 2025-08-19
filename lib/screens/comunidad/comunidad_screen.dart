@@ -15,7 +15,7 @@ class ComunidadScreen extends StatelessWidget {
         child: Column(
           children: [
             MainNavegationBar(navType: NavBarTypes.normal),
-            SizedBox(height: 20),
+            SizedBox(height: 5),
             SafeArea(
               child: PerfilPersonalWidget(user: user,)
           ),
