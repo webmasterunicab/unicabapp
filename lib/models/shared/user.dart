@@ -34,7 +34,7 @@ class User {
     return User(
       name: json['nombre'] ?? '',
       email: json['correo'] ?? '',
-      city: json['city'] ?? '',
+      city: json['ciudadResidencia'] ?? '',
       birthday: json['cumpleaños'] ?? '',
       remarks: json['observaciones'] ?? '',
       visitedPlaces: json['lugaresVisitados'] ?? '',

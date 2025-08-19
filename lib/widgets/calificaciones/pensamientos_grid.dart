@@ -118,15 +118,15 @@ class _PensamientosGridState extends State<PensamientosGrid> {
   final String gif = 'assets/img/cerebro.gif';
 
   final List<Map<String, String>> elementos = const [
-    {'img': 'assets/img/matematicas.png', 'text': 'Pensamiento Matemático'},
-    {'img': 'assets/img/bioetico.png', 'text': 'Pensamiento Bioético'},
+    {'img': 'assets/img/matematicas.png', 'text': 'Matemático'},
+    {'img': 'assets/img/bioetico.png', 'text': 'Bioético'},
     {
       'img': 'assets/img/español.png',
-      'text': 'Pensamiento Humanístico Español'
+      'text': 'Humanístico Español'
     },
-    {'img': 'assets/img/ingles.png', 'text': 'Pensamiento Humanístico Inglés'},
-    {'img': 'assets/img/social.png', 'text': 'Pensamiento Social'},
-    {'img': 'assets/img/tecnologico.png', 'text': 'Pensamiento Tecnológico'},
+    {'img': 'assets/img/ingles.png', 'text': 'Humanístico Inglés'},
+    {'img': 'assets/img/social.png', 'text': 'Social'},
+    {'img': 'assets/img/tecnologico.png', 'text': 'Tecnológico'},
   ];
 
   Widget _buildButton(Map<String, String> data, GestureTapCallback? onTap) {
@@ -153,7 +153,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
               SizedBox(
                 width: 30.w,
                 child: Text(
-                  data['text']!,
+                  "Pensamiento ${data['text']}",
                   textAlign: TextAlign.center,
                   softWrap: true,
                   style: TextStyle(

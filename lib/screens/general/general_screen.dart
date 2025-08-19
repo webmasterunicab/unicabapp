@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_intermedia_screen.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
+import 'package:uniconecta/screens/comunidad/comunidad_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/screens/seguimiento_acuerdos/seguimiento_acuerdos_screen.dart';
@@ -12,7 +13,7 @@ import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class GeneralScreen extends StatelessWidget {
   const GeneralScreen({super.key, this.userEmail = ''});
-  
+
   final String userEmail;
 
   @override
@@ -25,73 +26,119 @@ class GeneralScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(child: Column(
+      body: Center(
+          child: Column(
         children: [
           MainNavegationBar(navType: NavBarTypes.normal),
           SizedBox(height: 20),
 
           OrangeButton(
-            buttonText: "Calificaciones", 
-            width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
-            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
-            textWeight: FontWeight.normal,
-            onPressed: () {
-              if(rol == 1){
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen(rol: rol, email: email)));
-              }else {
-
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesIntermediaScreen(rol: rol, email: email,)));
-              }
-
-            }
-          ),
+              buttonText: "Calificaciones",
+              width: 324,
+              prefix: Icon(
+                Icons.terminal_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              suffix: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              textWeight: FontWeight.normal,
+              onPressed: () {
+                if (rol == 1) {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                          CalificacionesScreen(rol: rol, email: email)));
+                } else {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => CalificacionesIntermediaScreen(
+                            rol: rol,
+                            email: email,
+                          )));
+                }
+              }),
           SizedBox(height: buttonSpacing),
 
           OrangeButton(
-            buttonText: "Observador", 
-            width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
-            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
-            textWeight: FontWeight.normal,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorScreen()));
-            }
-          ),
+              buttonText: "Observador",
+              width: 324,
+              prefix: Icon(
+                Icons.terminal_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              suffix: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              textWeight: FontWeight.normal,
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => ObservadorScreen()));
+              }),
           SizedBox(height: buttonSpacing),
 
           OrangeButton(
-            buttonText: "Seguimientos y Acuerdos", 
-            width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
-            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
-            textWeight: FontWeight.normal,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => SeguimientoAcuerdosScreen()));
-            }
-          ),
+              buttonText: "Seguimientos y Acuerdos",
+              width: 324,
+              prefix: Icon(
+                Icons.terminal_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              suffix: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              textWeight: FontWeight.normal,
+              onPressed: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => SeguimientoAcuerdosScreen()));
+              }),
           SizedBox(height: buttonSpacing),
 
           OrangeButton(
-            buttonText: "Financiera", 
-            width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
-            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
-            textWeight: FontWeight.normal,
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (_) => EstadoFinanciero()));
-            }
-          ),
+              buttonText: "Financiera",
+              width: 324,
+              prefix: Icon(
+                Icons.terminal_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              suffix: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              textWeight: FontWeight.normal,
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => EstadoFinanciero()));
+              }),
           SizedBox(height: buttonSpacing),
 
           OrangeButton(
-            buttonText: "Comunidad", 
-            width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
-            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
-            textWeight: FontWeight.normal,
-            onPressed: () {}
-          ),
+              buttonText: "Comunidad",
+              width: 324,
+              prefix: Icon(
+                Icons.terminal_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              suffix: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 24,
+              ),
+              textWeight: FontWeight.normal,
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => ComunidadScreen(user: provider.user!,)));
+              }),
           //SizedBox(height: buttonSpacing),
 
           //SeeMoreContainer(),
