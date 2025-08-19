@@ -14,7 +14,8 @@ import 'package:uniconecta/widgets/shared/orange_button.dart';
 import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class ObservadorScreen extends StatelessWidget {
-  const ObservadorScreen({super.key});
+  const ObservadorScreen({super.key, required this.email});
+  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class ObservadorScreen extends StatelessWidget {
               suffixSize: 60,
             ),
 
-            _CardsList(),
+            _CardsList(email: email),
           ],
         ),
       ),
@@ -49,22 +50,24 @@ class ObservadorScreen extends StatelessWidget {
 }
 
 class _CardsList extends StatelessWidget {
-  const _CardsList();
+  const _CardsList({required this.email});
+
+  final String email;
 
   @override
-Widget build(BuildContext context) {
-  final UserProvider provider = context.watch<UserProvider>();
+  Widget build(BuildContext context) {
+    final UserProvider provider = context.watch<UserProvider>();
 
-  if (provider.user == null) {
-    return const Text(
-      "Error al cargar los datos del usuario, \n Inténtelo más tarde."
-    );
-  }
+    if (provider.user == null) {
+      return const Text(
+        "Error al cargar los datos del usuario, \n Inténtelo más tarde."
+      );
+    }
 
-  return FutureBuilder<ResponseObservador>(
+    return FutureBuilder<ResponseObservador>(
       future: ObservadorRepository.getRemarks(
-        role: provider.user!.userRole,
-        email: provider.user!.email,
+        role: 1,
+        email: email,
       ),
 
       builder: (context, snapshot) {
@@ -91,7 +94,7 @@ Widget build(BuildContext context) {
         return ListView.builder(
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
-          itemCount: remarkList.students.length,
+          itemCount: remarkList.finalRemarks.length,
           itemBuilder: (_, idx) {
             final StudentRemark student = remarkList.finalRemarks[idx];
 
@@ -144,5 +147,4 @@ Widget build(BuildContext context) {
       },
     );
   }
-
 }

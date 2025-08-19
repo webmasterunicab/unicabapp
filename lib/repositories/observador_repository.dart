@@ -8,7 +8,7 @@ class ObservadorRepository {
   
   static Future<ResponseObservador> getRemarks({required int role, required String email}) async {
     // uri parse for the post
-    Uri url = Uri.https(ApiConfig.production, ApiConfig.getRemarks);
+    Uri url = Uri.https(ApiConfig.https, ApiConfig.getRemarks);
 
     //post to the url with the api config.
     Response response = await post(

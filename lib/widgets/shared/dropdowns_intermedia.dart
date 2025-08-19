@@ -3,19 +3,19 @@ import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/intermedia_screen/estudiante_modelo.dart';
 import 'package:uniconecta/models/intermedia_screen/grado_modelo.dart';
 import 'package:uniconecta/repositories/intermedia_repository.dart';
-import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
 import 'package:uniconecta/widgets/shared/dropdown_intermedia.dart';
 
 class DropdownsIntermedia extends StatefulWidget {
   final int rol;
   final String email;
-  final String siguientePantalla;
+  final void Function (String selectedEmail) nextScreenCallback;
 
-  const DropdownsIntermedia(
-      {super.key,
-      required this.rol,
-      required this.email,
-      required this.siguientePantalla});
+  const DropdownsIntermedia({
+    super.key,
+    required this.rol,
+    required this.email,
+    required this.nextScreenCallback
+  });
 
   @override
   State<DropdownsIntermedia> createState() =>
@@ -154,11 +154,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
               }
             });
 
-            if (widget.siguientePantalla == "calificaciones") {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (_) => CalificacionesScreen(rol: 1, email: value!)));
-            }
-
+            widget.nextScreenCallback(value!);
           },
         ),
       );
