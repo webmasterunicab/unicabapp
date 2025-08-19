@@ -5,6 +5,7 @@ import 'package:uniconecta/screens/calificaciones/calificaciones_intermedia_scre
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
 import 'package:uniconecta/screens/comunidad/comunidad_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
+import 'package:uniconecta/screens/observador/observador_intermedia_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/screens/seguimiento_acuerdos/seguimiento_acuerdos_screen.dart';
 //import 'package:uniconecta/widgets/general/see_more_container.dart';
@@ -62,23 +63,19 @@ class GeneralScreen extends StatelessWidget {
           SizedBox(height: buttonSpacing),
 
           OrangeButton(
-              buttonText: "Observador",
-              width: 324,
-              prefix: Icon(
-                Icons.terminal_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
-              suffix: Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
-              textWeight: FontWeight.normal,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ObservadorScreen()));
-              }),
+            buttonText: "Observador", 
+            width: 324,
+            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
+            suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
+            textWeight: FontWeight.normal,
+            onPressed: () {
+              if(rol == 1){
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorScreen(email: email)));
+              }else {
+                Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorIntermediaScreen(rol: rol, email: email)));
+              }
+            }
+          ),
           SizedBox(height: buttonSpacing),
 
           OrangeButton(

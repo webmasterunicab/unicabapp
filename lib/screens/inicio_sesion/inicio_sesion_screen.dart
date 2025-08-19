@@ -86,93 +86,118 @@ class _MainForm extends StatefulWidget {
 class _MainFormState extends State<_MainForm> {
   String? error;
 
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController emailController = TextEditingController();
-    final TextEditingController passwordController = TextEditingController();
-
     return Form(
       child: Column(
-      children: [
-        CampoSesion(
-          fieldLabel: "Usuario (Correo)", 
-          fieldChecking: CustomFormFieldValidator.correo, 
-
-          controller: emailController, 
-          validator: (String? value) {
-            if (value != null && value.isEmpty) {
-              return "Ingresa un valor.";
-            } else { 
-              return CustomFormFieldValidator.correo(value, esRequerido: true);
-            }
-          }
-        ),
-
-        SizedBox(height: 47),
-      
-        CampoSesion(
-          fieldLabel: "Contraseña", 
-          fieldChecking: CustomFormFieldValidator.password,
-
-          controller: passwordController, 
-          validator: (String? value) {
-            if (value != null && value.isEmpty) {
-              return "Ingresa un valor.";
-            } else { 
-              return CustomFormFieldValidator.password(value, esRequerido: true);
-            }
-          }
-        ),
-
-        SizedBox(height: 30),
-
-        if (error != null)
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp), 
-            padding: EdgeInsets.all(12.sp),
-            decoration: BoxDecoration(
-              color: Colors.redAccent.shade100,
-              borderRadius: BorderRadius.circular(8.sp)
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.warning_rounded, color: Colors.redAccent.shade700, size: 20.sp),
-                SizedBox(height: 10.sp),
-                Text(error!, softWrap: true, textAlign: TextAlign.center, style: TextStyle(fontSize: 16.sp, color: Colors.redAccent.shade700, fontFamily: 'Roboto')),
-              ],
-            )
+        children: [
+          CampoSesion(
+            fieldLabel: "Usuario (Correo)",
+            fieldChecking: CustomFormFieldValidator.correo,
+            controller: emailController,
+            validator: (String? value) {
+              if (value != null && value.isEmpty) {
+                return "Ingresa un valor.";
+              } else {
+                return CustomFormFieldValidator.correo(value, esRequerido: true);
+              }
+            },
           ),
+          SizedBox(height: 47),
+          CampoSesion(
+            fieldLabel: "Contraseña",
+            fieldChecking: CustomFormFieldValidator.password,
+            controller: passwordController,
+            validator: (String? value) {
+              if (value != null && value.isEmpty) {
+                return "Ingresa un valor.";
+              } else {
+                return CustomFormFieldValidator.password(value, esRequerido: true);
+              }
+            },
+          ),
+          SizedBox(height: 30),
+          if (error != null) ...[
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
+              padding: EdgeInsets.all(12.sp),
+              decoration: BoxDecoration(
+                color: Colors.redAccent.shade100,
+                borderRadius: BorderRadius.circular(8.sp),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.warning_rounded,
+                      color: Colors.redAccent.shade700, size: 20.sp),
+                  SizedBox(height: 10.sp),
+                  Text(
+                    error!,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      color: Colors.redAccent.shade700,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          Builder(
+            builder: (context) {
+              return OrangeButton(
+                buttonText: "Iniciar Sesión",
+                onPressed: () async {
+                  if (Form.of(context).validate()) {
+                    final String email = emailController.text.trim();
+                    ResponseLogin loginResponse =
+                        await InicioSesionRepository.sendLoginRequest(
+                      email,
+                      passwordController.text.trim(),
+                      context: context,
+                    );
 
-        Builder(
-          builder: (context) {
-            return OrangeButton(
-              buttonText: "Iniciar Sesión",
-              onPressed: () async {
-                if (Form.of(context).validate()) {
-                  final String email = emailController.text.trim();
-                  ResponseLogin loginResponse = await InicioSesionRepository.sendLoginRequest(
-                    email, 
-                    passwordController.text.trim(),
-                    context: context
-                  );
-                  
-                  if (!context.mounted) return;
+                    if (!context.mounted) return;
 
-                  if (loginResponse.canLogin) {
-                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => GeneralScreen(userEmail: email)), (Route<dynamic> route) => false);
-                  } else {
-                    setState(() {
-                      error = loginResponse.message;
-                    });
+                    if (loginResponse.canLogin) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (_) => GeneralScreen(userEmail: email),
+                        ),
+                        (Route<dynamic> route) => false,
+                      );
+                    } else {
+                      setState(() {
+                        error = loginResponse.message;
+                      });
+                    }
                   }
-                }
-              },
-              textWeight: FontWeight.w600,
-            );
-          }
-        ),
-      ],
-    ));
+                },
+                textWeight: FontWeight.w600,
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

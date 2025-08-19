@@ -61,5 +61,4 @@ class InicioSesionRepository {
       return ResponseLogin(canLogin: false, message: 'Ha ocurrido un error, intentelo mas tarde.');
     }
   } 
-
 }
