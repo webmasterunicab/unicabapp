@@ -8,18 +8,16 @@ import 'package:uniconecta/widgets/shared/dropdown_intermedia.dart';
 class DropdownsIntermedia extends StatefulWidget {
   final int rol;
   final String email;
-  final void Function (String selectedEmail) nextScreenCallback;
+  final void Function(String selectedEmail) nextScreenCallback;
 
-  const DropdownsIntermedia({
-    super.key,
-    required this.rol,
-    required this.email,
-    required this.nextScreenCallback
-  });
+  const DropdownsIntermedia(
+      {super.key,
+      required this.rol,
+      required this.email,
+      required this.nextScreenCallback});
 
   @override
-  State<DropdownsIntermedia> createState() =>
-      _DropdownsIntermediaState();
+  State<DropdownsIntermedia> createState() => _DropdownsIntermediaState();
 }
 
 class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
@@ -110,10 +108,15 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         }
         _cargando = false;
       });
+    } on FormatException catch (e) {
+       setState(() {
+        _error = "No hay estudiantes relacionados a este correo";
+        _cargando = false;
+      });
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = "Ocurrio un error inesperado intenta nuevamente!";
         _cargando = false;
       });
     }

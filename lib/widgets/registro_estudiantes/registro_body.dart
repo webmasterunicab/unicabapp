@@ -205,6 +205,17 @@ class _RegistroBodyState extends State<RegistroBody> {
                       onSaved: (newValue) => correo = newValue!,
                     ),
                     espaciadoElementosForm,
+                    Text(
+                        "Importante: los estudiantes deben registrarse con su correo institucional. Los acudientes deben hacerlo con el correo utilizado en el proceso de matrícula.",
+                        style: 
+                        TextStyle(
+                          fontFamily: 'Roboto',
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.orange,
+                        ),
+                        ),
+                    espaciadoElementosForm,
                     RegistroLabel(
                       label: '¿Qué lugares has viajado o te gustaría visitar?',
                     ),

@@ -7,16 +7,20 @@ import 'package:uniconecta/models/calificaciones/estudiante_calificaciones_respo
 class CalificacionesRepository {
   Future<EstudianteCalificacionesResponse> obtenerCalificaciones(
       Map<String, dynamic> datosEnvio) async {
-    // final urlLocal = Uri.parse(ApiConfig.usuariosRolesL);
+
     final url = Uri.parse(ApiConfig.estudiantesCalificaciones);
 
-    final response = await http
-        .post(
-          url,
-          body: jsonEncode(datosEnvio),
-          headers: ApiConfig.defaultHeaders,
-        )
-        .timeout(ApiConfig.defaultTimeout);
+
+    final request = http.Request("GET", url)
+      ..headers.addAll(ApiConfig.defaultHeaders)
+      ..body = jsonEncode(datosEnvio);
+
+
+    final streamedResponse = await request.send();
+
+
+    final response = await http.Response.fromStream(streamedResponse);
+
 
     final data = jsonDecode(response.body);
 

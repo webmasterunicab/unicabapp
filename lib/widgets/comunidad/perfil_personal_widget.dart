@@ -3,6 +3,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/shared/user.dart';
+import 'package:uniconecta/widgets/shared/orange_button.dart';
+import 'package:uniconecta/widgets/shared/text_area.dart';
 
 class PerfilPersonalWidget extends StatefulWidget {
   final User user;
@@ -47,7 +49,7 @@ class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 8.w),
+      padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 10.w),
       child: Column(
         children: [
           Align(
@@ -290,6 +292,23 @@ class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
               color: Color.fromRGBO(14, 14, 14, 1),
             ),
           ),
+          const SizedBox(
+            height: 16,
+          ),
+          TextArea(
+            fontSize: 15.sp,
+            fieldHeight: 200,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          OrangeButton(
+            buttonText: "Enviar",
+            onPressed: () {},
+            fontSize: 16.sp,
+            textWeight: FontWeight.w600,
+            padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 4.w),
+          )
         ],
       ),
     );

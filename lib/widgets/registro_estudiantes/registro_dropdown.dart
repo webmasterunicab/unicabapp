@@ -9,13 +9,13 @@ class RegistroDropdown extends StatelessWidget {
   final Function(String?)? onChanged;
   final FormFieldSetter<String> onSaved;
 
-
   const RegistroDropdown({
     super.key,
     required this.registros,
     required this.validator,
     required this.onChanged,
-    required this.valorSeleccionado, required this.onSaved,
+    required this.valorSeleccionado,
+    required this.onSaved,
   });
 
   @override
@@ -45,14 +45,24 @@ class RegistroDropdown extends StatelessWidget {
             fontWeight: FontWeight.normal,
           ),
           errorStyle: TextStyle(
-            fontSize: 14.sp,
-            fontFamily: 'Roboto',
-          ),
+              fontSize: 14.sp,
+              fontFamily: 'Roboto',
+              color: Color.fromRGBO(255, 23, 68, 1)),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey, width: 2),
+          ),
+          errorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Color.fromRGBO(255, 23, 68, 1),
+                width: 2), // borde en error
+          ),
+          focusedErrorBorder: UnderlineInputBorder(
+            borderSide: BorderSide(
+                color: Color.fromRGBO(255, 23, 68, 1),
+                width: 2), // borde en error con foco
           ),
           border: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),

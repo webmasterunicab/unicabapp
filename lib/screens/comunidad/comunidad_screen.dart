@@ -11,14 +11,15 @@ class ComunidadScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             MainNavegationBar(navType: NavBarTypes.normal),
             SizedBox(height: 5),
             SafeArea(
-              child: PerfilPersonalWidget(user: user,)
-          ),
+                child: PerfilPersonalWidget(
+              user: user,
+            )),
           ],
         ),
       ),

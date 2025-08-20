@@ -68,7 +68,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        // _error = e.toString();
         _cargando = false;
       });
     }

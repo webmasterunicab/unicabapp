@@ -42,18 +42,20 @@ class IntermediaRepository {
 
   Future<EstudiantesAcudienteResponse> obtenerEstudiantesPorAcudiente(
       Map<String, dynamic> datosEnvio) async {
-    // final urlLocal = Uri.parse(ApiConfig.usuariosRolesL);
     final url = Uri.parse(ApiConfig.estudiantesAcudiente);
 
-    final response = await http
-        .post(
-          url,
-          body: jsonEncode(datosEnvio),
-          headers: ApiConfig.defaultHeaders,
-        )
-        .timeout(ApiConfig.defaultTimeout);
+
+    final request = http.Request("GET", url)
+      ..headers.addAll(ApiConfig.defaultHeaders)
+      ..body = jsonEncode(datosEnvio);
+
+    final streamedResponse = await request.send();
+
+    final response = await http.Response.fromStream(streamedResponse);
+
 
     final data = jsonDecode(response.body);
+
     return EstudiantesAcudienteResponse.fromJson(data);
   }
 }
