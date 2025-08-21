@@ -8,6 +8,5 @@ CREATE TABLE tbl_publicaciones (
   fechaPublicacion varchar(20) NOT NULL,
   estadoRevisionTexto int(2) NOT NULL DEFAULT 0,
   estadoRevisionMultimedia int(2) NOT NULL DEFAULT 0,
-  correo varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
-  meGusta int(11) NOT NULL DEFAULT 0
+  correo varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
