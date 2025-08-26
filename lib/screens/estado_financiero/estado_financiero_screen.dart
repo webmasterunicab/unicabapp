@@ -15,7 +15,32 @@ class EstadoFinanciero extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: IntrinsicHeight(
+                child: _FinancieroBody(email: obtainedEmail),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _FinancieroBody extends StatelessWidget {
+  final String email;
+
+  const _FinancieroBody({required this.email});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -31,7 +56,7 @@ class EstadoFinanciero extends StatelessWidget {
                 fontWeight: FontWeight.w600
               ),
             ),
-            SizedBox(height: 84),
+            SizedBox(height: 50),
 
             Container(
               width: double.infinity,
@@ -46,10 +71,11 @@ class EstadoFinanciero extends StatelessWidget {
                   )
                 ],
               ),
+              
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32),
                 child: FutureBuilder(
-                  future: FinancieroRepository.getFinancial(role: 1, email: obtainedEmail), 
+                  future: FinancieroRepository.getFinancial(role: 1, email: email), 
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Row(
@@ -66,9 +92,31 @@ class EstadoFinanciero extends StatelessWidget {
                       if (snapshot.data!.financieroCargado && data != null) {
                         return Column(
                           children: [
-                            ItemListaFinanciero(itemTitle: "Pensiones Pagas", itemValue: "${data.pensionesPagas}"),
-                            ItemListaFinanciero(itemTitle: "Intereses de no pago", itemDescription: "(Después de los 10 primeros días de cada mes)", itemValue: "\$ ${data.interesNoPago}"),
+                            ItemListaFinanciero(
+                              itemTitle: "Deuda anterior", 
+                              itemValue: "\$ ${data.deudaAnterior}", 
+                              suffix: Text(
+                                (data.deudaAnterior < 1) ? "PAGADA" : "PENDIENTE", 
+                                style: TextStyle(
+                                  color: (data.deudaAnterior < 1) ? Color.fromRGBO(36, 255, 36, 1) : Color.fromARGB(255, 255, 99, 99), 
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15.sp
+                                )
+                              )
+                            ),
 
+                            ItemListaFinanciero(itemTitle: "Valor de matrícula", itemValue: "\$ ${data.valorMatricula}"),
+
+                            if (data.derechosGradoPago)
+                              ItemListaFinanciero(itemTitle: "Derechos de Grado", itemValue: "\$ ${data.derechosGradoValor}"),
+
+                            if (data.icfesPago)
+                              ItemListaFinanciero(itemTitle: "Icfes", itemValue: "\$ ${data.icfesValor}"),
+
+                            ItemListaFinanciero(itemTitle: "Pensiones Pagas", itemValue: "${data.pensionesPagas}"),
+                            ItemListaFinanciero(itemTitle: "Pensiones Pendientes", itemValue: "${data.pensionesPendientes}"),
+
+                            ItemListaFinanciero(itemTitle: "Intereses de no pago", itemDescription: "(Después de los 10 primeros días de cada mes)", itemValue: "\$ ${data.interesNoPago}"),
                             ItemListaFinanciero(itemTitle: "Saldo pendiente", itemValue: "\$ ${data.saldoPendiente}"),
                             ItemListaFinanciero(itemTitle: "Total pagado", itemValue: "\$ ${data.totalPagado}", isLastItem: true),
                           ],
@@ -82,6 +130,7 @@ class EstadoFinanciero extends StatelessWidget {
                 )
               )
             ),
+
             SizedBox(height: 60),
 
             Text(
@@ -100,10 +149,10 @@ class EstadoFinanciero extends StatelessWidget {
             BotonAzulFinanciero(buttonText: "Enviar", fontSize: 15, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
             SizedBox(height: 20),
 
-            ResultadoFinanciero(operationSuccess: true)
+            ResultadoFinanciero(operationSuccess: true),
+            SizedBox(height: 20),
           ],
         ),
-      ),
-    );
+      );
   }
 }

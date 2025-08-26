@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TextArea extends StatefulWidget {
-  const TextArea({super.key, this.fieldHeight, this.readOnly = false, this.fieldBody = '', this.fontSize = 16, this.controller});
-
   final double? fieldHeight; 
   final bool? readOnly;
   final String? fieldBody;
   final double? fontSize;
   final TextEditingController? controller;
+
+  const TextArea({super.key, this.fieldHeight, this.readOnly = false, this.fieldBody = '', this.fontSize = 16, this.controller});
 
   @override
   State<TextArea> createState() => _TextFieldObservadorState();

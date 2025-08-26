@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ScreenNameDisplay extends StatelessWidget {
-  const ScreenNameDisplay({super.key, required this.name, this.suffix, this.suffixSize = 50});
-
   final Widget? suffix;
   final double? suffixSize;
   final String name;
+
+  const ScreenNameDisplay({super.key, required this.name, this.suffix, this.suffixSize = 50});
 
   @override
   Widget build(BuildContext context) {

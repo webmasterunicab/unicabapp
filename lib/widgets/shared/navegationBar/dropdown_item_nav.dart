@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 
 class DropdownItemNav extends StatelessWidget {
-  const DropdownItemNav({super.key, required this.name, required this.onPressed});
-
   final VoidCallback onPressed;
   final String name;
+
+  const DropdownItemNav({super.key, required this.name, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
