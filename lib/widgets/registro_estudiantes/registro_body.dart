@@ -117,6 +117,7 @@ class _RegistroBodyState extends State<RegistroBody> {
       return Loading();
     }
 
+//TODO: cambiar forma de mostrar error
     if (_error != null) {
       return Scaffold(body: Center(child: Text('Error: $_error')));
     }
@@ -206,15 +207,14 @@ class _RegistroBodyState extends State<RegistroBody> {
                     ),
                     espaciadoElementosForm,
                     Text(
-                        "Importante: los estudiantes deben registrarse con su correo institucional. Los acudientes deben hacerlo con el correo utilizado en el proceso de matrícula.",
-                        style: 
-                        TextStyle(
-                          fontFamily: 'Roboto',
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.orange,
-                        ),
-                        ),
+                      "Importante: los estudiantes deben registrarse con su correo institucional. Los acudientes deben hacerlo con el correo utilizado en el proceso de matrícula.",
+                      style: TextStyle(
+                        fontFamily: 'Roboto',
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.orange,
+                      ),
+                    ),
                     espaciadoElementosForm,
                     RegistroLabel(
                       label: '¿Qué lugares has viajado o te gustaría visitar?',

@@ -108,7 +108,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         }
         _cargando = false;
       });
-    } on FormatException catch (e) {
+    } on FormatException {
        setState(() {
         _error = "No hay estudiantes relacionados a este correo";
         _cargando = false;

@@ -12,7 +12,7 @@ class CustomFormFieldValidator {
         r'''[-_'"<>\~\^\*\$\!\¡\#\%\&\¿\?\/\=\+\|,;:\(\)\{\}\[\]\\]{1,}''');
 
     if (regex.hasMatch(value!)) {
-      return 'El campo $nombreCampo no permite \nsímbolos especiales';
+      return 'El campo $nombreCampo no permite\nsímbolos especiales\n- _ \' " < > ~ ^ * \$ ! ¡ # % & ¿ ? / = + , ; : ( ) { } [ ] \\ ';
     }
 
     return null;
@@ -83,7 +83,7 @@ class CustomFormFieldValidator {
     final regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10,12}$');
 
     if (!regex.hasMatch(value!)) {
-      return 'Debe tener 10 caracteres, con al menos:\n'
+      return 'Debe tener minimo 10 caracteres, con al menos:\n'
           '- 1 letra minúscula '
           '- 1 letra mayúscula\n'
           '- 1 número '
