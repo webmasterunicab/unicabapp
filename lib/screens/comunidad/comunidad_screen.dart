@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/models/shared/user.dart';
-import 'package:uniconecta/widgets/comunidad/perfil_personal_widget.dart';
+import 'package:uniconecta/widgets/comunidad/comunidad_perfil.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 
 class ComunidadScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class ComunidadScreen extends StatelessWidget {
             MainNavegationBar(navType: NavBarTypes.normal),
             SizedBox(height: 5),
             SafeArea(
-                child: PerfilPersonalWidget(
+                child: ComunidadPerfilWidget(
               user: user,
             )),
           ],

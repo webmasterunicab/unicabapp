@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sizer/sizer.dart';
+import 'package:uniconecta/models/registro/subida_imagen_response.dart';
 import 'package:uniconecta/repositories/registro_service.dart';
+import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
@@ -19,8 +21,10 @@ class SubirFotoBody extends StatefulWidget {
 class _SubirFotoBodyState extends State<SubirFotoBody> {
   final Color colorBotones = Color.fromRGBO(11, 119, 179, 1);
   final _service = RegistroService();
-
   String _nombreArchivo = '';
+
+  SubidaImagenResponse response =
+      SubidaImagenResponse(status: '', mensaje: '', url: '');
 
   File? _imagen;
   final ImagePicker _picker = ImagePicker();
@@ -40,35 +44,59 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
   }
 
   void _submit() async {
+    final respuestaSubida = await _service.subirImagen(_imagen);
+
+    setState(() {
+      response = respuestaSubida;
+      if (response.status == 'success') {
+        widget.datosRegistro['fotoPerfil'] = response.url;
+      }
+    });
+
+    if (response.status != 'success') return;
+
+  
+    await _service.subirDatosRegistro(widget.datosRegistro);
 
 
-
-
-    // if (_imagen == null) {
-    // // El usuario decide continuar sin elegir foto de perfil
-    //   widget.datosRegistro['fotoPerfil'] = '';
-    // } else {
-    //   final respuestaSubida = await _service.subirImagen(_imagen);
-
-    //   setState(() {
-    //     if (respuestaSubida.status == 'success') {
-    //       widget.datosRegistro['fotoPerfil'] = respuestaSubida.url;
-    //     }
-    //   });
-
-    //   if (respuestaSubida.status != 'success') {
-    //     _error = respuestaSubida.mensaje;
-    //     _cargando = false;
-    //     return;
-    //   }
-    // }
-
-    // _subirRegistros();
+    if (!mounted) return; 
+    Navigator.of(context).push(
+      MaterialPageRoute(builder: (_) => RegistroConfirmadoScreen()),
+    );
   }
 
-
-
-
+  Widget _mostrarError() {
+    if (response.status == 'error') {
+      return Container(
+        margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
+        padding: EdgeInsets.all(12.sp),
+        decoration: BoxDecoration(
+          color: Colors.redAccent.shade100,
+          borderRadius: BorderRadius.circular(8.sp),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.warning_rounded,
+                color: Colors.redAccent.shade700, size: 20.sp),
+            SizedBox(height: 10.sp),
+            Text(
+              response.mensaje,
+              softWrap: true,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: Colors.redAccent.shade700,
+                fontFamily: 'Roboto',
+              ),
+            ),
+          ],
+        ),
+      );
+    } else {
+      return SizedBox.shrink(); // o Container() si prefieres
+    }
+  }
 
   Widget _mostrarImagenSeleccionada() {
     double size =
@@ -110,10 +138,6 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
 
   @override
   Widget build(BuildContext context) {
-    // if (_cargando) {
-    //   return Loading();
-    // }
-
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -192,7 +216,9 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                           ),
                         )
                       ],
-                    ))),
+                    )
+                    )
+                    ),
           ),
           Align(
             alignment: Alignment.center,
@@ -208,9 +234,10 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                          'assets/img/camara.jpg',
+                          'assets/img/pictureIcon.png',
                           width: 4.w,
                           height: 4.h,
+                          color: Colors.white,
                         ),
                         SizedBox(width: 8),
                         Text(
@@ -225,7 +252,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                       ],
                     ))),
           ),
-          // _mostrarError(),
+          _mostrarError(),
           Container(
               margin: EdgeInsets.only(top: 22),
               child: OrangeButton(
@@ -237,7 +264,6 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
                 width: 140,
                 fontSize: 16.sp,
               )),
-
           Container(
             margin: EdgeInsets.only(top: 55),
             child: TextButton(

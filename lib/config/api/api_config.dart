@@ -43,6 +43,11 @@ class ApiConfig {
   static String get getFinancial => 'uniconecta/financiera_getdat1.php';
   static String get estudiantesAcudiente => '$production/estudiantes_acudiente_getdat1.php';
   static String get estudiantesCalificaciones => '$production/calificaciones_getdat1.php';
+  static String get estudianteGrado => '$production/grado_getdat1.php';
+  static String get subirPublicacion => '$production/publicacion_putdat1.php';
+  static String get obtenerMisPublicaciones => '$production/publicaciones_getdat1.php';
+  static String get obtenerTodasPublicaciones => '$production/todas_publicaciones_getdat1.php';
+  static String get darLikePublicacion => '$production/megusta_publicacion_putdat1.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';

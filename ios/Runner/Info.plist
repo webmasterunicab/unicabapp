@@ -46,8 +46,8 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Pick an image from gallery</string>
+	<string>Permite acceder a tu galería para seleccionar imágenes</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Pick image from camera</string>
+	<string>Se necesita acceso a la cámara para tomar fotos</string>
 </dict>
 </plist>

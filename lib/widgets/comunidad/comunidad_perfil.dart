@@ -1,26 +1,84 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/shared/user.dart';
+import 'package:uniconecta/repositories/comunidad_repository.dart';
+import 'package:uniconecta/screens/comunidad/comunidad_mis_publicaciones.dart';
+import 'package:uniconecta/screens/comunidad/comunidad_todas_publicaciones.dart';
+import 'package:uniconecta/util/custom_form_field_validator.dart';
+import 'package:uniconecta/widgets/comunidad/imagen_publicacion.dart';
+import 'package:uniconecta/widgets/comunidad/warning_publicacion.dart';
+import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 import 'package:uniconecta/widgets/shared/text_area.dart';
 
-class PerfilPersonalWidget extends StatefulWidget {
+class ComunidadPerfilWidget extends StatefulWidget {
   final User user;
-  const PerfilPersonalWidget({super.key, required this.user});
+  const ComunidadPerfilWidget({super.key, required this.user});
 
   @override
-  State<PerfilPersonalWidget> createState() => _PerfilPersonalWidgetState();
+  State<ComunidadPerfilWidget> createState() => _ComunidadPerfilWidgetState();
 }
 
-class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
+class _ComunidadPerfilWidgetState extends State<ComunidadPerfilWidget> {
+  final ComunidadRepository _repo = ComunidadRepository();
   String? fechaFormateada;
+  final TextEditingController controller = TextEditingController();
+
+  String? _error;
+  bool _cargando = true;
+
+  String grado = '';
+  String _nombreArchivo = '';
+
+  File? _imagen;
+  final ImagePicker _picker = ImagePicker();
+
+  Future<void> _pickImage(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(
+      source: source,
+      maxHeight: 800,
+      maxWidth: 800,
+      imageQuality: 85,
+    );
+
+    if (pickedFile != null) {
+      _nombreArchivo = pickedFile.name;
+      setState(() => _imagen = File(pickedFile.path));
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     _formatearFecha();
+
+    if (widget.user.userRole == 1) {
+      _cargarGrado();
+    } else {
+      _cargando = false;
+    }
+  }
+
+  Future<void> _cargarGrado() async {
+    final response = await _repo
+        .obtenerGradoEstudiante({"email": widget.user.email, "rol": 1});
+
+    if (response.mensaje != 'error') {
+      setState(() {
+        grado = response.grado;
+        _cargando = false;
+      });
+    } else {
+      setState(() {
+        _error = response.mensaje;
+        _cargando = false;
+      });
+    }
   }
 
   Future<void> _formatearFecha() async {
@@ -46,15 +104,92 @@ class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
     }
   }
 
+  void _subirPublicacion() async {
+    if (controller.text.trim() == '') {
+      setState(() {
+        _error =
+            "Para completar tu publicación, escribe al menos una línea de texto.";
+      });
+      return;
+    } else {
+      final validarTexto = CustomFormFieldValidator.texto(controller.text,
+          esRequerido: true, nombreCampo: "texto publicación");
+
+      if (validarTexto != null) {
+        setState(() {
+          _error = validarTexto.replaceAll('\n', ' ');
+        });
+      } else {
+        setState(() {
+          _error = null;
+        });
+
+        final response = await _repo.subirPublicacion({
+          'email': widget.user.email,
+          'rol': widget.user.userRole.toString(),
+          'texto': controller.text.trim(),
+          'ImgPublicacion': _imagen
+        });
+
+        if (response.status != 'error') {
+          if (!mounted) return;
+          controller.clear();
+          _imagen = null;
+          Navigator.of(context).push(
+            MaterialPageRoute(
+                builder: (_) => ComunidadMisPublicaciones(user: widget.user)),
+          );
+        } else {
+          setState(() {
+            _error = response.mensaje;
+          });
+        }
+      }
+    }
+
+    setState(() {});
+  }
+
+  Widget _loader() {
+    return Container(
+      margin: EdgeInsets.only(top: 10.h),
+      child: const Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0B77B3)),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_cargando) {
+      return _loader();
+    }
+
     return Padding(
       padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 10.w),
       child: Column(
         children: [
           Align(
             alignment: Alignment.centerRight,
-            child: Icon(Icons.arrow_forward_ios),
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.grey[600],
+                size: 22,
+              ),
+              onPressed: () {
+                   Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (_) =>
+                            ComunidadTodasPublicaciones(user: widget.user)),
+                  );
+              },
+              splashRadius: 20, // Opcional: para ajustar el radio del toque
+              tooltip:
+                  'Todas las publicaciones', // Opcional: texto al mantener presionado
+            ),
           ),
           const SizedBox(
             height: 16,
@@ -154,44 +289,47 @@ class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Columna izquierda
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        "Esta en grado",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w300,
-                          color: const Color.fromRGBO(100, 96, 92, 0.7),
+                if (widget.user.userRole == 1)
+                  Expanded(
+                    flex: 40,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Esta en grado",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w300,
+                            color: const Color.fromRGBO(100, 96, 92, 0.7),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        "Sin Grado",
-                        style: TextStyle(
-                          fontSize: 15.sp,
-                          fontFamily: 'Roboto',
-                          fontWeight: FontWeight.w500,
-                          color: Colors.orange,
+                        const SizedBox(height: 5),
+                        Text(
+                          grado,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w500,
+                            color: Colors.orange,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
 
                 const SizedBox(width: 5),
 
                 // Columna derecha
                 Expanded(
+                  flex: 50,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        "correo en UNICAB",
+                        "Correo en UNICAB",
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontFamily: 'Roboto',
@@ -298,13 +436,66 @@ class _PerfilPersonalWidgetState extends State<PerfilPersonalWidget> {
           TextArea(
             fontSize: 15.sp,
             fieldHeight: 200,
+            controller: controller,
           ),
+          const SizedBox(
+            height: 26,
+          ),
+          ImagenPublicacion(imagen: _imagen),
           const SizedBox(
             height: 20,
           ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+                width: 100.w,
+                color: Colors.blue,
+                margin: EdgeInsets.only(top: 41, bottom: 31),
+                child: TextButton(
+                    onPressed: () {
+                      _pickImage(ImageSource.gallery);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/img/pictureIcon.png',
+                          width: 4.w,
+                          height: 4.h,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8),
+                        Text(
+                          'Elige una imagen',
+                          style: TextStyle(
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16.sp,
+                            color: Colors.white,
+                          ),
+                        )
+                      ],
+                    ))),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          WarningPublicacion(),
+          const SizedBox(
+            height: 26,
+          ),
+          if (_error != null)
+            ErrorMensaje(
+              mensaje: _error!,
+            ),
+          const SizedBox(
+            height: 26,
+          ),
           OrangeButton(
             buttonText: "Enviar",
-            onPressed: () {},
+            onPressed: () {
+              _subirPublicacion();
+            },
             fontSize: 16.sp,
             textWeight: FontWeight.w600,
             padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 4.w),

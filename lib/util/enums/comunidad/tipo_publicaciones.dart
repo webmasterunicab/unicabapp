@@ -1,0 +1,4 @@
+enum TipoPublicaciones {
+  personales,
+  todas
+}

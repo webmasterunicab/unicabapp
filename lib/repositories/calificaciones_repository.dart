@@ -11,7 +11,7 @@ class CalificacionesRepository {
     final url = Uri.parse(ApiConfig.estudiantesCalificaciones);
 
 
-    final request = http.Request("GET", url)
+    final request = http.Request("POST", url)
       ..headers.addAll(ApiConfig.defaultHeaders)
       ..body = jsonEncode(datosEnvio);
 
