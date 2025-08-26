@@ -14,9 +14,10 @@ import 'package:uniconecta/widgets/shared/orange_button.dart';
 import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class ObservadorScreen extends StatelessWidget {
-  const ObservadorScreen({super.key, required this.email});
   final String email;
 
+  const ObservadorScreen({super.key, required this.email});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(

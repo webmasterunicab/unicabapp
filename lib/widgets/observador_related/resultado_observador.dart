@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ResultadoObservador extends StatelessWidget {
-  const ResultadoObservador({super.key, required this.operationSuccess});
-
   final bool operationSuccess;
+
+  const ResultadoObservador({super.key, required this.operationSuccess});
 
   @override
   Widget build(BuildContext context) {

@@ -5,6 +5,7 @@ import 'package:uniconecta/screens/calificaciones/calificaciones_intermedia_scre
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
 import 'package:uniconecta/screens/comunidad/comunidad_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
+import 'package:uniconecta/screens/estado_financiero/financiero_intermedia_screen.dart';
 import 'package:uniconecta/screens/observador/observador_intermedia_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/screens/seguimiento_acuerdos/seguimiento_acuerdos_screen.dart';
@@ -13,9 +14,9 @@ import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class GeneralScreen extends StatelessWidget {
-  const GeneralScreen({super.key, this.userEmail = ''});
-
   final String userEmail;
+
+  const GeneralScreen({super.key, this.userEmail = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -113,8 +114,11 @@ class GeneralScreen extends StatelessWidget {
               ),
               textWeight: FontWeight.normal,
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => EstadoFinanciero()));
+                if(rol == 1){
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => EstadoFinanciero(obtainedEmail: email)));
+                }else {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => FinancieroIntermediaScreen(rol: rol, email: email)));
+                }
               }),
           SizedBox(height: buttonSpacing),
 

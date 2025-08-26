@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ResultadoFinanciero extends StatelessWidget {
-  const ResultadoFinanciero({super.key, required this.operationSuccess});
-
   final bool operationSuccess;
+
+  const ResultadoFinanciero({super.key, required this.operationSuccess});
 
   @override
   Widget build(BuildContext context) {

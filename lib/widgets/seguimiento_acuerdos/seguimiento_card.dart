@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:uniconecta/widgets/shared/text_area.dart';
 
 class SeguimientoCard extends StatelessWidget {
-  const SeguimientoCard({super.key, required this.acuerdos, required this.pensamiento, required this.status, required this.date});
-
   final String acuerdos;
   final String pensamiento;
   final String date;
   final int status;
+
+  const SeguimientoCard({super.key, required this.acuerdos, required this.pensamiento, required this.status, required this.date});
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +68,9 @@ class SeguimientoCard extends StatelessWidget {
 }
 
 class _VerticalTimeline extends StatelessWidget {
-  const _VerticalTimeline({required this.status});
-
   final int status;
+
+  const _VerticalTimeline({required this.status});
 
   @override
   Widget build(BuildContext context) {

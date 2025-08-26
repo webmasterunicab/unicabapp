@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
+import 'package:uniconecta/repositories/financiero_repository.dart';
 import 'package:uniconecta/widgets/estado_financiero/boton_azul_financiero.dart';
 import 'package:uniconecta/widgets/estado_financiero/item_lista_financiero.dart';
 import 'package:uniconecta/widgets/estado_financiero/resultado_financiero.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 
 class EstadoFinanciero extends StatelessWidget {
-  const EstadoFinanciero({super.key});
+  final String obtainedEmail;
+
+  const EstadoFinanciero({super.key, required this.obtainedEmail});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,7 @@ class EstadoFinanciero extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Color.fromRGBO(134, 132, 129, 1),
-                fontSize: 13,
+                fontSize: 15.sp,
                 fontWeight: FontWeight.w600
               ),
             ),
@@ -44,13 +48,38 @@ class EstadoFinanciero extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 32),
-                child: Column(
-                  children: [
-                    ItemListaFinanciero(itemTitle: "Pensiones Pagas", itemValue: "10"),
-                    ItemListaFinanciero(itemTitle: "Fecha de corte", itemDescription: "(los primeros 10 dias de cada mes.)", itemValue: "7/3/2025"),
-                    ItemListaFinanciero(itemTitle: "Intereses de no pago", itemDescription: "(Después de los 10 primeros días de cada mes)", itemValue: "\$ 10.000", isLastItem: true),
-                  ],
-                ),
+                child: FutureBuilder(
+                  future: FinancieroRepository.getFinancial(role: 1, email: obtainedEmail), 
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text("${snapshot.error}", textAlign: TextAlign.center,);
+                    } else {
+                      final data = snapshot.data!.financieroData;
+
+                      if (snapshot.data!.financieroCargado && data != null) {
+                        return Column(
+                          children: [
+                            ItemListaFinanciero(itemTitle: "Pensiones Pagas", itemValue: "${data.pensionesPagas}"),
+                            ItemListaFinanciero(itemTitle: "Intereses de no pago", itemDescription: "(Después de los 10 primeros días de cada mes)", itemValue: "\$ ${data.interesNoPago}"),
+
+                            ItemListaFinanciero(itemTitle: "Saldo pendiente", itemValue: "\$ ${data.saldoPendiente}"),
+                            ItemListaFinanciero(itemTitle: "Total pagado", itemValue: "\$ ${data.totalPagado}", isLastItem: true),
+                          ],
+                        );
+                      } else {
+                        return Text("No hay informacion financiera obtenida.", textAlign: TextAlign.center,);
+                      }
+                      
+                    }
+                  }
+                )
               )
             ),
             SizedBox(height: 60),
@@ -60,7 +89,7 @@ class EstadoFinanciero extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.normal,
-                fontSize: 10
+                fontSize: 13.sp
               ),
             ),
             SizedBox(height: 25),
@@ -68,7 +97,7 @@ class EstadoFinanciero extends StatelessWidget {
             BotonAzulFinanciero(buttonText: "Seleccionar", prefix: Image.asset('assets/img/pictureIcon.png', fit: BoxFit.contain, width: 16, height: 16), weight: FontWeight.normal),
             SizedBox(height: 25),
             
-            BotonAzulFinanciero(buttonText: "Enviar", fontSize: 13, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
+            BotonAzulFinanciero(buttonText: "Enviar", fontSize: 15, paddingRadius: EdgeInsets.symmetric(horizontal: 56, vertical: 22)),
             SizedBox(height: 20),
 
             ResultadoFinanciero(operationSuccess: true)

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class ItemListaFinanciero extends StatelessWidget {
-  const ItemListaFinanciero({super.key, required this.itemTitle, this.itemDescription = "", required this.itemValue, this.isLastItem = false});
-
   final String itemDescription;
 
   final String itemTitle;
   final String itemValue;
   final bool isLastItem;
+
+  const ItemListaFinanciero({super.key, required this.itemTitle, this.itemDescription = "", required this.itemValue, this.isLastItem = false});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +39,11 @@ class ItemListaFinanciero extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Roboto',
                     color: Color.fromRGBO(14, 14, 14, 1),
-                    fontSize: 11,
+                    fontSize: 15.sp,
                   ),
                 ),
 
-                if (itemDescription.isNotEmpty) Text(itemDescription, style: TextStyle(fontSize: 7, color: Color.fromRGBO(14, 14, 14, 1))),
+                if (itemDescription.isNotEmpty) Text(itemDescription, style: TextStyle(fontSize: 12.sp, color: Color.fromRGBO(14, 14, 14, 1))),
               ],
             ),
 
@@ -50,7 +51,7 @@ class ItemListaFinanciero extends StatelessWidget {
               itemValue,
               style: TextStyle(
                 color: Color.fromRGBO(255, 152, 5, 1),
-                fontSize: 13,
+                fontSize: 15.sp,
               ),
             ),
           ],

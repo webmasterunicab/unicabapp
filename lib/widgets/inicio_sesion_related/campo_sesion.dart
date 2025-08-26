@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class CampoSesion extends StatefulWidget {
+  final String fieldLabel;
+  final String? fieldPlaceholder;
+  final TextEditingController? controller;
+  final String? Function(String?) validator;
+  final String? Function(String?, {required bool esRequerido}) fieldChecking;
+
   const CampoSesion({
     super.key, 
     required this.fieldLabel, 
@@ -10,12 +16,6 @@ class CampoSesion extends StatefulWidget {
     this.controller, 
     this.fieldPlaceholder, 
   });
-
-  final String fieldLabel;
-  final String? fieldPlaceholder;
-  final TextEditingController? controller;
-  final String? Function(String?) validator;
-  final String? Function(String?, {required bool esRequerido}) fieldChecking;
 
   @override
   State<CampoSesion> createState() => _CampoSesionState();

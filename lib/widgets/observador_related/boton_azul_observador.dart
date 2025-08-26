@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class BotonAzulObservador extends StatelessWidget {
-  const BotonAzulObservador({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 10, this.paddingRadius = const EdgeInsets.all(15)});
-
   final String buttonText;
   final Widget? prefix;
   final FontWeight? weight;
   final double? fontSize;
   final EdgeInsets paddingRadius;
+
+  const BotonAzulObservador({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 10, this.paddingRadius = const EdgeInsets.all(15)});
 
   @override
   Widget build(BuildContext context) {
