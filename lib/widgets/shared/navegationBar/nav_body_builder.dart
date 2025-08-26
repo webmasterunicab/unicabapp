@@ -37,7 +37,7 @@ List<Widget> navBodyBuilder(
       height: 25,
       width: 25,
       fit: BoxFit.contain,
-      color: Colors.white,
+      color: Color.fromRGBO(239, 158, 41, 1),
     ),
   );
 
