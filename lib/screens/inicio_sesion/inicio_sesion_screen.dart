@@ -56,7 +56,6 @@ class _InicioBody extends StatelessWidget {
                   width: 154,
                 ),
               ),
-              SizedBox(height: 100),
     
               _MainForm(),
     
@@ -84,10 +83,15 @@ class _MainForm extends StatefulWidget {
 }
 
 class _MainFormState extends State<_MainForm> {
+  // Variables //
   String? error;
+  bool _joiningSession = false;
+  final _formKey = GlobalKey<FormState>();
 
   late TextEditingController emailController;
   late TextEditingController passwordController;
+
+  // Methods //
 
   @override
   void initState() {
@@ -103,11 +107,105 @@ class _MainFormState extends State<_MainForm> {
     super.dispose();
   }
 
+  // Send a login request to the server, if everything passes, logs in automatically.
+  // Needs a StatefulWidget BuildContext.
+  Future<void> _sendRequest(BuildContext context) async {
+    if (_joiningSession) return;
+
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      setState(() {
+        _joiningSession = true;
+      });
+
+      try {
+
+        final String email = emailController.text.trim();
+        ResponseLogin loginResponse = await InicioSesionRepository.sendLoginRequest(
+          email,
+          passwordController.text.trim(),
+          context: context,
+        );
+
+        if (!context.mounted) return;
+
+        if (loginResponse.canLogin) {
+          Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+              builder: (_) => GeneralScreen(userEmail: email),
+            ),
+            (Route<dynamic> route) => false,
+          );
+        } else {
+          setState(() {
+            error = loginResponse.message;
+          });
+        }
+
+      } catch (e) {
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.transparent, 
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
+                Icon(Icons.error_rounded, color: Colors.white),
+                SizedBox(width: 4),
+
+                Text("Ha Ocurrido un error, Revisa tu conexion a internet.", style: TextStyle(fontFamily: "Roboto", fontSize: 15.sp, color: Colors.white))
+              ]
+            )
+          ),
+        );
+
+      } finally {
+
+        setState(() {
+          _joiningSession = false;
+        });
+
+      }
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext buildContext) {
     return Form(
+      key: _formKey,
       child: Column(
         children: [
+          if (error != null) ...[
+            SizedBox(height: 20),
+
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
+              padding: EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(246, 119, 144, 1),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
+                border: BoxBorder.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
+              ),
+              
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    error!,
+                    softWrap: true,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 15.sp,
+                      color: Colors.white,
+                      fontFamily: 'Roboto',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ] else SizedBox(height: 100),
+
           CampoSesion(
             fieldLabel: "Usuario (Correo)",
             fieldChecking: CustomFormFieldValidator.correo,
@@ -121,6 +219,7 @@ class _MainFormState extends State<_MainForm> {
             },
           ),
           SizedBox(height: 47),
+
           CampoSesion(
             fieldLabel: "Contraseña",
             fieldChecking: CustomFormFieldValidator.password,
@@ -134,68 +233,16 @@ class _MainFormState extends State<_MainForm> {
             },
           ),
           SizedBox(height: 30),
-          if (error != null) ...[
-            Container(
-              margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
-              padding: EdgeInsets.all(12.sp),
-              decoration: BoxDecoration(
-                color: Colors.redAccent.shade100,
-                borderRadius: BorderRadius.circular(8.sp),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.warning_rounded,
-                      color: Colors.redAccent.shade700, size: 20.sp),
-                  SizedBox(height: 10.sp),
-                  Text(
-                    error!,
-                    softWrap: true,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      color: Colors.redAccent.shade700,
-                      fontFamily: 'Roboto',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          Builder(
-            builder: (context) {
-              return OrangeButton(
+
+          (!_joiningSession) 
+            ? OrangeButton(
+                onPressed: () => _sendRequest(buildContext),
+
                 buttonText: "Iniciar Sesión",
-                onPressed: () async {
-                  if (Form.of(context).validate()) {
-                    final String email = emailController.text.trim();
-                    ResponseLogin loginResponse =
-                        await InicioSesionRepository.sendLoginRequest(
-                      email,
-                      passwordController.text.trim(),
-                      context: context,
-                    );
-
-                    if (!context.mounted) return;
-
-                    if (loginResponse.canLogin) {
-                      Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                          builder: (_) => GeneralScreen(userEmail: email),
-                        ),
-                        (Route<dynamic> route) => false,
-                      );
-                    } else {
-                      setState(() {
-                        error = loginResponse.message;
-                      });
-                    }
-                  }
-                },
                 textWeight: FontWeight.w600,
-              );
-            },
-          ),
+              )
+
+            : SizedBox(height: 26, width: 26, child: CircularProgressIndicator(color: Colors.white)),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class DropdownItemNav extends StatelessWidget {
   final VoidCallback onPressed;
@@ -27,7 +28,7 @@ class DropdownItemNav extends StatelessWidget {
       
         child: Text(name, style: TextStyle(
           fontFamily: 'Roboto',
-          fontSize: 10,
+          fontSize: 14.sp,
           fontWeight: FontWeight.normal,
           color: Colors.black,
         )),
