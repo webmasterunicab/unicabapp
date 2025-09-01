@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:uniconecta/widgets/shared/text_area.dart';
 
 class CardObservador extends StatelessWidget {
+  final double? fontSize;
+
+  final String? studentName;
+  final bool? readOnly;
+  final String type;
+  final String dependency;
+  final String charge;
+  final String date;
+
+  final String cardInfo;
+  final double? fieldHeight;
+
   const CardObservador({
     super.key, 
     required this.dependency, 
@@ -14,18 +26,6 @@ class CardObservador extends StatelessWidget {
     this.fontSize, 
     this.fieldHeight = 90, 
   });
-
-  final double? fontSize;
-
-  final String? studentName;
-  final bool? readOnly;
-  final String type;
-  final String dependency;
-  final String charge;
-  final String date;
-
-  final String cardInfo;
-  final double? fieldHeight;
 
   @override
   Widget build(BuildContext context) {

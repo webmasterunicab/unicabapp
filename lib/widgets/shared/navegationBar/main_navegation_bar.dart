@@ -9,12 +9,12 @@ enum NavBarTypes {
 }
 
 class MainNavegationBar extends StatelessWidget {
-  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen});
-
   final NavBarTypes navType;
 
   final Widget? nextScreen;
   final bool canGetBackHere;
+
+  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen});
 
   @override
   Widget build(BuildContext context) {

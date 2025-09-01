@@ -7,16 +7,17 @@ import 'package:uniconecta/models/observador/response_observador.dart';
 import 'package:uniconecta/models/observador/student_remark.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/repositories/observador_repository.dart';
-import 'package:uniconecta/screens/observador_falta/observador_falta_screen.dart';
+//import 'package:uniconecta/screens/observador_falta/observador_falta_screen.dart';
 import 'package:uniconecta/widgets/observador_related/card_observador.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
-import 'package:uniconecta/widgets/shared/orange_button.dart';
+//import 'package:uniconecta/widgets/shared/orange_button.dart';
 import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class ObservadorScreen extends StatelessWidget {
-  const ObservadorScreen({super.key, required this.email});
   final String email;
 
+  const ObservadorScreen({super.key, required this.email});
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,7 @@ class ObservadorScreen extends StatelessWidget {
         
             ScreenNameDisplay(
               name: "OBSERVADOR", 
-              suffix: OrangeButton(buttonText: "Editar", 
+              /*suffix: OrangeButton(buttonText: "Editar", 
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorFaltaScreen()));
                 }, 
@@ -38,7 +39,7 @@ class ObservadorScreen extends StatelessWidget {
                 padding: EdgeInsets.all(0),
                 fontSize: 15.sp,
               ),
-              suffixSize: 60,
+               suffixSize: 60, */
             ),
 
             _CardsList(email: email),

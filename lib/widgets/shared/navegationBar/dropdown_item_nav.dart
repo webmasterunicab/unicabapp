@@ -1,11 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class DropdownItemNav extends StatelessWidget {
-  const DropdownItemNav({super.key, required this.name, required this.onPressed});
-
   final VoidCallback onPressed;
   final String name;
+
+  const DropdownItemNav({super.key, required this.name, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class DropdownItemNav extends StatelessWidget {
       
         child: Text(name, style: TextStyle(
           fontFamily: 'Roboto',
-          fontSize: 10,
+          fontSize: 14.sp,
           fontWeight: FontWeight.normal,
           color: Colors.black,
         )),

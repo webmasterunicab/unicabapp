@@ -6,9 +6,10 @@ import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_nav.dart';
 
 class NavBarAvatar extends StatefulWidget {
-  const NavBarAvatar({super.key, required this.userAvatar});
   final Widget userAvatar;
 
+  const NavBarAvatar({super.key, required this.userAvatar});
+  
   @override
   State<NavBarAvatar> createState() => _DropdownManager();
 }
@@ -51,8 +52,10 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
       return Positioned(
         top: yPosition,
         left: xPosition! - xOffset,
-        child: DropdownNav(boxSize: (width! + xOffset), items: [
-          DropdownItemNav(
+        child: DropdownNav(
+          boxSize: (width! + xOffset), 
+          items: [
+            DropdownItemNav(
               name: "Ajustar Perfil",
               onPressed: () {
                 Navigator.of(context).push(
@@ -62,14 +65,16 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => SubirFotoScreen()));
           }),
-          DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
-          DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
-          DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
-          DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
-          DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
-          DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
-          DropdownItemNav(name: "Eliminar cuenta", onPressed: () {}),
-        ]),
+            DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
+            //DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
+            DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
+            DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
+            //DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
+            //DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
+            //DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
+            DropdownItemNav(name: "Eliminar cuenta", onPressed: () {}),
+          ]
+        ),
       );
     });
   }
@@ -117,7 +122,9 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             child: CircleAvatar(
               radius: 35,
               backgroundColor: Colors.white,
-              child: widget.userAvatar,
+              child: ClipOval(
+                child: widget.userAvatar
+              ),
             ),
           ),
         ),

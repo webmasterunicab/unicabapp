@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 class OrangeButton extends StatelessWidget {
-  const OrangeButton({
-    super.key,
-    required this.buttonText,
-    required this.onPressed,
-    this.prefix,
-    this.suffix,
-    this.width,
-    this.height, 
-    this.padding = const EdgeInsets.all(20),
-    this.fontSize = 15, 
-    required this.textWeight, 
-  });
-
   final String buttonText;
   final VoidCallback onPressed;
 
@@ -28,6 +15,19 @@ class OrangeButton extends StatelessWidget {
   final EdgeInsets? padding;
 
   final FontWeight textWeight;
+
+  const OrangeButton({
+    super.key,
+    required this.buttonText,
+    required this.onPressed,
+    this.prefix,
+    this.suffix,
+    this.width,
+    this.height, 
+    this.padding = const EdgeInsets.all(20),
+    this.fontSize = 15, 
+    required this.textWeight, 
+  });
 
   @override
   Widget build(BuildContext context) {

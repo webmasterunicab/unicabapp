@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class BotonAzulFinanciero extends StatelessWidget {
-  const BotonAzulFinanciero({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 10, this.paddingRadius = const EdgeInsets.all(15)});
-
   final String buttonText;
   final Widget? prefix;
   final FontWeight? weight;
   final double? fontSize;
   final EdgeInsets paddingRadius;
+  final VoidCallback onPressed;
+
+  const BotonAzulFinanciero({super.key, required this.buttonText, this.prefix, this.weight = FontWeight.w600, this.fontSize = 13, this.paddingRadius = const EdgeInsets.all(15), required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
 
       style: TextButton.styleFrom(
         backgroundColor: Color.fromRGBO(11, 119, 179, 1),
@@ -32,7 +34,7 @@ class BotonAzulFinanciero extends StatelessWidget {
             fontFamily: 'Roboto',
             fontWeight: weight,
             color: Colors.white,
-            fontSize: fontSize
+            fontSize: fontSize!.sp
           ))
         ],
       )
