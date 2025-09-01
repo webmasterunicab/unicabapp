@@ -37,11 +37,7 @@ class GeneralScreen extends StatelessWidget {
           OrangeButton(
               buttonText: "Calificaciones",
               width: 324,
-              prefix: Icon(
-                Icons.terminal_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
+              prefix: Image.asset("assets/img/general_icon2.png", width: 30, height: 30),
               suffix: Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.white,
@@ -66,7 +62,7 @@ class GeneralScreen extends StatelessWidget {
           OrangeButton(
             buttonText: "Observador", 
             width: 324,
-            prefix: Icon(Icons.terminal_rounded, color: Colors.white, size: 24,),
+            prefix: Image.asset("assets/img/general_icon3.png", width: 30, height: 30),
             suffix: Icon(Icons.arrow_forward_ios_rounded, color: Colors.white, size: 24,), 
             textWeight: FontWeight.normal,
             onPressed: () {
@@ -102,11 +98,7 @@ class GeneralScreen extends StatelessWidget {
           OrangeButton(
               buttonText: "Financiera",
               width: 324,
-              prefix: Icon(
-                Icons.terminal_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
+              prefix: Image.asset("assets/img/general_icon1.png", width: 30, height: 30),
               suffix: Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.white,

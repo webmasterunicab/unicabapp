@@ -1,13 +1,15 @@
 import 'package:uniconecta/models/financiero/financiero_data_model.dart';
 
 class FinancieroResponseModel {
+  
+  final bool financieroCargado;
+  final FinancieroDataModel? financieroData;
+
   FinancieroResponseModel({
     required this.financieroCargado,
     this.financieroData,
   });
 
-  final bool financieroCargado;
-  final FinancieroDataModel? financieroData;
   factory FinancieroResponseModel.fromJson(Map<String, dynamic> json) {
     return FinancieroResponseModel(
       financieroCargado: (json['status'] == 'success') ? true : false,

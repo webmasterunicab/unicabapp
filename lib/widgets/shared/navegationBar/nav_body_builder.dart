@@ -21,7 +21,12 @@ List<Widget> navBodyBuilder(
     name = userProvider.name;
 
     if (userProvider.profilePicture.isNotEmpty) {
-      picture = Image.network(userProvider.profilePicture);
+      picture = Image.network(
+        userProvider.profilePicture,
+        fit: BoxFit.cover,
+        width: 70,
+        height: 70,
+      );
     }
   }
 
@@ -63,8 +68,8 @@ List<Widget> navBodyBuilder(
         TextButton(
             onPressed: () {},
             style: TextButton.styleFrom(padding: EdgeInsets.only(bottom: 15)),
-            child: Image.asset('assets/img/pictureIcon.png',
-                fit: BoxFit.contain, width: 45, height: 45)),
+            child: Image.asset('assets/img/online-study.png',
+                fit: BoxFit.contain, width: 55, height: 55)),
         Row(
           children: [
             Column(

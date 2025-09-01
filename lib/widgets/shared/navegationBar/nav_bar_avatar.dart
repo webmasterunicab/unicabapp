@@ -115,7 +115,9 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             child: CircleAvatar(
               radius: 35,
               backgroundColor: Colors.white,
-              child: widget.userAvatar,
+              child: ClipOval(
+                child: widget.userAvatar
+              ),
             ),
           ),
         ),
