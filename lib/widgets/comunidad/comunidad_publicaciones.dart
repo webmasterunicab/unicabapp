@@ -6,7 +6,6 @@ import 'package:uniconecta/repositories/comunidad_repository.dart';
 import 'package:uniconecta/util/enums/comunidad/tipo_publicaciones.dart';
 import 'package:uniconecta/widgets/comunidad/comunidad_post_card.dart';
 import 'package:uniconecta/widgets/shared/error_mensaje.dart';
-import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/screen_name_display.dart';
 
 class ComunidadPublicaciones extends StatefulWidget {

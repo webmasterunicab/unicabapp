@@ -1,22 +1,21 @@
 class User {
   // Constructor
-  User({
-    required this.name, 
-    required this.profilePicture, 
-    required this.email,
-    required this.city, 
-    required this.birthday, 
-    required this.remarks, 
-    required this.visitedPlaces, 
-    required this.whyUnicab,
-    required this.userActive,
-    required this.userRole
-  });
+  User(
+      {required this.name,
+      required this.profilePicture,
+      required this.email,
+      required this.city,
+      required this.birthday,
+      required this.remarks,
+      required this.visitedPlaces,
+      required this.whyUnicab,
+      required this.userActive,
+      required this.userRole});
 
   // Properties
   final String name;
   final String email;
-  
+
   final String city;
   final String birthday;
 
@@ -39,22 +38,45 @@ class User {
       remarks: json['observaciones'] ?? '',
       visitedPlaces: json['lugaresVisitados'] ?? '',
       whyUnicab: json['porqueUnicab'] ?? '',
-      profilePicture: json['fotoPerfil'] ?? '', 
-      userActive: json['activo'] ?? 0, 
+      profilePicture: json['fotoPerfil'] ?? '',
+      userActive: json['activo'] ?? 0,
       userRole: json['rol'] ?? 0,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'name': name,
-    'email': email,
-    'city': city,
-    'birthday': birthday,
-    'remarks': remarks,
-    'visitedPlaces': visitedPlaces,
-    'whyUnicab': whyUnicab,
-    'profilePicture': profilePicture,
-    'userActive': whyUnicab,
-    'userRole': profilePicture,
-  };
+        'name': name,
+        'email': email,
+        'city': city,
+        'birthday': birthday,
+        'remarks': remarks,
+        'visitedPlaces': visitedPlaces,
+        'whyUnicab': whyUnicab,
+        'profilePicture': profilePicture,
+        'userActive': whyUnicab,
+        'userRole': profilePicture,
+      };
+
+  User copyWith({
+    String? name,
+    String? email,
+    String? birthday,
+    String? city,
+    String? visitedPlaces,
+    String? whyUnicab,
+    String? profilePicture
+  }) {
+    return User(
+      name: name ?? this.name,
+      email: email ?? this.email,
+      birthday: birthday ?? this.birthday,
+      city: city ?? this.city,
+      profilePicture: profilePicture ?? this.profilePicture,
+      visitedPlaces: visitedPlaces ?? this.visitedPlaces,
+      whyUnicab: whyUnicab ?? this.whyUnicab,
+      remarks: this.remarks,
+      userActive: this.userActive,
+      userRole: this.userRole,
+    );
+  }
 }

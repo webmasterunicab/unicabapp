@@ -5,6 +5,7 @@ import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_scree
 import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
+import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
@@ -24,6 +25,7 @@ class _ClaveBodyState extends State<ClaveBody> {
   final _formKey = GlobalKey<FormState>();
   String password = '';
   String passwordRepetida = '';
+  String passRegistroAcademico = '';
   String? _error;
   final _service = RegistroService();
 
@@ -34,31 +36,9 @@ class _ClaveBodyState extends State<ClaveBody> {
   Widget _mostrarError() {
     if (_error != null) {
       return Container(
-        margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
-        padding: EdgeInsets.all(12.sp),
-        decoration: BoxDecoration(
-          color: Colors.redAccent.shade100,
-          borderRadius: BorderRadius.circular(8.sp),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.warning_rounded,
-                color: Colors.redAccent.shade700, size: 20.sp),
-            SizedBox(height: 10.sp),
-            Text(
-              _error!,
-              softWrap: true,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: Colors.redAccent.shade700,
-                fontFamily: 'Roboto',
-              ),
-            ),
-          ],
-        ),
-      );
+          margin: EdgeInsets.symmetric(vertical: 2.w, horizontal: 2.w),
+          padding: EdgeInsets.all(4.w),
+          child: ErrorMensaje(mensaje: _error!));
     } else {
       return SizedBox.shrink();
     }
@@ -74,7 +54,7 @@ class _ClaveBodyState extends State<ClaveBody> {
     });
   }
 
-  void _submit() {
+  void _submit() async {
     if (!terminosAceptados) {
       setState(() {
         _error = 'Debes aceptar los terminos y condiciones';
@@ -85,53 +65,52 @@ class _ClaveBodyState extends State<ClaveBody> {
     if (_formKey.currentState?.validate() == true) {
       _formKey.currentState?.save();
 
-      _cargando = true;
+      setState(() {
+        _cargando = true;
+      });
+
       widget.datosRegistro['pass'] = password.trim();
-      widget.datosRegistro['aceptoTerminos'] = 1;
-      widget.datosRegistro['fotoPerfil'] = 'https://unicab.org/uniconecta/assets/fotos_perfil/user1.png';
+      widget.datosRegistro['pass_registro_academico'] =
+          passRegistroAcademico.trim();
+      widget.datosRegistro['proceso'] = 'Registro';
 
-      _subirRegistros();
+      // widget.datosRegistro['aceptoTerminos'] = 1;
+      // widget.datosRegistro['fotoPerfil'] =
+      //     'https://unicab.org/uniconecta/assets/fotos_perfil/user1.png';
 
-      // Navigator.of(context).push(
-      //   MaterialPageRoute(
-      //       builder: (_) => SubirFotoScreen(
-      //             datosRegistro: widget.datosRegistro,
-      //           )),
-      // );
-    }
-  }
+      try {
+        final responseUsuario =
+            await _service.subirDatosRegistro(widget.datosRegistro);
 
-  Future<void> _subirRegistros() async {
-    try {
-      final responseUsuario =
-          await _service.subirDatosRegistro(widget.datosRegistro);
+        // asegura que el widget aún está en pantalla
+        if (!mounted) return;
 
-      // asegura que el widget aún está en pantalla
-      if (!mounted) return;
+        setState(() {
+          if (responseUsuario.status == 'error') {
+            _error = responseUsuario.mensaje;
+          }
+        });
 
-      setState(() {
-        if (responseUsuario.status == 'error') {
-          _error = '${responseUsuario.mensaje} ${responseUsuario.sentencia}';
+        if (responseUsuario.status == 'error') return;
+
+        if (!mounted) return;
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => RegistroConfirmadoScreen()),
+          (Route<dynamic> route) =>
+              false, // Esto elimina todas las rutas anteriores
+        );
+      } catch (e) {
+        if (!mounted) return;
+        setState(() {
+          _error = "¡Ha ocurrido un error inesperado, inténtalo más tarde!";
+        });
+      } finally {
+        setState(() {
           _cargando = false;
-        }
-      });
-
-      if (responseUsuario.status == 'error') return;
-
-      if (!mounted) return;
-
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => RegistroConfirmadoScreen()),
-        (Route<dynamic> route) =>
-            false, // Esto elimina todas las rutas anteriores
-      );
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _error = "Ah ocurrido un error inesperado, intentalo mas tarde!";
-        _cargando = false;
-      });
+        });
+      }
     }
   }
 
@@ -225,6 +204,25 @@ class _ClaveBodyState extends State<ClaveBody> {
                       onSaved: (newValue) => passwordRepetida = newValue!,
                       readOnly: false,
                     ),
+                    espaciado,
+                    if (widget.datosRegistro['rol'] == "4" ||
+                        widget.datosRegistro['rol'] == "5")
+                      RegistroLabel(
+                          label:
+                              'Ingrese contraseña de acceso a Registro Académico:'),
+                    if (widget.datosRegistro['rol'] == "4" ||
+                        widget.datosRegistro['rol'] == "5")
+                      RegistroInput(
+                        placeholder: 'Contraseña registro académico',
+                        validator: (value) {
+                          password = value!;
+
+                          return CustomFormFieldValidator.password(value,
+                              esRequerido: true, nombreCampo: 'contraseña registro academico');
+                        },
+                        onSaved: (newValue) =>
+                            passRegistroAcademico = newValue!,
+                      ),
                   ],
                 ),
               )),

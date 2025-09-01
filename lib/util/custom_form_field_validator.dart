@@ -64,10 +64,46 @@ class CustomFormFieldValidator {
     String nombreCampo = 'fecha',
   }) {
     if ((value == null || value.trim().isEmpty) && esRequerido) {
-      return 'Campo: $nombreCampo es obilgatorio';
+      return 'Campo: $nombreCampo es obligatorio';
     }
-    final regex = RegExp(r'''^[0-9]{4}-[0-1][0-9]-[0-3][0-9]$''');
-    if (!regex.hasMatch(value!)) return 'Formato inválido. Ej: 2024-05-21';
+
+    // Validación inicial de formato (YYYY-MM-DD)
+    final regex = RegExp(r'^\d{4}-\d{2}-\d{2}$');
+    if (!regex.hasMatch(value!)) {
+      return 'Formato inválido. Ej: 2024-05-21';
+    }
+
+    // Intentar parsear la fecha
+    final partes = value.split('-');
+    final anio = int.tryParse(partes[0]);
+    final mes = int.tryParse(partes[1]);
+    final dia = int.tryParse(partes[2]);
+
+    if (anio == null || mes == null || dia == null) {
+      return 'Fecha inválida';
+    }
+
+    // Validar año
+    final anioActual = DateTime.now().year;
+    if (anio > anioActual) {
+      return 'El año no puede ser mayor a $anioActual';
+    }
+
+    // Validar mes
+    if (mes < 1 || mes > 12) {
+      return 'El mes debe estar entre 01 y 12';
+    }
+
+    // Validar días usando DateTime (detecta meses y años bisiestos)
+    try {
+      final fecha = DateTime(anio, mes, dia);
+      if (fecha.year != anio || fecha.month != mes || fecha.day != dia) {
+        return 'El día no es válido para el mes';
+      }
+    } catch (_) {
+      return 'Fecha inválida';
+    }
+
     return null;
   }
 
@@ -77,10 +113,15 @@ class CustomFormFieldValidator {
     String nombreCampo = 'Contraseña',
   }) {
     if ((value == null || value.trim().isEmpty) && esRequerido) {
+      if (nombreCampo.length > 17) {
+        nombreCampo = "$nombreCampo\n";
+      }
+
       return 'Campo: $nombreCampo es obligatorio';
     }
 
-    final regex = RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10,12}$');
+    final regex = RegExp(
+        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10,12}$');
 
     if (!regex.hasMatch(value!)) {
       return 'Debe tener minimo 10 caracteres, con al menos:\n'

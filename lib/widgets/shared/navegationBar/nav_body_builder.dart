@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uniconecta/models/shared/user.dart';
 import 'package:uniconecta/providers/user_provider.dart';
-import 'package:uniconecta/screens/comunidad/comunidad_mis_publicaciones.dart';
-import 'package:uniconecta/screens/comunidad/comunidad_todas_publicaciones.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/nav_bar_avatar.dart';
 
@@ -27,10 +25,10 @@ List<Widget> navBodyBuilder(
 
   final misPublicaciones = GestureDetector(
     onTap: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (_) => ComunidadMisPublicaciones(user: userProvider!)),
-      );
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //       builder: (_) => ComunidadMisPublicaciones(user: userProvider!)),
+      // );
     },
     child: Image.asset(
       "assets/img/msgIconNav.png",
@@ -43,10 +41,10 @@ List<Widget> navBodyBuilder(
 
   final todasPublicaciones = GestureDetector(
     onTap: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (_) => ComunidadTodasPublicaciones(user: userProvider!)),
-      );
+      // Navigator.of(context).push(
+      //   MaterialPageRoute(
+      //       builder: (_) => ComunidadTodasPublicaciones(user: userProvider!)),
+      // );
     },
     child: Image.asset(
       "assets/img/bellNav.png",

@@ -4,6 +4,7 @@ import 'package:uniconecta/models/intermedia_screen/estudiante_modelo.dart';
 import 'package:uniconecta/models/intermedia_screen/grado_modelo.dart';
 import 'package:uniconecta/repositories/intermedia_repository.dart';
 import 'package:uniconecta/widgets/shared/dropdown_intermedia.dart';
+import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 
 class DropdownsIntermedia extends StatefulWidget {
   final int rol;
@@ -38,11 +39,11 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
     if (widget.rol == 2) {
       _cargarEstudiantesPorAcudiente();
     } else {
-      _cargarRegistros();
+      _cargarGrados();
     }
   }
 
-  Future<void> _cargarRegistros() async {
+  Future<void> _cargarGrados() async {
     try {
       final data = await _repo.obtenerGrados();
 
@@ -53,22 +54,23 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         } else {
           _error = data.mensaje;
         }
-        _cargando = false;
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _error = e.toString();
+      });
+    } finally {
+      setState(() {
         _cargando = false;
       });
     }
   }
 
   Future<void> _cargarEstudiantesPorGrado() async {
-    _cargando = true;
-
     try {
       if (idGrado == null) return;
+      _cargando = true;
 
       final data = await _repo.obtenerEstudiantesPorGrado({"idGrado": idGrado});
 
@@ -109,7 +111,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         _cargando = false;
       });
     } on FormatException {
-       setState(() {
+      setState(() {
         _error = "No hay estudiantes relacionados a este correo";
         _cargando = false;
       });
@@ -174,7 +176,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
           grados: _grados,
           hintText: "Selecciona un Grado",
           validator: (String? value) {
-            if (value == "NA") {
+            if (value == "NINGUNO") {
               return "Debe seleccionar un grado valido";
             }
             return null;
@@ -182,7 +184,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
           valorSeleccionado: idGrado,
           onChanged: (value) {
             setState(() {
-              if (value != "NA") {
+              if (value != "NINGUNO") {
                 idGrado = value;
               }
 
@@ -200,43 +202,13 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
 
   Widget buildErrorWidget(String? error) {
     if (error == null || error.isEmpty) {
-      return const SizedBox.shrink(); // No muestra nada si no hay error
+      return const SizedBox.shrink();
     }
 
     return Container(
-      margin: EdgeInsets.only(top: 10.h, left: 5.w, right: 5.w),
-      padding: EdgeInsets.all(3.w),
-      decoration: BoxDecoration(
-        color: Colors.red.shade50,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.red.shade300, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.red.withValues(alpha: 0.1), // nuevo método
-            blurRadius: 6,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.error_outline, color: Colors.red.shade400, size: 18.sp),
-          SizedBox(width: 2.w),
-          Expanded(
-            child: Text(
-              error,
-              style: TextStyle(
-                color: Colors.red.shade800,
-                fontSize: 18.sp,
-                fontWeight: FontWeight.w500,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
+        margin: EdgeInsets.only(top: 10.h, left: 5.w, right: 5.w),
+        padding: EdgeInsets.all(3.w),
+        child: ErrorMensaje(mensaje: _error!));
   }
 
   @override

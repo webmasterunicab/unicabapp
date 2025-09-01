@@ -1,0 +1,4 @@
+enum Proceso {
+  ajustarPerfil,
+  registro
+}

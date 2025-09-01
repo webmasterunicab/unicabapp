@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_intermedia_screen.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_screen.dart';
-import 'package:uniconecta/screens/comunidad/comunidad_screen.dart';
 import 'package:uniconecta/screens/estado_financiero/estado_financiero_screen.dart';
 import 'package:uniconecta/screens/observador/observador_intermedia_screen.dart';
 import 'package:uniconecta/screens/observador/observador_screen.dart';
@@ -118,24 +117,24 @@ class GeneralScreen extends StatelessWidget {
               }),
           SizedBox(height: buttonSpacing),
 
-          OrangeButton(
-              buttonText: "Comunidad",
-              width: 324,
-              prefix: Icon(
-                Icons.terminal_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
-              suffix: Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-                size: 24,
-              ),
-              textWeight: FontWeight.normal,
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => ComunidadScreen(user: provider.user!,)));
-              }),
+          // OrangeButton(
+          //     buttonText: "Comunidad",
+          //     width: 324,
+          //     prefix: Icon(
+          //       Icons.terminal_rounded,
+          //       color: Colors.white,
+          //       size: 24,
+          //     ),
+          //     suffix: Icon(
+          //       Icons.arrow_forward_ios_rounded,
+          //       color: Colors.white,
+          //       size: 24,
+          //     ),
+          //     textWeight: FontWeight.normal,
+          //     onPressed: () {
+          //       Navigator.of(context).push(
+          //           MaterialPageRoute(builder: (_) => ComunidadScreen(user: provider.user!,)));
+          //     }),
           //SizedBox(height: buttonSpacing),
 
           //SeeMoreContainer(),

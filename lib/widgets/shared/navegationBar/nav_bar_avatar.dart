@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/main.dart';
+import 'package:uniconecta/screens/ajustar_perfil/ajustar_perfil_screen.dart';
+import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_nav.dart';
 
@@ -33,7 +35,7 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
   void didPushNext() {
     _closeDropdown();
   }
-  
+
   void _getDropdownVariables() {
     RenderBox? box = action.currentContext?.findRenderObject() as RenderBox?;
 
@@ -49,25 +51,28 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
       return Positioned(
         top: yPosition,
         left: xPosition! - xOffset,
-        child: DropdownNav(
-          boxSize: (width! + xOffset), 
-          items: [
-            DropdownItemNav(name: "Ajustar Perfil", onPressed: () {}),
-            DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
-            DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
-            DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
-            DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
-            DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
-            DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
-            DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
-            DropdownItemNav(name: "Eliminar cuenta", onPressed: () {}),
-          ]
-        ),
+        child: DropdownNav(boxSize: (width! + xOffset), items: [
+          DropdownItemNav(
+              name: "Ajustar Perfil",
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => AjustarPerfilScreen()));
+              }),
+          DropdownItemNav(name: "Cambiar foto de Perfil", onPressed: () {
+            Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => SubirFotoScreen()));
+          }),
+          DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
+          DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
+          DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
+          DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
+          DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
+          DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
+          DropdownItemNav(name: "Eliminar cuenta", onPressed: () {}),
+        ]),
       );
     });
   }
-
-
 
   void _closeDropdown() {
     if (isOpened && dropdown != null) {
@@ -93,7 +98,6 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white, width: 2),
           ),
-
           child: TextButton(
             key: action,
             onPressed: () {
@@ -109,7 +113,6 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
                 isOpened = !isOpened;
               });
             },
-
             style: TextButton.styleFrom(padding: EdgeInsets.all(0)),
             child: CircleAvatar(
               radius: 35,
@@ -118,13 +121,12 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             ),
           ),
         ),
-
         Positioned(
-          right: 0, bottom: -5,
-
+          right: 0,
+          bottom: -5,
           child: Container(
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-
+            decoration: const BoxDecoration(
+                shape: BoxShape.circle, color: Colors.white),
             child: const Icon(
               Icons.keyboard_arrow_down_rounded,
               color: Color.fromRGBO(145, 145, 145, 1),

@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/registro/rol_modelo.dart';
+import 'package:uniconecta/models/shared/user.dart';
+import 'package:uniconecta/providers/user_provider.dart';
+import 'package:uniconecta/repositories/registro_service.dart';
 import 'package:uniconecta/repositories/roles_repository.dart';
 import 'package:uniconecta/screens/clave/clave_screen.dart';
+import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
+import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/util/custom_form_field_validator.dart';
+import 'package:uniconecta/util/enums/ajustar_perfil/proceso.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_dropdown.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
+import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
 
 class RegistroBody extends StatefulWidget {
-  const RegistroBody({super.key});
+  final Proceso proceso;
+  const RegistroBody({super.key, required this.proceso});
 
   @override
   State<RegistroBody> createState() => _RegistroBodyState();
@@ -19,6 +28,7 @@ class RegistroBody extends StatefulWidget {
 
 class _RegistroBodyState extends State<RegistroBody> {
   final RolesRepository _repo = RolesRepository();
+  final RegistroService _registro = RegistroService();
 
   final _formKey = GlobalKey<FormState>();
   String nombre = '';
@@ -46,7 +56,7 @@ class _RegistroBodyState extends State<RegistroBody> {
     });
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState?.validate() == true) {
       _formKey.currentState?.save();
 
@@ -60,10 +70,33 @@ class _RegistroBodyState extends State<RegistroBody> {
         'porqueUnicab': porqueUnicab.trim(),
       };
 
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (_) => ClaveScreen(datosRegistro: datosRegistro)),
-      );
+      if (widget.proceso == Proceso.registro) {
+        datosRegistro['proceso'] = 'Registro';
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (_) => ClaveScreen(datosRegistro: datosRegistro)),
+        );
+      }
+
+      if (widget.proceso == Proceso.ajustarPerfil) {
+        final provider = context.read<UserProvider>();
+        datosRegistro['proceso'] = 'Ajustar perfil';
+        datosRegistro['rol'] = provider.user!.userRole.toString();
+        _registro.subirDatosRegistro(datosRegistro);
+
+        provider.updateUser(
+          name: nombre.trim(),
+          email: correo.trim(),
+          birthday: cumple.trim(),
+          city: ciudad.trim(),
+          visitedPlaces: lugaresVisitados.trim(),
+          whyUnicab: porqueUnicab.trim(),
+        );
+
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => GeneralScreen()),
+        );
+      }
     }
   }
 
@@ -93,6 +126,15 @@ class _RegistroBodyState extends State<RegistroBody> {
 
   @override
   Widget build(BuildContext context) {
+    final UserProvider provider = context.watch<UserProvider>();
+    User? user = provider.user;
+    String initNombre = user?.name ?? '';
+    String initCorreo = user?.email ?? '';
+    String initCumple = user?.birthday ?? '';
+    String initCiudad = user?.city ?? '';
+    String initLugares = user?.visitedPlaces ?? '';
+    String initPorqueUnicab = user?.whyUnicab ?? '';
+
     final decoracion = BoxDecoration(
       color: Colors.white,
       boxShadow: [
@@ -117,9 +159,10 @@ class _RegistroBodyState extends State<RegistroBody> {
       return Loading();
     }
 
-//TODO: cambiar forma de mostrar error
     if (_error != null) {
-      return Scaffold(body: Center(child: Text('Error: $_error')));
+      return ErrorMensaje(
+        mensaje: _error!,
+      );
     }
 
     return SingleChildScrollView(
@@ -142,6 +185,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: '¿Cómo te llamas?',
                     ),
                     RegistroInput(
+                      initialValue: initNombre,
                       placeholder: 'Tal como te conocen en casa y en UNICAB.',
                       validator: (value) => CustomFormFieldValidator.texto(
                           value,
@@ -154,6 +198,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: '¿Cuándo es tu cumpleaños?',
                     ),
                     RegistroInput(
+                      initialValue: initCumple,
                       placeholder:
                           'No prometemos pastel, pero nos gusta saberlo.',
                       validator: (value) => CustomFormFieldValidator.fecha(
@@ -167,6 +212,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: 'Ciudad de residencia',
                     ),
                     RegistroInput(
+                      initialValue: initCiudad,
                       placeholder:
                           'UNICAB es virtual, pero tú tienes un mundo propio.',
                       validator: (value) => CustomFormFieldValidator.texto(
@@ -176,28 +222,32 @@ class _RegistroBodyState extends State<RegistroBody> {
                       onSaved: (newValue) => ciudad = newValue!,
                     ),
                     espaciadoElementosForm,
-                    RegistroLabel(
-                      label: '¿Cuál es tu rol?',
-                    ),
-                    RegistroDropdown(
-                      registros: _registros,
-                      valorSeleccionado: rolSeleccionado,
-                      validator: (value) => CustomFormFieldValidator.texto(
-                          value,
-                          esRequerido: true,
-                          nombreCampo: 'Rol'),
-                      onChanged: (value) {
-                        setState(() {
-                          rolSeleccionado = value!;
-                        });
-                      },
-                      onSaved: (newValue) => rol = newValue!,
-                    ),
-                    espaciadoElementosForm,
+                    if (widget.proceso == Proceso.registro)
+                      RegistroLabel(
+                        label: '¿Cuál es tu rol?',
+                      ),
+                    if (widget.proceso == Proceso.registro)
+                      RegistroDropdown(
+                        registros: _registros,
+                        valorSeleccionado: rolSeleccionado,
+                        validator: (value) => CustomFormFieldValidator.texto(
+                            value,
+                            esRequerido: true,
+                            nombreCampo: 'Rol'),
+                        onChanged: (value) {
+                          setState(() {
+                            rolSeleccionado = value!;
+                          });
+                        },
+                        onSaved: (newValue) => rol = newValue!,
+                      ),
+                    if (widget.proceso == Proceso.registro)
+                      espaciadoElementosForm,
                     RegistroLabel(
                       label: 'Correo',
                     ),
                     RegistroInput(
+                      initialValue: initCorreo,
                       placeholder: 'Para avisarte de cosas importantes.',
                       validator: (value) => CustomFormFieldValidator.correo(
                           value,
@@ -220,6 +270,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: '¿Qué lugares has viajado o te gustaría visitar?',
                     ),
                     RegistroInput(
+                      initialValue: initLugares,
                       placeholder:
                           '¿Qué sitios has explorado o sueñas conocer?',
                       validator: (value) => CustomFormFieldValidator.texto(
@@ -233,6 +284,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       label: '¿Por qué elige a UNICAB?',
                     ),
                     RegistroInput(
+                      initialValue: initPorqueUnicab,
                       placeholder:
                           'Cada historia es única. ¿Qué te trajo hasta aquí?',
                       validator: (value) => CustomFormFieldValidator.texto(
@@ -251,26 +303,28 @@ class _RegistroBodyState extends State<RegistroBody> {
                   _checkForm();
                   if (_isFormValid) _submit();
                 },
-                buttonText: '¡Listo, sigamos!',
+                buttonText: widget.proceso == Proceso.registro
+                    ? '¡Listo, sigamos!'
+                    : 'Actualizar perfil',
                 textWeight: FontWeight.w600,
                 fontSize: 16.sp,
               )),
-          Container(
-            margin: EdgeInsets.only(top: 55),
-            child: TextButton(
-                onPressed: () {
-                  // Acción al presionar
-                },
-                child: Text(
-                  'Términos y privacidad (Enlace a políticas de datos)',
-                  style: TextStyle(
-                    fontFamily: 'Roboto',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 14.sp,
-                    color: Colors.black,
-                  ),
-                )),
-          ),
+          // Container(
+          //   margin: EdgeInsets.only(top: 55),
+          //   child: TextButton(
+          //       onPressed: () {
+          //         // Acción al presionar
+          //       },
+          //       child: Text(
+          //         'Términos y privacidad (Enlace a políticas de datos)',
+          //         style: TextStyle(
+          //           fontFamily: 'Roboto',
+          //           fontWeight: FontWeight.w400,
+          //           fontSize: 14.sp,
+          //           color: Colors.black,
+          //         ),
+          //       )),
+          // ),
         ],
       ),
     );

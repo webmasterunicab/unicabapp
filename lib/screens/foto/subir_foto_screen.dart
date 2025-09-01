@@ -3,11 +3,8 @@ import 'package:uniconecta/widgets/foto/subir_foto_body.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_app_bar.dart';
 
 class SubirFotoScreen extends StatelessWidget {
-  final Map<String, dynamic> datosRegistro;
-
   const SubirFotoScreen({
     super.key,
-    required this.datosRegistro,
   });
 
   @override
@@ -18,7 +15,7 @@ class SubirFotoScreen extends StatelessWidget {
         mostrarTexto: false,
         color: Color.fromRGBO(255, 255, 255, 1),
       ),
-      body: SafeArea(child: SubirFotoBody(datosRegistro: datosRegistro)),
+      body: SafeArea(child: SubirFotoBody()),
     );
   }
 }

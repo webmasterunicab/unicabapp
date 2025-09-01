@@ -4,6 +4,7 @@ import 'package:sizer/sizer.dart';
 class RegistroInput extends StatelessWidget {
   final String placeholder;
   final bool readOnly;
+  final String initialValue;
 
   final FormFieldSetter<String> onSaved;
   final FormFieldValidator<String>? validator;
@@ -13,7 +14,9 @@ class RegistroInput extends StatelessWidget {
       required this.placeholder,
       this.readOnly = false,
       required this.validator,
-      required this.onSaved});
+      required this.onSaved,
+      this.initialValue = ''
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class RegistroInput extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         validator: validator,
         onSaved: onSaved,
+        initialValue: initialValue,
         // minLines: 1,
         // maxLines: null,
         readOnly: readOnly,
