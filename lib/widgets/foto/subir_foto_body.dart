@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/models/inicio_sesion/response_login.dart';
 import 'package:uniconecta/providers/user_provider.dart';
-import 'package:uniconecta/repositories/inicio_sesion_repository.dart';
-import 'package:uniconecta/repositories/registro_service.dart';
+import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
@@ -23,7 +21,7 @@ class SubirFotoBody extends StatefulWidget {
 
 class _SubirFotoBodyState extends State<SubirFotoBody> {
   final Color colorBotones = Color.fromRGBO(11, 119, 179, 1);
-  final _service = RegistroService();
+  final _service = UsuarioService();
   final ImagePicker _picker = ImagePicker();
 
   File? _selectedImage;

@@ -15,8 +15,6 @@ class InicioSesion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
       body: LayoutBuilder(
@@ -56,15 +54,13 @@ class _InicioBody extends StatelessWidget {
                   width: 154,
                 ),
               ),
-    
               _MainForm(),
-    
               SizedBox(height: 42),
-          
               CustomButtonSesion(
                 buttonText: "Olvide mi contraseña",
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => RecuperarContrasenaScreen()));
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => RecuperarContrasenaScreen()));
                 },
               ),
             ],
@@ -147,17 +143,17 @@ class _MainFormState extends State<_MainForm> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.transparent, 
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center, 
-              children: [
+              backgroundColor: Colors.transparent,
+              content:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(Icons.error_rounded, color: Colors.white),
                 SizedBox(width: 4),
-
-                Text("Ha Ocurrido un error, Revisa tu conexion a internet.", style: TextStyle(fontFamily: "Roboto", fontSize: 15.sp, color: Colors.white))
-              ]
-            )
-          ),
+                Text("Ha Ocurrido un error, Revisa tu conexion a internet.",
+                    style: TextStyle(
+                        fontFamily: "Roboto",
+                        fontSize: 15.sp,
+                        color: Colors.white))
+              ])),
         );
 
       } finally {
@@ -178,14 +174,13 @@ class _MainFormState extends State<_MainForm> {
         children: [
           if (error != null) ...[
             SizedBox(height: 20),
-
             Container(
               margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
               padding: EdgeInsets.all(18),
               decoration: BoxDecoration(
                 color: Color.fromRGBO(246, 119, 144, 1),
                 borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                border: BoxBorder.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
+                border: Border.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
               ),
               
               child: Column(
@@ -204,8 +199,8 @@ class _MainFormState extends State<_MainForm> {
                 ],
               ),
             ),
-          ] else SizedBox(height: 100),
-
+          ] else
+            SizedBox(height: 100),
           CampoSesion(
             fieldLabel: "Usuario (Correo)",
             fieldChecking: CustomFormFieldValidator.correo,
@@ -214,12 +209,12 @@ class _MainFormState extends State<_MainForm> {
               if (value != null && value.isEmpty) {
                 return "Ingresa un valor.";
               } else {
-                return CustomFormFieldValidator.correo(value, esRequerido: true);
+                return CustomFormFieldValidator.correo(value,
+                    esRequerido: true);
               }
             },
           ),
           SizedBox(height: 47),
-
           CampoSesion(
             fieldLabel: "Contraseña",
             fieldChecking: CustomFormFieldValidator.password,
@@ -228,21 +223,22 @@ class _MainFormState extends State<_MainForm> {
               if (value != null && value.isEmpty) {
                 return "Ingresa un valor.";
               } else {
-                return CustomFormFieldValidator.password(value, esRequerido: true);
+                return CustomFormFieldValidator.password(value,
+                    esRequerido: true);
               }
             },
           ),
           SizedBox(height: 30),
-
-          (!_joiningSession) 
-            ? OrangeButton(
-                onPressed: () => _sendRequest(buildContext),
-
-                buttonText: "Iniciar Sesión",
-                textWeight: FontWeight.w600,
-              )
-
-            : SizedBox(height: 26, width: 26, child: CircularProgressIndicator(color: Colors.white)),
+          (!_joiningSession)
+              ? OrangeButton(
+                  onPressed: () => _sendRequest(buildContext),
+                  buttonText: "Iniciar Sesión",
+                  textWeight: FontWeight.w600,
+                )
+              : SizedBox(
+                  height: 26,
+                  width: 26,
+                  child: CircularProgressIndicator(color: Colors.white)),
         ],
       ),
     );

@@ -104,7 +104,7 @@ class RegistroConfirmadoScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 5.h,),
-                Image.asset('assets/img/pictureIcon.png',
+                Image.asset('assets/img/online-study.png',
                 width: 20.w,
                 height: 20.w,
                 fit: BoxFit.contain,)

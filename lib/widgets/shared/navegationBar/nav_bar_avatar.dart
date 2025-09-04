@@ -9,7 +9,7 @@ class NavBarAvatar extends StatefulWidget {
   final Widget userAvatar;
 
   const NavBarAvatar({super.key, required this.userAvatar});
-  
+
   @override
   State<NavBarAvatar> createState() => _DropdownManager();
 }
@@ -47,34 +47,84 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
     }
   }
 
+  Future<bool> showDeleteAccountAlert(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false, // evita cerrar tocando fuera
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: const Text('Confirmación',
+              style: TextStyle(
+                  color: Colors.orange,
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w600)),
+          content: const Text('¿Está seguro de que quiere eliminar su cuenta?',
+              style: TextStyle(fontFamily: 'Roboto')),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(false),
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.all(Colors.blue),
+              ),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(ctx).pop(true),
+              style: ElevatedButton.styleFrom(
+                  shape: const StadiumBorder(),
+                  overlayColor: Colors.orange,
+                  backgroundColor: Colors.orange),
+              child: const Text('Eliminar',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Roboto',
+                  )),
+            ),
+          ],
+        );
+      },
+    );
+    return result ?? false;
+  }
+
   OverlayEntry _buildDropdown() {
     return OverlayEntry(builder: (context) {
       return Positioned(
         top: yPosition,
         left: xPosition! - xOffset,
-        child: DropdownNav(
-          boxSize: (width! + xOffset), 
-          items: [
-            DropdownItemNav(
+        child: DropdownNav(boxSize: (width! + xOffset), items: [
+          DropdownItemNav(
               name: "Ajustar Perfil",
               onPressed: () {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (_) => AjustarPerfilScreen()));
               }),
-          DropdownItemNav(name: "Cambiar foto de Perfil", onPressed: () {
-            Navigator.of(context).push(
-                    MaterialPageRoute(builder: (_) => SubirFotoScreen()));
-          }),
-            DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
-            //DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
-            DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
-            DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
-            //DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
-            //DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
-            //DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
-            DropdownItemNav(name: "Eliminar cuenta", onPressed: () {}),
-          ]
-        ),
+          DropdownItemNav(
+              name: "Cambiar foto de Perfil",
+              onPressed: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (_) => SubirFotoScreen()));
+              }),
+          DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
+          //DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
+          DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
+          DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
+          //DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
+          //DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
+          //DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
+          DropdownItemNav(
+            name: "Eliminar cuenta",
+            onPressed: () async {
+              final confirmed = await showDeleteAccountAlert(context);
+
+             
+              if (confirmed) {}
+            },
+          ),
+        ]),
       );
     });
   }
@@ -122,9 +172,7 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             child: CircleAvatar(
               radius: 35,
               backgroundColor: Colors.white,
-              child: ClipOval(
-                child: widget.userAvatar
-              ),
+              child: ClipOval(child: widget.userAvatar),
             ),
           ),
         ),

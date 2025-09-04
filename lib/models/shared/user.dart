@@ -10,7 +10,8 @@ class User {
       required this.visitedPlaces,
       required this.whyUnicab,
       required this.userActive,
-      required this.userRole});
+      required this.userRole,
+      required this.pass});
 
   // Properties
   final String name;
@@ -28,6 +29,7 @@ class User {
   final int userActive;
   final int userRole;
 
+  String pass;
   // fromJson Constructor
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -41,6 +43,7 @@ class User {
       profilePicture: json['fotoPerfil'] ?? '',
       userActive: json['activo'] ?? 0,
       userRole: json['rol'] ?? 0,
+      pass: json['pass'] ?? '',
     );
   }
 
@@ -57,15 +60,14 @@ class User {
         'userRole': profilePicture,
       };
 
-  User copyWith({
-    String? name,
-    String? email,
-    String? birthday,
-    String? city,
-    String? visitedPlaces,
-    String? whyUnicab,
-    String? profilePicture
-  }) {
+  User copyWith(
+      {String? name,
+      String? email,
+      String? birthday,
+      String? city,
+      String? visitedPlaces,
+      String? whyUnicab,
+      String? profilePicture}) {
     return User(
       name: name ?? this.name,
       email: email ?? this.email,
@@ -74,9 +76,10 @@ class User {
       profilePicture: profilePicture ?? this.profilePicture,
       visitedPlaces: visitedPlaces ?? this.visitedPlaces,
       whyUnicab: whyUnicab ?? this.whyUnicab,
-      remarks: this.remarks,
-      userActive: this.userActive,
-      userRole: this.userRole,
+      remarks: remarks,
+      userActive: userActive,
+      userRole: userRole,
+      pass: pass,
     );
   }
 }

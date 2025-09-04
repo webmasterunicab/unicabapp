@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/repositories/registro_service.dart';
+import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/screens/registro_confirmado/registro_confirmado_screen.dart';
 import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/widgets/registro_estudiantes/registro_input.dart';
@@ -27,7 +27,7 @@ class _ClaveBodyState extends State<ClaveBody> {
   String passwordRepetida = '';
   String passRegistroAcademico = '';
   String? _error;
-  final _service = RegistroService();
+  final _service = UsuarioService();
 
   bool _isFormValid = false;
   bool _cargando = false;
@@ -72,11 +72,6 @@ class _ClaveBodyState extends State<ClaveBody> {
       widget.datosRegistro['pass'] = password.trim();
       widget.datosRegistro['pass_registro_academico'] =
           passRegistroAcademico.trim();
-      widget.datosRegistro['proceso'] = 'Registro';
-
-      // widget.datosRegistro['aceptoTerminos'] = 1;
-      // widget.datosRegistro['fotoPerfil'] =
-      //     'https://unicab.org/uniconecta/assets/fotos_perfil/user1.png';
 
       try {
         final responseUsuario =
@@ -214,12 +209,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                         widget.datosRegistro['rol'] == "5")
                       RegistroInput(
                         placeholder: 'Contraseña registro académico',
-                        validator: (value) {
-                          password = value!;
-
-                          return CustomFormFieldValidator.password(value,
-                              esRequerido: true, nombreCampo: 'contraseña registro academico');
-                        },
+                        validator: (value) => null,
                         onSaved: (newValue) =>
                             passRegistroAcademico = newValue!,
                       ),
@@ -229,7 +219,7 @@ class _ClaveBodyState extends State<ClaveBody> {
           Container(
             margin: EdgeInsets.symmetric(vertical: 38, horizontal: 38),
             child: Text(
-              'Requisitos: *Mínimo 8 caracteres, incluye letras, números y al menos un Mínimo 8 caracteres, incluye letras, números y al menos un símbolo.',
+              'Requisitos: * Mínimo 10 caracteres, incluye letras, números y al menos un símbolo.',
               style: TextStyle(
                 fontFamily: 'Roboto',
                 fontWeight: FontWeight.normal,

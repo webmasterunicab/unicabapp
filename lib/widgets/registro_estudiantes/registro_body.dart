@@ -4,10 +4,9 @@ import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/registro/rol_modelo.dart';
 import 'package:uniconecta/models/shared/user.dart';
 import 'package:uniconecta/providers/user_provider.dart';
-import 'package:uniconecta/repositories/registro_service.dart';
+import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/repositories/roles_repository.dart';
 import 'package:uniconecta/screens/clave/clave_screen.dart';
-import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
 import 'package:uniconecta/screens/general/general_screen.dart';
 import 'package:uniconecta/util/custom_form_field_validator.dart';
 import 'package:uniconecta/util/enums/ajustar_perfil/proceso.dart';
@@ -28,7 +27,7 @@ class RegistroBody extends StatefulWidget {
 
 class _RegistroBodyState extends State<RegistroBody> {
   final RolesRepository _repo = RolesRepository();
-  final RegistroService _registro = RegistroService();
+  final UsuarioService _registro = UsuarioService();
 
   final _formKey = GlobalKey<FormState>();
   String nombre = '';
@@ -82,19 +81,27 @@ class _RegistroBodyState extends State<RegistroBody> {
         final provider = context.read<UserProvider>();
         datosRegistro['proceso'] = 'Ajustar perfil';
         datosRegistro['rol'] = provider.user!.userRole.toString();
-        _registro.subirDatosRegistro(datosRegistro);
+        datosRegistro['pass'] = provider.user!.pass;
+        final response = await _registro.subirDatosRegistro(datosRegistro);
+        if (response.status != 'error') {
+          provider.updateUser(
+            name: nombre.trim(),
+            email: correo.trim(),
+            birthday: cumple.trim(),
+            city: ciudad.trim(),
+            visitedPlaces: lugaresVisitados.trim(),
+            whyUnicab: porqueUnicab.trim(),
+          );
+        } else {
+          _error = response.mensaje;
+        }
 
-        provider.updateUser(
-          name: nombre.trim(),
-          email: correo.trim(),
-          birthday: cumple.trim(),
-          city: ciudad.trim(),
-          visitedPlaces: lugaresVisitados.trim(),
-          whyUnicab: porqueUnicab.trim(),
-        );
-
-        Navigator.of(context).push(
+        if (!mounted) return;
+        Navigator.pushAndRemoveUntil(
+          context,
           MaterialPageRoute(builder: (_) => GeneralScreen()),
+          (Route<dynamic> route) =>
+              false, // Esto elimina todas las rutas anteriores
         );
       }
     }
@@ -157,12 +164,6 @@ class _RegistroBodyState extends State<RegistroBody> {
 
     if (_cargando) {
       return Loading();
-    }
-
-    if (_error != null) {
-      return ErrorMensaje(
-        mensaje: _error!,
-      );
     }
 
     return SingleChildScrollView(
@@ -296,8 +297,13 @@ class _RegistroBodyState extends State<RegistroBody> {
                   ],
                 ),
               )),
+          if (_error != null)
+            Container(
+                margin: EdgeInsets.symmetric(vertical: 2.w, horizontal: 2.w),
+                padding: EdgeInsets.all(4.w),
+                child: ErrorMensaje(mensaje: _error!)),
           Container(
-              margin: EdgeInsets.only(top: 55),
+              margin: EdgeInsets.symmetric(vertical: 25),
               child: OrangeButton(
                 onPressed: () {
                   _checkForm();
