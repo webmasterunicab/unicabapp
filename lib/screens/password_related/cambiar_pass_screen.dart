@@ -204,7 +204,7 @@ class _MainFormState extends State<_MainForm> {
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(246, 119, 144, 1),
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                  border: BoxBorder.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
+                  border: Border.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
                 ),
 
                 child: Column(

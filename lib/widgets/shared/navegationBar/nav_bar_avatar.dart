@@ -6,7 +6,6 @@ import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/screens/ajustar_perfil/ajustar_perfil_screen.dart';
 import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
-import 'package:uniconecta/screens/inicio/inicio_screen.dart';
 import 'package:uniconecta/screens/password_related/cambiar_pass_screen.dart';
 import 'package:uniconecta/screens/video_inicio/splash_inicio_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
