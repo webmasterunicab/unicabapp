@@ -147,7 +147,7 @@ class _MainFormState extends State<_MainForm> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: Colors.transparent, 
+            backgroundColor: const Color.fromRGBO(11, 119, 179, 1), 
             content: Row(
               mainAxisAlignment: MainAxisAlignment.center, 
               children: [

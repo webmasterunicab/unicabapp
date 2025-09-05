@@ -7,7 +7,7 @@ class ResponseRecoverPass {
 
   factory ResponseRecoverPass.fromJson(Map<String, dynamic> json) {
     return ResponseRecoverPass(
-      recoverStatus: (json['estado'] == "CorreoOK") ? true : false,
+      recoverStatus: (json['estado'] == "CorreoOK"),
       message: json['mensaje'] ?? '',
     );
   }

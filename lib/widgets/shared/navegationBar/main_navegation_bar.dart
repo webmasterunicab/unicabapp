@@ -13,8 +13,9 @@ class MainNavegationBar extends StatelessWidget {
 
   final Widget? nextScreen;
   final bool canGetBackHere;
+  final Color? buttonsColor;
 
-  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen});
+  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen, this.buttonsColor});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +51,8 @@ class MainNavegationBar extends StatelessWidget {
             context: context, 
             canGetBackHere: 
             canGetBackHere, 
-            nextScreen: nextScreen
+            nextScreen: nextScreen,
+            buttonsColor: buttonsColor
           ),
         ),
       ),

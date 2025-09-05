@@ -31,7 +31,7 @@ class FollowUpModel {
       studentActions: (json['acciones_est'] == 'NA') ? '' : json['acciones_est'] ?? '', 
       attendantActions: (json['acciones_acu'] == 'NA') ? '' : json['acciones_acu'] ?? '', 
       commitments: (json['compromisos'] == 'NA') ? '' : json['compromisos'] ?? '', 
-      isOpen: (json['estado'] == "abierto") ? true : false
+      isOpen: (json['estado'] == "abierto")
     );
   }
 }

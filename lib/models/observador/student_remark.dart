@@ -41,7 +41,7 @@ class StudentRemark {
     return StudentRemark(
       name: json['nombre'] ?? '', 
 
-      hasAssessment: (json['conValoracion'] == 'SI') ? true : false, 
+      hasAssessment: (json['conValoracion'] == 'SI'),
       assessmentId: (json['idValoracion'] is String) 
         ? int.tryParse(json['idValoracion']) ?? 0 
         : json['idValoracion'] ?? 0, 
@@ -53,12 +53,12 @@ class StudentRemark {
       assessmentPersonality: json['personalidadValoracion'] ?? '', 
       assessmentGeneral: json['generalValoracion'] ?? '', 
 
-      hasFollowUps: (json['conSeguimientos'] == 'SI') ? true : false, 
+      hasFollowUps: (json['conSeguimientos'] == 'SI'), 
       followUps: (json['seguimientos'] as List<dynamic>?)
         ?.map((e) => FollowUpModel.fromJson(e as Map<String, dynamic>))
         .toList() ?? [],
 
-      hasRemarks: (json['conObservacionesTutores'] == 'SI') ? true : false, 
+      hasRemarks: (json['conObservacionesTutores'] == 'SI'), 
       remarks: (json['observacionesTutores'] as List<dynamic>?)
         ?.map((e) => RemarkModel.fromJson(e as Map<String, dynamic>))
         .toList() ?? []

@@ -45,11 +45,6 @@ class _CampoSesionState extends State<CampoSesion> {
       borderRadius: BorderRadius.circular(16.sp),
     );
 
-    final OutlineInputBorder borderError = OutlineInputBorder(
-      borderSide: BorderSide(color: Colors.redAccent.shade100, width: 2),
-      borderRadius: BorderRadius.circular(16.sp),
-    );
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
@@ -72,6 +67,7 @@ class _CampoSesionState extends State<CampoSesion> {
             controller: widget.controller,
             validator: widget.validator,
             focusNode: focusNode,
+
             onTapOutside: (event) {
               focusNode.unfocus();
             },
@@ -84,20 +80,40 @@ class _CampoSesionState extends State<CampoSesion> {
             },
             decoration: InputDecoration(
               filled: true,
+
               enabledBorder: border,
               focusedBorder: border,
-              errorBorder: borderError,
-              focusedErrorBorder: borderError,
+              errorBorder: border,
+              focusedErrorBorder: border,
+
               hintText: widget.fieldPlaceholder,
               hintStyle: TextStyle(
                 color: Colors.grey,
+                fontFamily: 'Roboto',
                 fontSize: 15.sp,
               ),
               errorStyle: TextStyle(
-                color: Colors.redAccent.shade100,
+                color: Colors.orangeAccent,
+                fontSize: 14.sp,
                 fontFamily: 'Roboto',
               ),
+
               errorText: errorText,
+              suffixIcon: (errorText != null)
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: Image.asset(
+                      "assets/img/errorIcon.png",
+                      width: 30,
+                      height: 30,
+                    ),
+                  )
+                : null,
+
+              suffixIconConstraints: const BoxConstraints(
+                minHeight: 24,
+                minWidth: 24,
+              ),
             ),
             style: TextStyle(fontFamily: 'Roboto'),
           ),

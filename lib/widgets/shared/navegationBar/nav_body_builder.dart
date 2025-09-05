@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uniconecta/models/shared/user.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/screens/comunidad/comunidad_mis_publicaciones.dart';
@@ -8,10 +9,15 @@ import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart
 import 'package:uniconecta/widgets/shared/navegationBar/nav_bar_avatar.dart';
 
 List<Widget> navBodyBuilder(
-    {required NavBarTypes type,
-    required BuildContext context,
-    Widget? nextScreen,
-    bool canGetBackHere = false}) {
+    {
+      required NavBarTypes type,
+      required BuildContext context,
+      Widget? nextScreen,
+      bool canGetBackHere = false,
+      Color? buttonsColor
+    }
+  ) {
+  
   final User? userProvider = context.watch<UserProvider>().user;
 
   String? name = '';
@@ -65,41 +71,56 @@ List<Widget> navBodyBuilder(
   switch (type) {
     case NavBarTypes.normal:
       return [
-        TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(padding: EdgeInsets.only(bottom: 15)),
-            child: Image.asset('assets/img/online-study.png',
-                fit: BoxFit.contain, width: 55, height: 55)),
-        Row(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(name,
-                    style: TextStyle(
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            
+            children: [
+              TextButton(
+                onPressed: () {},
+                style: TextButton.styleFrom(padding: EdgeInsets.only(bottom: 15)),
+                child: Image.asset('assets/img/online-study.png', fit: BoxFit.contain, width: 55, height: 55)
+              ),
+          
+              SizedBox(
+                width: 50.w,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      name,
+                      softWrap: true,
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
                         fontSize: 13,
                         fontFamily: 'Roboto',
                         fontWeight: FontWeight.w600,
-                        color: Colors.white)),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    misPublicaciones,
-                    SizedBox(width: 8),
-                    todasPublicaciones,
+                        color: Colors.white
+                      )
+                    ),
+                
+                    SizedBox(height: 8),
+                
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        misPublicaciones,
+                        SizedBox(width: 8),
+                        todasPublicaciones,
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-            SizedBox(width: 18),
-            NavBarAvatar(
-                userAvatar: (picture != null)
-                    ? picture
-                    : const Icon(Icons.person,
-                        color: Color.fromRGBO(145, 145, 145, 1), size: 60))
-          ],
+              ),
+          
+              NavBarAvatar(
+                  userAvatar: (picture != null)
+                      ? picture
+                      : const Icon(Icons.person,
+                          color: Color.fromRGBO(145, 145, 145, 1), size: 60))
+            ],
+          ),
         ),
       ];
 
@@ -110,7 +131,7 @@ List<Widget> navBodyBuilder(
             height: 40,
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_rounded),
-              color: Colors.white,
+              color: (buttonsColor != null) ? buttonsColor : Colors.white,
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -133,7 +154,7 @@ List<Widget> navBodyBuilder(
             height: 40,
             child: IconButton(
               icon: Icon(Icons.arrow_forward_ios_rounded),
-              color: Colors.white,
+              color: (buttonsColor != null) ? buttonsColor : Colors.white,
               onPressed: () {
                 if (canGetBackHere) {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -158,7 +179,7 @@ List<Widget> navBodyBuilder(
                 height: 40,
                 child: IconButton(
                   icon: Icon(Icons.arrow_back_ios_rounded),
-                  color: Colors.white,
+                  color: (buttonsColor != null) ? buttonsColor : Colors.white,
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -168,7 +189,7 @@ List<Widget> navBodyBuilder(
               height: 40,
               child: IconButton(
                 icon: Icon(Icons.arrow_forward_ios_rounded),
-                color: Colors.white,
+                color: (buttonsColor != null) ? buttonsColor : Colors.white,
                 onPressed: () {
                   if (canGetBackHere && nextScreen != null) {
                     Navigator.of(context).push(MaterialPageRoute(
@@ -201,7 +222,7 @@ List<Widget> navBodyBuilder(
             height: 40,
             child: IconButton(
               icon: Icon(Icons.arrow_back_ios_rounded),
-              color: Colors.white,
+              color: (buttonsColor != null) ? buttonsColor : Colors.white,
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -212,7 +233,7 @@ List<Widget> navBodyBuilder(
             height: 40,
             child: IconButton(
               icon: Icon(Icons.arrow_forward_ios_rounded),
-              color: Colors.white,
+              color: (buttonsColor != null) ? buttonsColor : Colors.white,
               onPressed: () {
                 if (canGetBackHere) {
                   Navigator.of(context).push(MaterialPageRoute(
