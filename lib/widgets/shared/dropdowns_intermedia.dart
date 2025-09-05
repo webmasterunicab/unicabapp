@@ -199,7 +199,11 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
               correoEstudiante = null;
             });
 
-            _cargarEstudiantesPorGrado();
+            // Se limpia para evitar mostrar las cargas anteriores
+            _estudiantes = [];
+            if (value != 'NINGUNO') {
+              _cargarEstudiantesPorGrado();
+            }
           },
         ),
       );
