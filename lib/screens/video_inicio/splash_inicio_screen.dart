@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:uniconecta/screens/inicio/inicio_screen.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class SplashInicioScreen extends StatefulWidget {
+  const SplashInicioScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashInicioScreen> createState() => _SplashInicioScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashInicioScreenState extends State<SplashInicioScreen> {
   @override
   void initState() {
     super.initState();

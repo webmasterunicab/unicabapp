@@ -17,10 +17,16 @@ class IntermediaRepository {
         )
         .timeout(ApiConfig.defaultTimeout);
 
-    final data = jsonDecode(response.body);
-    return GradosResponse.fromJson(data);
-
-    // return GradosResponse(status: 'error', mensaje: 'Ocurrio un error inesperado', grados: []);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final data = jsonDecode(response.body);
+      return GradosResponse.fromJson(data);
+    } else {
+      return GradosResponse(
+        status: 'error',
+        mensaje: '¡Ha ocurrido un error inesperado, inténtalo más tarde!',
+        grados: [],
+      );
+    }
   }
 
   Future<EstudiantesGradoResponse> obtenerEstudiantesPorGrado(
@@ -36,14 +42,21 @@ class IntermediaRepository {
         )
         .timeout(ApiConfig.defaultTimeout);
 
-    final data = jsonDecode(response.body);
-    return EstudiantesGradoResponse.fromJson(data);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final data = jsonDecode(response.body);
+      return EstudiantesGradoResponse.fromJson(data);
+    } else {
+      return EstudiantesGradoResponse(
+        status: 'error',
+        mensaje: '¡Ha ocurrido un error inesperado, inténtalo más tarde!',
+        estudiantes: [],
+      );
+    }
   }
 
   Future<EstudiantesAcudienteResponse> obtenerEstudiantesPorAcudiente(
       Map<String, dynamic> datosEnvio) async {
     final url = Uri.parse(ApiConfig.estudiantesAcudiente);
-
 
     final request = http.Request("GET", url)
       ..headers.addAll(ApiConfig.defaultHeaders)
@@ -53,9 +66,15 @@ class IntermediaRepository {
 
     final response = await http.Response.fromStream(streamedResponse);
 
-
-    final data = jsonDecode(response.body);
-
-    return EstudiantesAcudienteResponse.fromJson(data);
+    if (response.statusCode >= 200 && response.statusCode < 300) {
+      final data = jsonDecode(response.body);
+      return EstudiantesAcudienteResponse.fromJson(data);
+    } else {
+      return EstudiantesAcudienteResponse(
+        status: 'error',
+        mensaje: '¡Ha ocurrido un error inesperado, inténtalo más tarde!',
+        estudiantes: [],
+      );
+    }
   }
 }

@@ -125,7 +125,7 @@ class _RegistroBodyState extends State<RegistroBody> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = '¡Ha ocurrido un error inesperado, inténtalo más tarde!';
         _cargando = false;
       });
     }

@@ -20,7 +20,6 @@ class InicioScreen extends StatelessWidget {
                   children: [
                     InicioButton(btnNombre: "Inicio de sesión", bottom: false,),
                     InicioButton(btnNombre: "Registro",),
-                    
                   ],
                 ),
               ),

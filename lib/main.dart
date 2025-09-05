@@ -4,7 +4,7 @@ import 'package:uniconecta/config/theme/app_theme.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uniconecta/screens/video_inicio/video_inicio_screen.dart';
+import 'package:uniconecta/screens/video_inicio/splash_inicio_screen.dart';
 
 final RouteObserver<ModalRoute> routeObserver = RouteObserver<ModalRoute>();
 
@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             title: 'UNICONECTA',
             debugShowCheckedModeBanner: false,
             theme: AppTheme().theme(),
-            home: SplashScreen() //VideoInicioScreen(),
+            home: SplashInicioScreen() //VideoInicioScreen(),
           );
         }
       ),

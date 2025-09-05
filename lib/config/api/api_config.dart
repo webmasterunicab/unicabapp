@@ -50,6 +50,7 @@ class ApiConfig {
   static String get obtenerTodasPublicaciones => '$production/todas_publicaciones_getdat1.php';
   static String get darLikePublicacion => '$production/megusta_publicacion_putdat1.php';
   static String get actualizarFotoPerfil => '$production/cambio_foto_perfil_upddat1.php';
+  static String get eliminarCuenta => '$production/eliminar_usuario_deldat1.php';
   // static String get menusUrl => '$baseUrl/general/menus.php';
   // static String get estudiantesUrl => '$baseUrl/general/estudiantes.php';
   // static String get noticiasUrl => '$baseUrl/general/noticias.php';

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:uniconecta/config/api/api_config.dart';
+import 'package:uniconecta/models/cuenta/eliminar_cuenta_response.dart';
 import 'package:uniconecta/models/registro/subida_imagen_response.dart';
 import 'package:uniconecta/models/registro/usuario_registrado_response.dart';
 
 class UsuarioService {
-
   Future<UsuarioRegistradoResponse> subirDatosRegistro(
       Map<String, dynamic> datosEnvio) async {
     final uri = Uri.parse(ApiConfig.registrarUsuario);
@@ -88,40 +88,37 @@ class UsuarioService {
     }
   }
 
-
-  Future<void> eliminarCuenta(
+  Future<EliminarCuentaResponse> eliminarCuenta(
       Map<String, dynamic> datosEnvio) async {
-    final uri = Uri.parse(ApiConfig.actualizarFotoPerfil);
-    final request = http.MultipartRequest('POST', uri);
+    final uri = Uri.parse(ApiConfig.eliminarCuenta);
 
-    request.fields['rol'] = datosEnvio['rol'];
-    request.fields['email'] = datosEnvio['email'];
-
-// Imagen con nombre original
-    if (datosEnvio['ImagenA'] != null &&
-        datosEnvio['originalFileName'] != null) {
-      final file = await http.MultipartFile.fromPath(
-        'ImagenA',
-        datosEnvio['ImagenA'].path,
-        filename: datosEnvio['originalFileName'].trim().replaceAll(" ", "_"),
-      );
-      request.files.add(file);
-    } else {
-      request.fields['ImagenA'] = '';
-    }
-
-    final response = await request.send();
-
-    final respStr = await response.stream.bytesToString();
+    final response = await http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        "rol": datosEnvio['rol'],
+        "email": datosEnvio['email'],
+      }),
+    );
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
+      final respStr = response.body;
       final Map<String, dynamic> jsonMap = json.decode(respStr);
-      return SubidaImagenResponse.fromJson(jsonMap);
+      return EliminarCuentaResponse.fromJson(jsonMap);
     } else {
-      return SubidaImagenResponse(
-          status: 'error',
-          mensaje: '¡Ha ocurrido un error inesperado, inténtalo más tarde!',
-          url: '');
+      return EliminarCuentaResponse(
+        status: 'error',
+        mensaje: '¡Ha ocurrido un error inesperado, inténtalo más tarde!',
+        megustaComentarios: '',
+        megustaPublicaciones: '',
+        comentariosPublicaciones: '',
+        imagenes: '',
+        publicaciones: '',
+        fotoPerfil: '',
+        usuarios: '',
+      );
     }
   }
 }

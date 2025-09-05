@@ -33,7 +33,7 @@ class _ComunidadPerfilWidgetState extends State<ComunidadPerfilWidget> {
   bool _cargando = true;
 
   String grado = '';
-  String _nombreArchivo = '';
+  // String _nombreArchivo = '';
 
   File? _imagen;
   final ImagePicker _picker = ImagePicker();
@@ -47,7 +47,7 @@ class _ComunidadPerfilWidgetState extends State<ComunidadPerfilWidget> {
     );
 
     if (pickedFile != null) {
-      _nombreArchivo = pickedFile.name;
+      // _nombreArchivo = pickedFile.name;
       setState(() => _imagen = File(pickedFile.path));
     }
   }

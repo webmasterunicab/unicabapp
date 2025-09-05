@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uniconecta/main.dart';
+import 'package:uniconecta/providers/user_provider.dart';
+import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/screens/ajustar_perfil/ajustar_perfil_screen.dart';
 import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
+import 'package:uniconecta/screens/video_inicio/splash_inicio_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_nav.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NavBarAvatar extends StatefulWidget {
   final Widget userAvatar;
@@ -90,8 +95,26 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
     return result ?? false;
   }
 
-  OverlayEntry _buildDropdown() {
-    return OverlayEntry(builder: (context) {
+  Future<void> _launchUrl(BuildContext context) async {
+    final Uri url = Uri.parse('https://aulavirtual.unicab.org/login/');
+
+    final ok = await launchUrl(
+      url,
+      mode: LaunchMode.externalApplication,
+    );
+
+    if (!ok && context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Error al intentar abrir el navegador"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  OverlayEntry _buildDropdown(BuildContext context) {
+    return OverlayEntry(builder: (_) {
       return Positioned(
         top: yPosition,
         left: xPosition! - xOffset,
@@ -108,7 +131,11 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (_) => SubirFotoScreen()));
               }),
-          DropdownItemNav(name: "Ir al aula virtual", onPressed: () {}),
+          DropdownItemNav(
+              name: "Ir al aula virtual",
+              onPressed: () {
+                _launchUrl(context);
+              }),
           //DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
           DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
           DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
@@ -120,8 +147,25 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
             onPressed: () async {
               final confirmed = await showDeleteAccountAlert(context);
 
-             
-              if (confirmed) {}
+              if (!confirmed) return;
+
+              if (!context.mounted) return;
+              final UsuarioService service = UsuarioService();
+              final UserProvider provider =
+                  Provider.of<UserProvider>(context, listen: false);
+
+              final response = await service.eliminarCuenta({
+                "email": provider.user!.email,
+                "rol": provider.user!.userRole.toString()
+              });
+
+              if (!context.mounted) return;
+              if (response.status != 'error') {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (_) => const SplashInicioScreen()),
+                );
+              }
             },
           ),
         ]),
@@ -161,7 +205,7 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
                   dropdown!.remove();
                 } else {
                   _getDropdownVariables();
-                  dropdown = _buildDropdown();
+                  dropdown = _buildDropdown(context);
                   Overlay.of(context).insert(dropdown!);
                 }
 

@@ -50,7 +50,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
         });
       }
     } catch (e) {
-      print('Error en file_picker: $e');
+      // print('Error en file_picker: $e');
     } finally {
       setState(() {
         _isPickerActive = false;
@@ -78,7 +78,7 @@ class _SubirFotoBodyState extends State<SubirFotoBody> {
         });
       }
     } catch (e) {
-      print('Error en image_picker: $e');
+      // print('Error en image_picker: $e');
     } finally {
       setState(() {
         _isPickerActive = false;

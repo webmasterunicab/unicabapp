@@ -41,6 +41,7 @@ class CustomBatteryIndicator extends StatelessWidget {
               width: size - 4, // Ancho interno
               height: availableHeight, // Alto interno
               decoration: BoxDecoration(
+                // ignore: deprecated_member_use
                 color: mainColor.withOpacity(0.3),
                 borderRadius: BorderRadius.circular(2),
               ),

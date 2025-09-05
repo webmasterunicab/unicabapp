@@ -58,7 +58,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = '¡Ha ocurrido un error inesperado, inténtalo más tarde!';
       });
     } finally {
       setState(() {
@@ -69,7 +69,11 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
 
   Future<void> _cargarEstudiantesPorGrado() async {
     try {
-      if (idGrado == null) return;
+      if (idGrado == null || idGrado == '1') {
+        _estudiantes = [];
+        return;
+      }
+
       _cargando = true;
 
       final data = await _repo.obtenerEstudiantesPorGrado({"idGrado": idGrado});
@@ -81,12 +85,14 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         } else {
           _error = data.mensaje;
         }
-        _cargando = false;
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString();
+        _error = '¡Ha ocurrido un error inesperado, inténtalo más tarde!';
+      });
+    } finally {
+      setState(() {
         _cargando = false;
       });
     }
@@ -108,17 +114,18 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
         } else {
           _error = data.mensaje;
         }
-        _cargando = false;
       });
     } on FormatException {
       setState(() {
         _error = "No hay estudiantes relacionados a este correo";
-        _cargando = false;
       });
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = "Ocurrio un error inesperado intenta nuevamente!";
+        _error = '¡Ha ocurrido un error inesperado, inténtalo más tarde!';
+      });
+    } finally {
+      setState(() {
         _cargando = false;
       });
     }
@@ -159,7 +166,9 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
               }
             });
 
-            widget.nextScreenCallback(value!);
+            if (correoEstudiante != 'NINGUNO' && correoEstudiante != null) {
+              widget.nextScreenCallback(value!);
+            }
           },
         ),
       );
@@ -176,7 +185,7 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
           grados: _grados,
           hintText: "Selecciona un Grado",
           validator: (String? value) {
-            if (value == "NINGUNO") {
+            if (value == "NINGUNO" || value == '1') {
               return "Debe seleccionar un grado valido";
             }
             return null;
@@ -187,7 +196,6 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
               if (value != "NINGUNO") {
                 idGrado = value;
               }
-
               correoEstudiante = null;
             });
 
