@@ -11,7 +11,7 @@ class SendSupportModel {
   factory SendSupportModel.fromJson(Map<String, dynamic> json) {
     return SendSupportModel(
       message: json['mensaje'] ?? '',
-      success: (json['status'] == "success") ? true : false
+      success: (json['status'] == "success")
     );
   }
 

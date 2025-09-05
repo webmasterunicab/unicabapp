@@ -143,9 +143,10 @@ class _MainFormState extends State<_MainForm> {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-              backgroundColor: Colors.transparent,
-              content:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            backgroundColor: const Color.fromRGBO(11, 119, 179, 1), 
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center, 
+              children: [
                 Icon(Icons.error_rounded, color: Colors.white),
                 SizedBox(width: 4),
                 Text("Ha Ocurrido un error, Revisa tu conexion a internet.",

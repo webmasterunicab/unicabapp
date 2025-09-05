@@ -41,6 +41,7 @@ class ApiConfig {
   static String get recoverPassword => 'uniconecta/olvido_password.php';
   static String get getRemarks => 'uniconecta/observador_getdat1.php';
   static String get getFinancial => 'uniconecta/financiera_getdat1.php';
+  static String get cambiarPassword => 'uniconecta/cambio_pass_upddat1.php';
   static String get sendPaymentSupport => 'uniconecta/soporte_putdat1.php';
   static String get estudiantesAcudiente => '$production/estudiantes_acudiente_getdat1.php';
   static String get estudiantesCalificaciones => '$production/calificaciones_getdat1.php';

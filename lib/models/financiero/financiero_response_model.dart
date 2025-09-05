@@ -12,7 +12,7 @@ class FinancieroResponseModel {
 
   factory FinancieroResponseModel.fromJson(Map<String, dynamic> json) {
     return FinancieroResponseModel(
-      financieroCargado: (json['status'] == 'success') ? true : false,
+      financieroCargado: (json['status'] == 'success'),
       financieroData: (json['financiera'] != null) 
         ? FinancieroDataModel.fromJson(json['financiera'].first as Map<String, dynamic>? ?? {})
         : null

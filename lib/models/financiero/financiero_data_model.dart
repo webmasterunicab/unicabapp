@@ -50,7 +50,7 @@ class FinancieroDataModel {
       valorMatricula: int.tryParse(json["matricula_ocp"]) ?? 0, 
       pensionesPendientes: pensionesPendientes, 
 
-      derechosGradoPago: (json["pago_derechos_grado"] == "NO") ? false : true, 
+      derechosGradoPago: (json["pago_derechos_grado"] != "NO"), 
       icfesPago: (json['pago_icfes'] == "NO") ? false : true,
 
       icfesValor: int.tryParse(json["icfes"]),

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sizer/sizer.dart';
 import 'package:uniconecta/main.dart';
 import 'package:uniconecta/providers/user_provider.dart';
 import 'package:uniconecta/repositories/usuario_service.dart';
 import 'package:uniconecta/screens/ajustar_perfil/ajustar_perfil_screen.dart';
 import 'package:uniconecta/screens/foto/subir_foto_screen.dart';
+import 'package:uniconecta/screens/inicio/inicio_screen.dart';
+import 'package:uniconecta/screens/password_related/cambiar_pass_screen.dart';
 import 'package:uniconecta/screens/video_inicio/splash_inicio_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_nav.dart';
@@ -137,8 +140,38 @@ class _DropdownManager extends State<NavBarAvatar> with RouteAware {
                 _launchUrl(context);
               }),
           //DropdownItemNav(name: "Manual de convivencia", onPressed: () {}),
-          DropdownItemNav(name: "Cambiar Contraseña", onPressed: () {}),
-          DropdownItemNav(name: "Cerrar sesión", onPressed: () {}),
+
+          DropdownItemNav(
+              name: "Cambiar Contraseña",
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => CambiarPassScreen()));
+              }),
+
+          DropdownItemNav(
+              name: "Cerrar sesión",
+              onPressed: () {
+                UserProvider provider =
+                    Provider.of<UserProvider>(context, listen: false);
+                provider.setUser(null);
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
+                      content: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.check_circle_rounded,
+                                color: Colors.white),
+                            SizedBox(width: 4),
+                            Text("Sesión cerrada con éxito.",
+                                style: TextStyle(
+                                    fontFamily: "Roboto",
+                                    fontSize: 15.sp,
+                                    color: Colors.white))
+                          ])),
+                );
+              }),
           //DropdownItemNav(name: "Preguntas Frecuentes", onPressed: () {}),
           //DropdownItemNav(name: "Política y privacidad", onPressed: () {}),
           //DropdownItemNav(name: "Terminos y condiciones", onPressed: () {}),
