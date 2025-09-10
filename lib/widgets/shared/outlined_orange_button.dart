@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class OrangeOutlinedButton extends StatelessWidget {
-  const OrangeOutlinedButton({super.key, required this.buttonText, required this.onPressed, this.width, this.height});
-
   final double? width;
   final double? height;
 
   final String buttonText;
   final VoidCallback onPressed;
+
+  const OrangeOutlinedButton({super.key, required this.buttonText, required this.onPressed, this.width, this.height});
 
   @override
   Widget build(BuildContext context) {

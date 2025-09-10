@@ -9,12 +9,13 @@ enum NavBarTypes {
 }
 
 class MainNavegationBar extends StatelessWidget {
-  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen});
-
   final NavBarTypes navType;
 
   final Widget? nextScreen;
   final bool canGetBackHere;
+  final Color? buttonsColor;
+
+  const MainNavegationBar({super.key, this.navType = NavBarTypes.normal, this.canGetBackHere = false, this.nextScreen, this.buttonsColor});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,14 @@ class MainNavegationBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
-          children: navBodyBuilder(type: navType, context: context, canGetBackHere: canGetBackHere, nextScreen: nextScreen),
+          children: navBodyBuilder(
+            type: navType, 
+            context: context, 
+            canGetBackHere: 
+            canGetBackHere, 
+            nextScreen: nextScreen,
+            buttonsColor: buttonsColor
+          ),
         ),
       ),
     );

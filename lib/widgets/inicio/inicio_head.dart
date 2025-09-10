@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class InicioHead extends StatelessWidget {
   const InicioHead({super.key});
@@ -11,8 +12,8 @@ class InicioHead extends StatelessWidget {
         child: Center(
           child: Image.asset(
             'assets/img/LOGO UNICONECTA.png',
-            width: 154,
-            height: 54,
+            width: 45.w,
+            height: 45.h,
           ),
         ),
       ),

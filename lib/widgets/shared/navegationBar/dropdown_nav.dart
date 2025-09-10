@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/dropdown_item_nav.dart';
 
 class DropdownNav extends StatelessWidget {
-  const DropdownNav({super.key, required this.items, required this.boxSize});
-
   final double boxSize;
   final List<DropdownItemNav> items;
+
+  const DropdownNav({super.key, required this.items, required this.boxSize});
 
   @override
   Widget build(BuildContext context) {

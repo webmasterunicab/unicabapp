@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class ButtonExtrasAcuerdos extends StatelessWidget {
-  const ButtonExtrasAcuerdos({super.key, required this.text, required this.iconPath});
-
   final String text;
   final String iconPath;
+
+  const ButtonExtrasAcuerdos({super.key, required this.text, required this.iconPath});
 
   @override
   Widget build(BuildContext context) {

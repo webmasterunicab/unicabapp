@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class SeeMoreButton extends StatelessWidget {
-  const SeeMoreButton({super.key, required this.title, required this.thumbnailPath, required this.route});
-
   final String title;
   final String thumbnailPath;
   final Widget route;
+
+  const SeeMoreButton({super.key, required this.title, required this.thumbnailPath, required this.route});
 
   @override
   Widget build(BuildContext context) {

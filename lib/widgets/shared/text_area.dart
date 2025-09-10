@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
 
 class TextArea extends StatefulWidget {
-  const TextArea({super.key, this.fieldHeight, this.readOnly = false});
-
   final double? fieldHeight; 
   final bool? readOnly;
+  final String? fieldBody;
+  final double? fontSize;
+  final TextEditingController? controller;
+
+  const TextArea({super.key, this.fieldHeight, this.readOnly = false, this.fieldBody = '', this.fontSize = 16, this.controller});
 
   @override
   State<TextArea> createState() => _TextFieldObservadorState();
 }
 
 class _TextFieldObservadorState extends State<TextArea> {
-  final TextEditingController controller = TextEditingController();
+  late final TextEditingController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    (widget.controller != null) 
+      ? controller = widget.controller!
+      : controller = TextEditingController();
+    
+    controller.text = widget.fieldBody!;
+  }
 
   @override
   void dispose() {
@@ -32,12 +46,16 @@ class _TextFieldObservadorState extends State<TextArea> {
       child: SizedBox(
         height: widget.fieldHeight,
         child: TextField(
+          scrollPhysics: const ClampingScrollPhysics(),
           readOnly: widget.readOnly!,
+
           maxLines: null,
           keyboardType: TextInputType.multiline,
+
           controller: controller,
           style: TextStyle(
-            fontFamily: 'Roboto'
+            fontFamily: 'Roboto',
+            fontSize: widget.fontSize!
           ),
         
           decoration: InputDecoration(
