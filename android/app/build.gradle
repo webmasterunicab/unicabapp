@@ -56,26 +56,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-    //Este bloque es para personalizar el nombre de los archivos .aab y .apk
-    applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            def appName = "Uniconecta" // ← ¡PON AQUÍ EL NOMBRE QUE QUIERAS!
-            def buildType = variant.buildType.name
-            def versionName = variant.versionName
-            def versionCode = variant.versionCode
-
-            if (buildType == "release") {
-                if (output.outputFileName.endsWith('.aab')) {
-                    output.outputFileName = "${appName}_v${versionName}(${versionCode})_release.aab"
-                } else if (output.outputFileName.endsWith('.apk')) {
-                    output.outputFileName = "${appName}_v${versionName}(${versionCode})_release.apk"
-                }
-            } else if (buildType == "debug") {
-                output.outputFileName = "${appName}_debug.apk"
-            }
-        }
-    }
+    
 }
 
 flutter {
