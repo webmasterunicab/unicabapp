@@ -1,4 +1,4 @@
-package com.example.uniconecta
+package com.unicab.uniconecta
 
 import io.flutter.embedding.android.FlutterActivity
 
