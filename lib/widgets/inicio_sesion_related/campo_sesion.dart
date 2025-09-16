@@ -59,7 +59,7 @@ class _CampoSesionState extends State<CampoSesion> {
                 widget.fieldLabel,
                 style: TextStyle(
                   fontFamily: 'Roboto',
-                  fontSize: 14.sp,
+                  fontSize: 17.sp,
                   color: Colors.white,
                 ),
               ),
@@ -95,11 +95,10 @@ class _CampoSesionState extends State<CampoSesion> {
                 fontSize: 15.sp,
               ),
               errorStyle: TextStyle(
-                color: Colors.orangeAccent,
-                fontSize: 14.sp,
-                fontFamily: 'Roboto',
-                overflow: TextOverflow.ellipsis
-              ),
+                  color: Colors.orangeAccent,
+                  fontSize: 14.sp,
+                  fontFamily: 'Roboto',
+                  overflow: TextOverflow.ellipsis),
               errorText: errorText,
               suffixIcon: (errorText != null)
                   ? Padding(

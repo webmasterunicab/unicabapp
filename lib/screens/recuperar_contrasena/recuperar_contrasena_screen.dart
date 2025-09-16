@@ -26,7 +26,6 @@ class RecuperarContrasenaScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     MainNavegationBar(navType: NavBarTypes.noBody),
-
                     Expanded(
                       child: _ScreenBody(),
                     ),
@@ -54,7 +53,7 @@ class _ScreenBodyState extends State<_ScreenBody> {
   bool _loadingRequest = false;
   final _formKey = GlobalKey<FormState>();
   late TextEditingController mainController;
-  
+
   // Methods //
   @override
   void initState() {
@@ -79,48 +78,42 @@ class _ScreenBodyState extends State<_ScreenBody> {
       });
 
       try {
-        
-        ResponseRecoverPass response = await InicioSesionRepository.sendRecoveryRequest(
-          mainController.text.trim(), 
+        ResponseRecoverPass response =
+            await InicioSesionRepository.sendRecoveryRequest(
+          mainController.text.trim(),
         );
 
         if (!context.mounted) return;
 
         if (response.recoverStatus) {
-
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (_) => RecuperarContrasenaExitoScreen()), (Route<dynamic> route) => false);
-
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (_) => RecuperarContrasenaExitoScreen()),
+              (Route<dynamic> route) => false);
         } else {
-
           setState(() {
             errorMsg = response.message;
           });
-
         }
-
       } catch (e) {
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: const Color.fromRGBO(11, 119, 179, 1), 
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center, 
-              children: [
+              backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
+              content:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(Icons.error_rounded, color: Colors.white),
                 SizedBox(width: 4),
-
-                Text("Ha Ocurrido un error, Revisa tu conexion a internet.", style: TextStyle(fontFamily: "Roboto", fontSize: 15.sp, color: Colors.white))
-              ]
-            )
-          ),
+                Text("Ha Ocurrido un error, Revisa tu conexion a internet.",
+                    style: TextStyle(
+                        fontFamily: "Roboto",
+                        fontSize: 15.sp,
+                        color: Colors.white))
+              ])),
         );
-
       } finally {
-        
         setState(() {
           _loadingRequest = false;
         });
-      
       }
     }
   }
@@ -138,72 +131,83 @@ class _ScreenBodyState extends State<_ScreenBody> {
           ),
         ),
         SizedBox(height: 75),
-    
-        Text("¿Deseas recuperar tu contraseña?", style: TextStyle(fontFamily: 'Roboto', fontSize: 17.sp, color: Colors.white, fontWeight: FontWeight.w700)),
-        Text("Permitenos ayudarte.", style: TextStyle(fontFamily: 'Roboto', fontSize: 16.sp, color: const Color.fromRGBO(221, 221, 221, 1), fontWeight: FontWeight.w500)),
-    
+        Text("¿Deseas recuperar tu contraseña?",
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 17.sp,
+                color: Colors.white,
+                fontWeight: FontWeight.w700)),
+        Text("Permitenos ayudarte.",
+            style: TextStyle(
+                fontFamily: 'Roboto',
+                fontSize: 16.sp,
+                color: const Color.fromRGBO(221, 221, 221, 1),
+                fontWeight: FontWeight.w500)),
         Form(
-          key: _formKey,
-          child: Column(
-          children: [
-            if (errorMsg != null) ...[
-              SizedBox(height: 10),
-
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
-                padding: EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(246, 119, 144, 1),
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                  border: Border.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
-                ),
-
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      errorMsg!,
-                      softWrap: true,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15.sp,
-                        color: Colors.white,
-                        fontFamily: 'Roboto',
-                      ),
+            key: _formKey,
+            child: Column(
+              children: [
+                if (errorMsg != null) ...[
+                  SizedBox(height: 10),
+                  Container(
+                    margin: EdgeInsets.symmetric(
+                        vertical: 22.sp, horizontal: 33.sp),
+                    padding: EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(246, 119, 144, 1),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                            bottomRight: Radius.circular(30)),
+                        border: Border.all(
+                            color: Color.fromRGBO(255, 23, 68, 1), width: 2)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          errorMsg!,
+                          softWrap: true,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 15.sp,
+                            color: Colors.white,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ] else SizedBox(height: 75),
-
-            CampoSesion(
-              fieldLabel: "Correo Electronico", 
-              fieldPlaceholder: "¡Para enviarte un codigo secreto!", 
-              
-              fieldChecking: CustomFormFieldValidator.correo,
-              controller: mainController,
-              validator: (String? value) {
-                if (value != null && value.isEmpty) {
-                  return "Ingresa un valor.";
-                } else { 
-                  return CustomFormFieldValidator.correo(value, esRequerido: true);
-                }
-              }
-            ),
-            SizedBox(height: 40),
-
-            (!_loadingRequest) 
-              ? OrangeButton(
-                  onPressed: () => _sendRequest(context),
-
-                  buttonText: "Enviar",
-                  textWeight: FontWeight.w600,
-                  padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h), 
-                )
-
-              : SizedBox(height: 26, width: 26, child: CircularProgressIndicator(color: Colors.white)),
-          ],
-        ))
+                  ),
+                ] else
+                  SizedBox(height: 75),
+                CampoSesion(
+                    fieldLabel: "Correo Electrónico",
+                    fieldPlaceholder: "¡Para enviarte un codigo secreto!",
+                    fieldChecking: CustomFormFieldValidator.correo,
+                    controller: mainController,
+                    validator: (String? value) {
+                      if (value != null && value.isEmpty) {
+                        return "Ingresa un valor.";
+                      } else {
+                        return CustomFormFieldValidator.correo(value,
+                            esRequerido: true);
+                      }
+                    }),
+                SizedBox(height: 40),
+                (!_loadingRequest)
+                    ? OrangeButton(
+                        onPressed: () => _sendRequest(context),
+                        buttonText: "Enviar",
+                        textWeight: FontWeight.w600,
+                        fontSize: 17,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 2.h),
+                      )
+                    : SizedBox(
+                        height: 26,
+                        width: 26,
+                        child: CircularProgressIndicator(color: Colors.white)),
+              ],
+            ))
       ],
     );
   }

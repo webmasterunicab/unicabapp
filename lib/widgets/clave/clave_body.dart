@@ -266,7 +266,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                 },
                 buttonText: '¡Listo, sigamos!',
                 textWeight: FontWeight.w600,
-                fontSize: 16.sp,
+                fontSize: 17.sp,
               )),
           Container(
             margin: EdgeInsets.only(top: 55),

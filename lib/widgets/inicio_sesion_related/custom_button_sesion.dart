@@ -5,20 +5,19 @@ class CustomButtonSesion extends StatelessWidget {
   final String buttonText;
   final VoidCallback onPressed;
 
-  const CustomButtonSesion({super.key, required this.buttonText, required this.onPressed});
-  
+  const CustomButtonSesion(
+      {super.key, required this.buttonText, required this.onPressed});
+
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: onPressed, 
-
+      onPressed: onPressed,
       child: Text(
         buttonText,
         style: TextStyle(
-          fontFamily: 'Roboto',
-          color: Color.fromRGBO(255, 152, 5, 1),
-          fontSize: 15.sp
-        ),
+            fontFamily: 'Roboto',
+            color: Color.fromRGBO(255, 152, 5, 1),
+            fontSize: 17.sp),
       ),
     );
   }

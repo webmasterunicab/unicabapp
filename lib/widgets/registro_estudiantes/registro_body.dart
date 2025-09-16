@@ -261,7 +261,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                       "Importante: los estudiantes deben registrarse con su correo institucional. Los acudientes deben hacerlo con el correo utilizado en el proceso de matrícula.",
                       style: TextStyle(
                         fontFamily: 'Roboto',
-                        fontSize: 14.sp,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         color: Colors.orange,
                       ),
@@ -313,7 +313,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                     ? '¡Listo, sigamos!'
                     : 'Actualizar perfil',
                 textWeight: FontWeight.w600,
-                fontSize: 16.sp,
+                fontSize: 17.sp,
               )),
           // Container(
           //   margin: EdgeInsets.only(top: 55),

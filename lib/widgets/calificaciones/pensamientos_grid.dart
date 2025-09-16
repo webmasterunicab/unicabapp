@@ -10,7 +10,11 @@ class PensamientosGrid extends StatefulWidget {
   final String email;
   final String estudiante;
 
-  const PensamientosGrid({super.key, required this.rol, required this.email, required this.estudiante});
+  const PensamientosGrid(
+      {super.key,
+      required this.rol,
+      required this.email,
+      required this.estudiante});
 
   @override
   State<PensamientosGrid> createState() => _PensamientosGridState();
@@ -63,7 +67,9 @@ class _PensamientosGridState extends State<PensamientosGrid> {
       if (!mounted) return;
       setState(() {
         if (data.status != "error") {
-          estudiante = widget.estudiante == '' ? data.estudiante.nombre : widget.estudiante;
+          estudiante = widget.estudiante == ''
+              ? data.estudiante.nombre
+              : widget.estudiante;
         } else {
           _error = data.mensaje;
         }
@@ -131,7 +137,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
                   softWrap: true,
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),

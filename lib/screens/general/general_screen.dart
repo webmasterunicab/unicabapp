@@ -10,6 +10,7 @@ import 'package:uniconecta/screens/observador/observador_intermedia_screen.dart'
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
+import 'package:sizer/sizer.dart';
 
 class GeneralScreen extends StatelessWidget {
   final String userEmail;
@@ -55,6 +56,7 @@ class GeneralScreen extends StatelessWidget {
                 // --- Calificaciones Button ---
                 OrangeButton(
                   buttonText: "Calificaciones",
+                  fontSize: 16.sp,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon2.png",
@@ -70,11 +72,16 @@ class GeneralScreen extends StatelessWidget {
                   onPressed: () {
                     if (rol == 1) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => CalificacionesScreen(rol: rol, email: email, nombreEstudiante: name,),
+                        builder: (_) => CalificacionesScreen(
+                          rol: rol,
+                          email: email,
+                          nombreEstudiante: name,
+                        ),
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => CalificacionesIntermediaScreen(rol: rol, email: email),
+                        builder: (_) => CalificacionesIntermediaScreen(
+                            rol: rol, email: email),
                       ));
                     }
                   },
@@ -84,6 +91,7 @@ class GeneralScreen extends StatelessWidget {
                 // --- Observador Button ---
                 OrangeButton(
                   buttonText: "Observador",
+                  fontSize: 16.sp,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon3.png",
@@ -103,7 +111,8 @@ class GeneralScreen extends StatelessWidget {
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => ObservadorIntermediaScreen(rol: rol, email: email),
+                        builder: (_) =>
+                            ObservadorIntermediaScreen(rol: rol, email: email),
                       ));
                     }
                   },
@@ -113,6 +122,7 @@ class GeneralScreen extends StatelessWidget {
                 // --- Financiera Button ---
                 OrangeButton(
                   buttonText: "Financiera",
+                  fontSize: 16.sp,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon1.png",
@@ -128,11 +138,13 @@ class GeneralScreen extends StatelessWidget {
                   onPressed: () {
                     if (rol == 1) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => EstadoFinanciero(obtainedEmail: email, studentName: name),
+                        builder: (_) => EstadoFinanciero(
+                            obtainedEmail: email, studentName: name),
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => FinancieroIntermediaScreen(rol: rol, email: email),
+                        builder: (_) =>
+                            FinancieroIntermediaScreen(rol: rol, email: email),
                       ));
                     }
                   },

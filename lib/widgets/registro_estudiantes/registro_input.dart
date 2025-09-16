@@ -15,8 +15,7 @@ class RegistroInput extends StatelessWidget {
       this.readOnly = false,
       required this.validator,
       required this.onSaved,
-      this.initialValue = ''
-      });
+      this.initialValue = ''});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class RegistroInput extends StatelessWidget {
           hintText: placeholder,
           // hintMaxLines: 2,
           hintStyle: TextStyle(
-              color: Colors.grey, fontSize: 13.sp), // Placeholder gris
+              color: Colors.grey, fontSize: 14.sp), // Placeholder gris
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey), // Borde inferior gris
           ),
