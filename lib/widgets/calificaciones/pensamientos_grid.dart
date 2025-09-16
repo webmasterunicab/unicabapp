@@ -63,7 +63,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
       if (!mounted) return;
       setState(() {
         if (data.status != "error") {
-          estudiante = widget.estudiante == '' || widget.estudiante == null ? data.estudiante.nombre : widget.estudiante;
+          estudiante = widget.estudiante == '' ? data.estudiante.nombre : widget.estudiante;
         } else {
           _error = data.mensaje;
         }
