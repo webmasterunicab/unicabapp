@@ -9,7 +9,7 @@ import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 class DropdownsIntermedia extends StatefulWidget {
   final int rol;
   final String email;
-  final void Function(String selectedEmail) nextScreenCallback;
+  final void Function(String selectedEmail, String nombreEstudiante) nextScreenCallback;
 
   const DropdownsIntermedia(
       {super.key,
@@ -167,7 +167,8 @@ class _DropdownsIntermediaState extends State<DropdownsIntermedia> {
             });
 
             if (correoEstudiante != 'NINGUNO' && correoEstudiante != null) {
-              widget.nextScreenCallback(value!);
+              String nombreEstudiante = _estudiantes.firstWhere( (estudiante) => estudiante.correo == correoEstudiante).nombre;
+              widget.nextScreenCallback(value!, nombreEstudiante);
             }
           },
         ),

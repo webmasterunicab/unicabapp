@@ -22,8 +22,8 @@ class CalificacionesIntermediaScreen extends StatelessWidget {
           SizedBox(height: 25),
           ScreenNameDisplay(name: "CALIFICACIONES"),
           SizedBox(height: 25),
-          DropdownsIntermedia(rol: rol, email: email, nextScreenCallback: (String selectedEmail) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen(rol: 1, email: selectedEmail)));
+          DropdownsIntermedia(rol: rol, email: email, nextScreenCallback: (String selectedEmail, String nombreEstudiante) {
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) => CalificacionesScreen(rol: 1, email: selectedEmail, nombreEstudiante: nombreEstudiante,)));
           }),
         ],
       ),

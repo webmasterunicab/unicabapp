@@ -58,7 +58,7 @@ class IntermediaRepository {
       Map<String, dynamic> datosEnvio) async {
     final url = Uri.parse(ApiConfig.estudiantesAcudiente);
 
-    final request = http.Request("GET", url)
+    final request = http.Request("POST", url)
       ..headers.addAll(ApiConfig.defaultHeaders)
       ..body = jsonEncode(datosEnvio);
 
