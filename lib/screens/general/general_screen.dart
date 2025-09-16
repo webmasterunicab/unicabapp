@@ -42,6 +42,7 @@ class GeneralScreen extends StatelessWidget {
         // If user exists, we take the data
         final rol = provider.user!.userRole;
         final email = provider.user!.email;
+        final name = provider.user!.name;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -69,7 +70,7 @@ class GeneralScreen extends StatelessWidget {
                   onPressed: () {
                     if (rol == 1) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => CalificacionesScreen(rol: rol, email: email),
+                        builder: (_) => CalificacionesScreen(rol: rol, email: email, nombreEstudiante: name,),
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(

@@ -22,7 +22,7 @@ class ObservadorIntermediaScreen extends StatelessWidget {
           SizedBox(height: 25),
           ScreenNameDisplay(name: "OBSERVADOR"),
           SizedBox(height: 25),
-          DropdownsIntermedia(rol: rol, email: email, nextScreenCallback: (String selectedEmail) {
+          DropdownsIntermedia(rol: rol, email: email, nextScreenCallback: (String selectedEmail, String nombreEstudiante) {
             Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorScreen(email: selectedEmail)));
           }),
         ],
