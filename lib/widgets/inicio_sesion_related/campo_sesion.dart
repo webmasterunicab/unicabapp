@@ -7,14 +7,16 @@ class CampoSesion extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?) validator;
   final String? Function(String?, {required bool esRequerido}) fieldChecking;
+  final String? pass;
 
   const CampoSesion({
-    super.key, 
-    required this.fieldLabel, 
-    required this.validator, 
+    super.key,
+    required this.fieldLabel,
+    required this.validator,
     required this.fieldChecking,
-    this.controller, 
-    this.fieldPlaceholder, 
+    this.controller,
+    this.fieldPlaceholder,
+    this.pass = "NO",
   });
 
   @override
@@ -45,6 +47,8 @@ class _CampoSesionState extends State<CampoSesion> {
       borderRadius: BorderRadius.circular(16.sp),
     );
 
+    final bool esPass = widget.pass == "NO" ? false : true;
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
@@ -64,10 +68,10 @@ class _CampoSesionState extends State<CampoSesion> {
           SizedBox(height: 9),
           TextFormField(
             key: fieldKey,
+            obscureText: esPass,
             controller: widget.controller,
             validator: widget.validator,
             focusNode: focusNode,
-
             onTapOutside: (event) {
               focusNode.unfocus();
             },
@@ -80,12 +84,10 @@ class _CampoSesionState extends State<CampoSesion> {
             },
             decoration: InputDecoration(
               filled: true,
-
               enabledBorder: border,
               focusedBorder: border,
               errorBorder: border,
               focusedErrorBorder: border,
-
               hintText: widget.fieldPlaceholder,
               hintStyle: TextStyle(
                 color: Colors.grey,
@@ -97,19 +99,17 @@ class _CampoSesionState extends State<CampoSesion> {
                 fontSize: 14.sp,
                 fontFamily: 'Roboto',
               ),
-
               errorText: errorText,
               suffixIcon: (errorText != null)
-                ? Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: Image.asset(
-                      "assets/img/errorIcon.png",
-                      width: 30,
-                      height: 30,
-                    ),
-                  )
-                : null,
-
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: Image.asset(
+                        "assets/img/errorIcon.png",
+                        width: 30,
+                        height: 30,
+                      ),
+                    )
+                  : null,
               suffixIconConstraints: const BoxConstraints(
                 minHeight: 24,
                 minWidth: 24,

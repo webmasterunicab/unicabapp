@@ -196,7 +196,7 @@ class _RegistroBodyState extends State<RegistroBody> {
                     ),
                     espaciadoElementosForm,
                     RegistroLabel(
-                      label: '¿Cuándo es tu cumpleaños?',
+                      label: '¿Cuándo es tu cumpleaños? (YYYY-MM-DD)',
                     ),
                     RegistroInput(
                       initialValue: initCumple,

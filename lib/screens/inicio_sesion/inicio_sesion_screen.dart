@@ -116,9 +116,9 @@ class _MainFormState extends State<_MainForm> {
       });
 
       try {
-
         final String email = emailController.text.trim();
-        ResponseLogin loginResponse = await InicioSesionRepository.sendLoginRequest(
+        ResponseLogin loginResponse =
+            await InicioSesionRepository.sendLoginRequest(
           email,
           passwordController.text.trim(),
           context: context,
@@ -138,15 +138,12 @@ class _MainFormState extends State<_MainForm> {
             error = loginResponse.message;
           });
         }
-
       } catch (e) {
-
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            backgroundColor: const Color.fromRGBO(11, 119, 179, 1), 
-            content: Row(
-              mainAxisAlignment: MainAxisAlignment.center, 
-              children: [
+              backgroundColor: const Color.fromRGBO(11, 119, 179, 1),
+              content:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Icon(Icons.error_rounded, color: Colors.white),
                 SizedBox(width: 4),
                 Text("Ha Ocurrido un error, Revisa tu conexion a internet.",
@@ -156,13 +153,10 @@ class _MainFormState extends State<_MainForm> {
                         color: Colors.white))
               ])),
         );
-
       } finally {
-
         setState(() {
           _joiningSession = false;
         });
-
       }
     }
   }
@@ -179,11 +173,13 @@ class _MainFormState extends State<_MainForm> {
               margin: EdgeInsets.symmetric(vertical: 22.sp, horizontal: 33.sp),
               padding: EdgeInsets.all(18),
               decoration: BoxDecoration(
-                color: Color.fromRGBO(246, 119, 144, 1),
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30), bottomRight: Radius.circular(30)),
-                border: Border.all(color: Color.fromRGBO(255, 23, 68, 1), width: 2)
-              ),
-              
+                  color: Color.fromRGBO(246, 119, 144, 1),
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                      bottomRight: Radius.circular(30)),
+                  border: Border.all(
+                      color: Color.fromRGBO(255, 23, 68, 1), width: 2)),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -218,6 +214,7 @@ class _MainFormState extends State<_MainForm> {
           SizedBox(height: 47),
           CampoSesion(
             fieldLabel: "Contraseña",
+            pass: "SI",
             fieldChecking: CustomFormFieldValidator.password,
             controller: passwordController,
             validator: (String? value) {
