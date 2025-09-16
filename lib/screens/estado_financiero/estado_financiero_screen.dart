@@ -39,7 +39,6 @@ class EstadoFinanciero extends StatelessWidget {
 
 class _FinancieroBody extends StatelessWidget {
   final String email;
-
   const _FinancieroBody({required this.email});
 
   @override
@@ -60,7 +59,17 @@ class _FinancieroBody extends StatelessWidget {
                 fontWeight: FontWeight.w600
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 8),
+            Text(
+              "",
+              style: TextStyle(
+                fontFamily: 'Roboto',
+                color: Color.fromRGBO(134, 132, 129, 1),
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600
+              ),
+            ),
+            SizedBox(height: 42),
 
             _MainCards(email: email),
 
@@ -306,11 +315,11 @@ class _SoportePagoButtonsState extends State<_SoportePagoButtons> {
 }
 
 class _MainCards extends StatelessWidget {
+  final String email;
+
   const _MainCards({
     required this.email,
   });
-
-  final String email;
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +353,7 @@ class _MainCards extends StatelessWidget {
               return Text("${snapshot.error}", textAlign: TextAlign.center,);
             } else {
               final data = snapshot.data!.financieroData;
-    
+
               if (snapshot.data!.financieroCargado && data != null) {
                 return Column(
                   children: [

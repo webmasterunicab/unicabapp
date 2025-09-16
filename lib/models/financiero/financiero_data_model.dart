@@ -15,6 +15,8 @@ class FinancieroDataModel {
   final int totalPagado;
   final int saldoPendiente;
 
+  final String name;
+
 
   FinancieroDataModel({
     required this.deudaAnterior, 
@@ -31,7 +33,9 @@ class FinancieroDataModel {
 
     required this.interesNoPago, 
     required this.totalPagado, 
-    required this.saldoPendiente
+    required this.saldoPendiente,
+
+    required this.name,
   });
 
   factory FinancieroDataModel.fromJson(Map<String, dynamic> json) {
@@ -51,10 +55,11 @@ class FinancieroDataModel {
       pensionesPendientes: pensionesPendientes, 
 
       derechosGradoPago: (json["pago_derechos_grado"] != "NO"), 
-      icfesPago: (json['pago_icfes'] == "NO") ? false : true,
+      icfesPago: (json['pago_icfes'] != "NO"),
 
       icfesValor: int.tryParse(json["icfes"]),
       derechosGradoValor: int.tryParse(json["derechos_grado"]),
+      name: json["nombre_completo"] ?? ''
     );
   }
 }
