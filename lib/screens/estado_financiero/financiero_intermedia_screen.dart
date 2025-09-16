@@ -23,7 +23,7 @@ class FinancieroIntermediaScreen extends StatelessWidget {
           ScreenNameDisplay(name: "ESTADO FINANCIERO"),
           SizedBox(height: 25),
           DropdownsIntermedia(rol: rol, email: email, nextScreenCallback: (String selectedEmail, String nombreEstudiante) {
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) => EstadoFinanciero(obtainedEmail: selectedEmail)));
+            Navigator.of(context).push(MaterialPageRoute(builder: (_) => EstadoFinanciero(obtainedEmail: selectedEmail, studentName: nombreEstudiante)));
           }),
         ],
       ),

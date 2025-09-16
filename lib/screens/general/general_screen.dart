@@ -128,7 +128,7 @@ class GeneralScreen extends StatelessWidget {
                   onPressed: () {
                     if (rol == 1) {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => EstadoFinanciero(obtainedEmail: email),
+                        builder: (_) => EstadoFinanciero(obtainedEmail: email, studentName: name),
                       ));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(

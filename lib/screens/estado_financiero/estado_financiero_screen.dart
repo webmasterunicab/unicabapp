@@ -12,8 +12,9 @@ import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart
 
 class EstadoFinanciero extends StatelessWidget {
   final String obtainedEmail;
+  final String studentName;
 
-  const EstadoFinanciero({super.key, required this.obtainedEmail});
+  const EstadoFinanciero({super.key, required this.obtainedEmail, required this.studentName});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class EstadoFinanciero extends StatelessWidget {
                 minHeight: constraints.maxHeight,
               ),
               child: IntrinsicHeight(
-                child: _FinancieroBody(email: obtainedEmail),
+                child: _FinancieroBody(email: obtainedEmail, name: studentName),
               ),
             ),
           );
@@ -39,7 +40,9 @@ class EstadoFinanciero extends StatelessWidget {
 
 class _FinancieroBody extends StatelessWidget {
   final String email;
-  const _FinancieroBody({required this.email});
+  final String name;
+
+  const _FinancieroBody({required this.email, required this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +64,7 @@ class _FinancieroBody extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              "",
+              name,
               style: TextStyle(
                 fontFamily: 'Roboto',
                 color: Color.fromRGBO(134, 132, 129, 1),
