@@ -98,6 +98,7 @@ class _CampoSesionState extends State<CampoSesion> {
                 color: Colors.orangeAccent,
                 fontSize: 14.sp,
                 fontFamily: 'Roboto',
+                overflow: TextOverflow.ellipsis
               ),
               errorText: errorText,
               suffixIcon: (errorText != null)
