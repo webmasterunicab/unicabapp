@@ -8,6 +8,8 @@ import 'package:uniconecta/widgets/registro_estudiantes/registro_label.dart';
 import 'package:uniconecta/widgets/shared/error_mensaje.dart';
 import 'package:uniconecta/widgets/shared/loading/loading.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 class ClaveBody extends StatefulWidget {
   final Map<String, dynamic> datosRegistro;
@@ -216,7 +218,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                   ],
                 ),
               )),
-          Container(
+          /*Container(
             margin: EdgeInsets.symmetric(vertical: 38, horizontal: 38),
             child: Text(
               'Requisitos: * Mínimo 10 caracteres, incluye letras, números y al menos un símbolo.',
@@ -227,7 +229,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                 color: Color.fromRGBO(14, 14, 14, 1),
               ),
             ),
-          ),
+          ),*/
           Container(
             margin: EdgeInsets.symmetric(vertical: 40),
             child: Align(
@@ -268,7 +270,7 @@ class _ClaveBodyState extends State<ClaveBody> {
                 textWeight: FontWeight.w600,
                 fontSize: 17.sp,
               )),
-          Container(
+          /*Container(
             margin: EdgeInsets.only(top: 55),
             child: TextButton(
                 onPressed: () {
@@ -283,6 +285,40 @@ class _ClaveBodyState extends State<ClaveBody> {
                     color: Colors.black,
                   ),
                 )),
+          ),*/
+          Container(
+            margin: EdgeInsets.only(top: 55),
+            child: Text.rich(
+              TextSpan(
+                style: TextStyle(
+                  fontFamily: 'Roboto',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 14.sp,
+                  color: Colors.black,
+                ),
+                children: [
+                  //TextSpan(text: 'Términos y privacidad '),
+                  TextSpan(
+                    text: 'Política de Privadicad',
+                    style: TextStyle(
+                      color: Colors.blue, // color de enlace (opcional)
+                      decoration:
+                          TextDecoration.underline, // subrayado (opcional)
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () async {
+                        final Uri url = Uri.parse(
+                            'https://unicab.org/homeunicabpro/politica_privacidad.php'); // ¡CAMBIA ESTO!
+                        if (!await launchUrl(url,
+                            mode: LaunchMode.externalApplication)) {
+                          throw Exception('No se pudo abrir el enlace');
+                        }
+                      },
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.center, // opcional
+            ),
           ),
         ],
       ),

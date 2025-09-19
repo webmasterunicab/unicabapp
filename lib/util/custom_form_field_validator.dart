@@ -124,11 +124,12 @@ class CustomFormFieldValidator {
         r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!¡%#*¿?&])[A-Za-z\d@$!¡%#*¿?&]{10,12}$');
 
     if (!regex.hasMatch(value!)) {
-      return 'Debe tener minimo 10 caracteres, con al menos:\n'
+      return 'Debe tener entre 10 y 12 caracteres, con al menos:\n'
           '- 1 letra minúscula '
           '- 1 letra mayúscula\n'
           '- 1 número '
-          '- 1 carácter especial';
+          '- 1 carácter especial\n'
+          'No se permiten - y _ como carácter espercial';
     }
 
     return null;

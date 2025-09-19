@@ -28,6 +28,9 @@ class _CampoSesionState extends State<CampoSesion> {
   late FocusNode focusNode;
   String? errorText;
 
+  // Controla si la contraseña es visible
+  bool _isPasswordVisible = false;
+
   @override
   void initState() {
     super.initState();
@@ -52,6 +55,8 @@ class _CampoSesionState extends State<CampoSesion> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Column(
+        crossAxisAlignment:
+            CrossAxisAlignment.start, // mejora el alineado del label
         children: [
           Row(
             children: [
@@ -68,7 +73,9 @@ class _CampoSesionState extends State<CampoSesion> {
           SizedBox(height: 9),
           TextFormField(
             key: fieldKey,
-            obscureText: esPass,
+            //obscureText: esPass,
+            // Aquí controlamos si se oculta o no
+            obscureText: esPass ? !_isPasswordVisible : false,
             controller: widget.controller,
             validator: widget.validator,
             focusNode: focusNode,
@@ -100,7 +107,7 @@ class _CampoSesionState extends State<CampoSesion> {
                   fontFamily: 'Roboto',
                   overflow: TextOverflow.ellipsis),
               errorText: errorText,
-              suffixIcon: (errorText != null)
+              /*suffixIcon: (errorText != null)
                   ? Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: Image.asset(
@@ -109,7 +116,54 @@ class _CampoSesionState extends State<CampoSesion> {
                         height: 30,
                       ),
                     )
-                  : null,
+                  : null,*/
+              // ¡Aquí está el cambio clave! Usamos "suffix" en lugar de "suffixIcon"
+              suffix: esPass
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Ícono de error (si existe)
+                        if (errorText != null)
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Image.asset(
+                              "assets/img/errorIcon.png",
+                              width: 30,
+                              height: 30,
+                            ),
+                          ),
+                        // Espacio entre íconos si ambos están presentes
+                        if (errorText != null) SizedBox(width: 4),
+                        // Botón de mostrar/ocultar
+                        IconButton(
+                          icon: Icon(
+                            _isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: const Color.fromRGBO(255, 152, 5, 1),
+                            size: 24,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                          splashRadius: 20,
+                          padding: EdgeInsets
+                              .zero, // para que no ocupe mucho espacio
+                        ),
+                      ],
+                    )
+                  : errorText != null
+                      ? Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Image.asset(
+                            "assets/img/errorIcon.png",
+                            width: 30,
+                            height: 30,
+                          ),
+                        )
+                      : null,
               suffixIconConstraints: const BoxConstraints(
                 minHeight: 24,
                 minWidth: 24,
