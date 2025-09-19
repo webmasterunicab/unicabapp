@@ -331,18 +331,31 @@ class _MainCards extends StatelessWidget {
                               itemTitle: "Deuda anterior",
                               itemValue: "\$ ${data.deudaAnterior}",
                               suffix: Text(
-                                  (data.deudaAnterior < 1)
+                                  /*(data.deudaAnterior < 1)
                                       ? "PAGADA"
-                                      : "PENDIENTE",
+                                      : "PENDIENTE",*/
+                                  data.estadoDeuda,
                                   style: TextStyle(
-                                      color: (data.deudaAnterior < 1)
-                                          ? Color.fromRGBO(36, 255, 36, 1)
-                                          : Color.fromARGB(255, 255, 99, 99),
+                                      color: data.estadoDeuda == 'PAGADA'
+                                          ? Color.fromRGBO(
+                                              5, 163, 5, 1) // Verde
+                                          : data.estadoDeuda == 'PENDIENTE'
+                                              ? Color.fromRGBO(
+                                                  232, 8, 8, 1) // Rojo
+                                              : Color.fromRGBO(
+                                                  0, 0, 255, 1.0), // Azul
                                       fontWeight: FontWeight.w700,
                                       fontSize: 15.sp))),
+                          if (data.deudaPendiente > 0)
+                            ItemListaFinanciero(
+                                itemTitle: "Deuda pendiente",
+                                itemValue: "\$ ${data.deudaPendiente}"),
                           ItemListaFinanciero(
                               itemTitle: "Valor de matrícula",
                               itemValue: "\$ ${data.valorMatricula}"),
+                          ItemListaFinanciero(
+                              itemTitle: "Valor de pensión",
+                              itemValue: "\$ ${data.valorPension}"),
                           if (data.derechosGradoPago)
                             ItemListaFinanciero(
                                 itemTitle: "Derechos de Grado",
@@ -362,6 +375,12 @@ class _MainCards extends StatelessWidget {
                               itemDescription:
                                   "(Después de los 10 primeros días de cada mes)",
                               itemValue: "\$ ${data.interesNoPago}"),
+                          ItemListaFinanciero(
+                              itemTitle: "Total Pensión Anual",
+                              itemValue: "\$ ${data.valorPensionAnual}"),
+                          ItemListaFinanciero(
+                              itemTitle: "Total Pago Anual",
+                              itemValue: "\$ ${data.totalPagoAnual}"),
                           ItemListaFinanciero(
                               itemTitle: "Saldo pendiente",
                               itemValue: "\$ ${data.saldoPendiente}"),
