@@ -37,6 +37,10 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
     // Agrupamos por periodo normalizado y seleccionamos el que tiene nota
     final Map<String, LineaCalificacion> mejoresPorPeriodo = {};
 
+    double acumulado = 0.0;
+    int periodos = 0;
+    String criterio = "";
+
     for (var cal in widget.calificaciones) {
       String codigoPeriodo = cal.periodo.toUpperCase().trim();
       if (codigoPeriodo.endsWith("I")) {
@@ -44,6 +48,8 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
       }
 
       double nota = double.tryParse(cal.calificacion) ?? 0.0;
+      acumulado = acumulado + nota;
+      periodos = periodos + 1;
 
       // Si no existe un registro para este periodo o el actual tiene mejor nota
       if (!mejoresPorPeriodo.containsKey(codigoPeriodo) ||
@@ -53,6 +59,17 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
                   0.0)) {
         mejoresPorPeriodo[codigoPeriodo] = cal;
       }
+    }
+
+    double notaFinal = acumulado / periodos;
+    if (notaFinal < 3.5) {
+      criterio = "EN PROCESO";
+    } else if (notaFinal >= 3.5 && notaFinal < 3.9) {
+      criterio = "POR ALCANZAR";
+    } else if (notaFinal >= 3.9 && notaFinal < 4.6) {
+      criterio = "ALCANZADO POR MEJORAR";
+    } else if (notaFinal >= 4.6) {
+      criterio = "ALCANZADO";
     }
 
     // Lista final filtrada
@@ -65,13 +82,79 @@ class _CalificacionesEspecificasState extends State<CalificacionesEspecificas> {
       return Colors.blue;
     }
 
-    return SafeArea(
+    /*return SafeArea(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         child: ListView.separated(
           itemCount: filtradas.length,
           separatorBuilder: (_, __) => espaciado,
           itemBuilder: (_, i) {
+            final cal = filtradas[i];
+            final double nota = double.tryParse(cal.calificacion) ?? 0.0;
+
+            String codigoPeriodo = cal.periodo.toUpperCase().trim();
+            if (codigoPeriodo.endsWith("I")) {
+              codigoPeriodo = codigoPeriodo.substring(0, 3);
+            }
+
+            String titulo = periodosMap[codigoPeriodo] ?? codigoPeriodo;
+            final int porcentaje = ((nota * 100) / 5.0).round();
+
+            final String retro = "${_capitalizar(cal.criterioEvaluacion)}\n\n"
+                "${_capitalizar(cal.descripcionValoracionInstitucional)}";
+
+            final Color color = colorNota(nota);
+
+            return _buildPanel(
+              index: i,
+              titulo: titulo,
+              porcentaje: porcentaje,
+              retroalimentacion: retro,
+              color: color,
+              nota: nota,
+              estado: cal.escalaValoracionInstitucional,
+            );
+          },
+        ),
+      ),
+    );*/
+
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 5.w),
+        child: ListView.separated(
+          itemCount: filtradas.length + 2, // Aumentamos en 1
+          separatorBuilder: (_, __) => espaciado,
+          itemBuilder: (_, i) {
+            // Si es el último índice, mostramos el texto extra
+            if (i == filtradas.length) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: Text(
+                    "Calificación Acumulada",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 28, 22, 22),
+                    ),
+                  ),
+                ),
+              );
+            }
+            if (i == filtradas.length + 1) {
+              return Center(
+                child: Padding(
+                  padding: EdgeInsets.all(8.sp),
+                  child: IndicadorNota(
+                    nota: notaFinal,
+                    estado: criterio,
+                  ),
+                ),
+              );
+            }
+
+            // Caso normal (tus items)
             final cal = filtradas[i];
             final double nota = double.tryParse(cal.calificacion) ?? 0.0;
 

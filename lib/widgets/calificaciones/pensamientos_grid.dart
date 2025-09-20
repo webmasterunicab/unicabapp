@@ -4,6 +4,8 @@ import 'package:uniconecta/models/calificaciones/linea_calificacion.dart';
 import 'package:uniconecta/repositories/calificaciones_repository.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_especificas_screen.dart';
 import 'package:uniconecta/widgets/shared/error_mensaje.dart';
+import 'package:uniconecta/util/chart_utils.dart'; // ← ¡Importa la función de promedios!
+import 'package:uniconecta/widgets/calificaciones/calificacion_promedio_chart.dart'; // ← ¡Importa el widget!
 
 class PensamientosGrid extends StatefulWidget {
   final int rol;
@@ -42,10 +44,14 @@ class _PensamientosGridState extends State<PensamientosGrid> {
     _cargarRegistros();
   }
 
+  Map<String, double> promedios = {};
+
   Future<void> _cargarRegistros() async {
     try {
       final data =
           await _repo.obtenerCalificaciones({"email": widget.email, "rol": 1});
+
+      promedios = calcularPromediosPorPensamiento(data.lineas);
 
       for (final linea in data.lineas) {
         if (linea.pensamiento.toLowerCase().contains('bioético')) {
@@ -100,7 +106,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
   final String gif = 'assets/img/cerebro.gif';
 
   final List<Map<String, String>> elementos = const [
-    {'img': 'assets/img/matematicas.png', 'text': 'Matemático'},
+    {'img': 'assets/img/matematicas.png', 'text': 'Numérico'},
     {'img': 'assets/img/bioetico.png', 'text': 'Bioético'},
     {'img': 'assets/img/español.png', 'text': 'Humanístico Español'},
     {'img': 'assets/img/ingles.png', 'text': 'Humanístico Inglés'},
@@ -173,13 +179,25 @@ class _PensamientosGridState extends State<PensamientosGrid> {
       );
     }
 
-    return Container(
+    return SingleChildScrollView(
+        child: Container(
       width: 100.w,
-      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Text(
+            "Acumulado por Pensamiento (línea roja = 3.5)",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
+          ),
+          SizedBox(height: 2.h),
+          SizedBox(
+            //height: 100, // ← Altura fija
+            width: double.infinity,
+            child: CalificacionChart(promedios: promedios),
+          ),
+          SizedBox(height: 2.h),
           Row(
             children: [
               _buildButton(elementos[0], () {
@@ -199,7 +217,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
               }),
             ],
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 1.h),
           Row(
             children: [
               _buildButton(elementos[2], () {
@@ -219,7 +237,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
               }),
             ],
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 1.h),
           Row(
             children: [
               _buildButton(elementos[4], () {
@@ -241,6 +259,6 @@ class _PensamientosGridState extends State<PensamientosGrid> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
