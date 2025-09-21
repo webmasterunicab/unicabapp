@@ -56,7 +56,8 @@ class GeneralScreen extends StatelessWidget {
                 // --- Calificaciones Button ---
                 OrangeButton(
                   buttonText: "Calificaciones",
-                  fontSize: 16.sp,
+                  //fontSize: 5.sw,
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon2.png",
@@ -91,7 +92,8 @@ class GeneralScreen extends StatelessWidget {
                 // --- Observador Button ---
                 OrangeButton(
                   buttonText: "Observador",
-                  fontSize: 16.sp,
+                  //fontSize: 5.sw,
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon3.png",
@@ -122,7 +124,8 @@ class GeneralScreen extends StatelessWidget {
                 // --- Financiera Button ---
                 OrangeButton(
                   buttonText: "Financiera",
-                  fontSize: 16.sp,
+                  //fontSize: 5.sw,
+                  fontSize: MediaQuery.of(context).size.width * 0.045,
                   width: 324,
                   prefix: Image.asset(
                     "assets/img/general_icon1.png",

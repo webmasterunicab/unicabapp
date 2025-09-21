@@ -27,7 +27,7 @@ class CalificacionesScreen extends StatelessWidget {
               offset: Offset(0, 3))
         ],
       ),
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2.h),
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 1.h),
       child: Text(
         nombreEstudiante.toUpperCase(),
         style: TextStyle(
@@ -42,23 +42,48 @@ class CalificacionesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    /*return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MainNavegationBar(navType: NavBarTypes.alternative),
-          SizedBox(height: 25),
+          SizedBox(height: 1.h),
           ScreenNameDisplay(name: "CALIFICACIONES"),
-          SizedBox(height: 5),
+          SizedBox(height: 1.h),
           mostrarNombreEstudiante(),
-          SizedBox(height: 10),
+          SizedBox(height: 1.h),
           PensamientosGrid(
             rol: rol,
             email: email,
             estudiante: nombreEstudiante,
           ),
         ],
+      ),
+    );*/
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              MainNavegationBar(navType: NavBarTypes.alternative),
+              SizedBox(height: 1.h),
+              ScreenNameDisplay(name: "CALIFICACIONES"),
+              SizedBox(height: 1.h),
+              mostrarNombreEstudiante(),
+              SizedBox(height: 1.h),
+              PensamientosGrid(
+                rol: rol,
+                email: email,
+                estudiante: nombreEstudiante,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -179,17 +179,33 @@ class _PensamientosGridState extends State<PensamientosGrid> {
       );
     }
 
-    return SingleChildScrollView(
-        child: Container(
-      width: 100.w,
+    return Container(
+      //width: 100.w,
       padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            "Acumulado por Pensamiento (línea roja = 3.5)",
+          /*Text(
+            "Acumulado por Pensamiento \n(línea roja = calificación mínima 3.5)",
+            textAlign: TextAlign.center,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
+          ),*/
+          RichText(
+            textAlign: TextAlign.center, // opcional, si quieres centrar
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 15.sp,
+                color: Colors.black, // color por defecto del texto
+              ),
+              children: [
+                TextSpan(text: "Promedio Año por Pensamiento \n"),
+                TextSpan(
+                  text: "(línea roja = calificación mínima 3.5)",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 2.h),
           SizedBox(
@@ -259,6 +275,6 @@ class _PensamientosGridState extends State<PensamientosGrid> {
           ),
         ],
       ),
-    ));
+    );
   }
 }

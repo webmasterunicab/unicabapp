@@ -54,7 +54,7 @@ class _FinancieroBody extends StatelessWidget {
           MainNavegationBar(
             navType: NavBarTypes.navegating,
           ),
-          SizedBox(height: 77),
+          SizedBox(height: 2.h),
           Text(
             "ESTADO FINANCIERO",
             style: TextStyle(
@@ -63,7 +63,7 @@ class _FinancieroBody extends StatelessWidget {
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 8),
+          SizedBox(height: 2.h),
           Text(
             name,
             style: TextStyle(
@@ -72,9 +72,9 @@ class _FinancieroBody extends StatelessWidget {
                 fontSize: 15.sp,
                 fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 42),
+          SizedBox(height: 2.h),
           _MainCards(email: email),
-          SizedBox(height: 60),
+          SizedBox(height: 4.h),
           Text(
             "Subir soporte de pago",
             style: TextStyle(
