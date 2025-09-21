@@ -44,9 +44,13 @@ class _CalificacionChartPainter extends CustomPainter {
     final int count = promedios.length;
     if (count == 0) return;
 
-    final double pasoX = size.width / (count + 1);
+    /*final double pasoX = size.width / (count + 1);
     final double anchoBarra = pasoX * 0.6;
-    final double margenX = pasoX * 0.2;
+    final double margenX = pasoX * 0.2;*/
+    //Esto mejora la distribución en el eje x
+    final pasoX = size.width / count;
+    final anchoBarra = pasoX * 0.5;
+    final margenX = pasoX * 0.25;
 
     int index = 0;
     for (var entry in promedios.entries) {
@@ -60,15 +64,48 @@ class _CalificacionChartPainter extends CustomPainter {
 
       // Color condicional
       final colorBarra = valor < 3.5 ? Colors.red[700]! : Colors.green[700]!;
-      final barPaintColored = Paint()..color = colorBarra;
+      //final barPaintColored = Paint()..color = colorBarra;
 
       // Dibujar barra
       if (alturaBarra > 0 && anchoBarra > 0) {
-        canvas.drawRect(
+        /*canvas.drawRect(
             Rect.fromLTWH(
                 x, size.height - alturaBarra, anchoBarra, alturaBarra),
             //barPaint,
-            barPaintColored);
+            barPaintColored);*/
+
+        //Esto pone las barras con esquinas redondeadas
+        /*final rrect = RRect.fromRectAndRadius(
+          Rect.fromLTWH(x, size.height - alturaBarra, anchoBarra, alturaBarra),
+          const Radius.circular(6),
+        );
+        canvas.drawRRect(rrect, barPaintColored);*/
+
+        //Esto pone las barras con esquinas redondeadas y sombra para dar profundidad
+        // Rectángulo con bordes redondeados
+        final rrect = RRect.fromRectAndRadius(
+          Rect.fromLTWH(
+            x,
+            size.height - alturaBarra,
+            anchoBarra,
+            alturaBarra,
+          ),
+          const Radius.circular(6), // radio de redondeo
+        );
+
+        // --- SOMBRA desplazada ---
+        final shadowPaint = Paint()
+          ..color = Colors.black.withValues(alpha: 0.65) // más fuerte
+          ..maskFilter =
+              const MaskFilter.blur(BlurStyle.normal, 6); // más difuso
+
+        // Sombra un poco más abajo y derecha
+        final rrectShadow = rrect.shift(const Offset(3, 3));
+        canvas.drawRRect(rrectShadow, shadowPaint);
+
+        // --- BARRA encima ---
+        final barPaintColored = Paint()..color = colorBarra;
+        canvas.drawRRect(rrect, barPaintColored);
       }
 
       // Dibujar VALOR en BLANCO, dentro de la barra, en la PARTE SUPERIOR
@@ -95,7 +132,7 @@ class _CalificacionChartPainter extends CustomPainter {
 
       textPainterValor.paint(canvas, Offset(xTextValor, yTextValor));
 
-      // Dibujar ETIQUETA (inicial) en BLANCO, dentro de la barra, en la PARTE INFERIOR
+      // Dibujar ETIQUETA (inicial) en BLANCO, en la PARTE INFERIOR
       final textSpanInicial = TextSpan(
         text: _obtenerInicial(pensamiento),
         style: TextStyle(
