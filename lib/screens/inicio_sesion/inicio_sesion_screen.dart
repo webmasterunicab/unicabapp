@@ -232,6 +232,7 @@ class _MainFormState extends State<_MainForm> {
                   onPressed: () => _sendRequest(buildContext),
                   buttonText: "Iniciar Sesión",
                   textWeight: FontWeight.w600,
+                  fontSize: 17,
                 )
               : SizedBox(
                   height: 26,

@@ -7,15 +7,11 @@ import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart
 import 'package:uniconecta/widgets/shared/navegationBar/nav_bar_avatar.dart';
 
 List<Widget> navBodyBuilder(
-    {
-      required NavBarTypes type,
-      required BuildContext context,
-      Widget? nextScreen,
-      bool canGetBackHere = false,
-      Color? buttonsColor
-    }
-  ) {
-  
+    {required NavBarTypes type,
+    required BuildContext context,
+    Widget? nextScreen,
+    bool canGetBackHere = false,
+    Color? buttonsColor}) {
   final User? userProvider = context.watch<UserProvider>().user;
 
   String? name = '';
@@ -34,7 +30,7 @@ List<Widget> navBodyBuilder(
     }
   }
 
-  final misPublicaciones = GestureDetector(
+  /*final misPublicaciones = GestureDetector(
     onTap: () {
       // Navigator.of(context).push(
       //   MaterialPageRoute(
@@ -64,7 +60,7 @@ List<Widget> navBodyBuilder(
       fit: BoxFit.contain,
       color: Color.fromRGBO(239, 158, 41, 1),
     ),
-  );
+  );*/
 
   switch (type) {
     case NavBarTypes.normal:
@@ -72,46 +68,39 @@ List<Widget> navBodyBuilder(
         Expanded(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            
             children: [
               TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(padding: EdgeInsets.only(bottom: 15)),
-                child: Image.asset('assets/img/online-study.png', fit: BoxFit.contain, width: 55, height: 55)
-              ),
-          
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                      padding: EdgeInsets.only(bottom: 15)),
+                  child: Image.asset('assets/img/online-study.png',
+                      fit: BoxFit.contain, width: 55, height: 55)),
               SizedBox(
                 width: 50.w,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text(
-                      name,
-                      softWrap: true,
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontFamily: 'Roboto',
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white
-                      )
-                    ),
-                
+                    Text(name,
+                        softWrap: true,
+                        textAlign: TextAlign.end,
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontFamily: 'Roboto',
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white)),
                     SizedBox(height: 8),
-                
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         misPublicaciones,
                         SizedBox(width: 8),
                         todasPublicaciones,
                       ],
-                    ),
+                    ),*/
                   ],
                 ),
               ),
-          
               NavBarAvatar(
                   userAvatar: (picture != null)
                       ? picture
@@ -137,7 +126,7 @@ List<Widget> navBodyBuilder(
           )
         else
           SizedBox(width: 40),
-        SizedBox(
+        /*SizedBox(
           height: 40,
           child: Row(
             children: [
@@ -146,7 +135,7 @@ List<Widget> navBodyBuilder(
               todasPublicaciones,
             ],
           ),
-        ),
+        ),*/
         if (nextScreen != null)
           SizedBox(
             height: 40,
@@ -201,7 +190,7 @@ List<Widget> navBodyBuilder(
             )
           ],
         ),
-        SizedBox(
+        /*SizedBox(
           height: 40,
           child: Row(
             children: [
@@ -210,7 +199,7 @@ List<Widget> navBodyBuilder(
               todasPublicaciones,
             ],
           ),
-        ),
+        ),*/
       ];
 
     case NavBarTypes.noBody:

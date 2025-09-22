@@ -4,13 +4,19 @@ import 'package:uniconecta/models/calificaciones/linea_calificacion.dart';
 import 'package:uniconecta/repositories/calificaciones_repository.dart';
 import 'package:uniconecta/screens/calificaciones/calificaciones_especificas_screen.dart';
 import 'package:uniconecta/widgets/shared/error_mensaje.dart';
+import 'package:uniconecta/util/chart_utils.dart'; // ← ¡Importa la función de promedios!
+import 'package:uniconecta/widgets/calificaciones/calificacion_promedio_chart.dart'; // ← ¡Importa el widget!
 
 class PensamientosGrid extends StatefulWidget {
   final int rol;
   final String email;
   final String estudiante;
 
-  const PensamientosGrid({super.key, required this.rol, required this.email, required this.estudiante});
+  const PensamientosGrid(
+      {super.key,
+      required this.rol,
+      required this.email,
+      required this.estudiante});
 
   @override
   State<PensamientosGrid> createState() => _PensamientosGridState();
@@ -38,10 +44,14 @@ class _PensamientosGridState extends State<PensamientosGrid> {
     _cargarRegistros();
   }
 
+  Map<String, double> promedios = {};
+
   Future<void> _cargarRegistros() async {
     try {
       final data =
           await _repo.obtenerCalificaciones({"email": widget.email, "rol": 1});
+
+      promedios = calcularPromediosPorPensamiento(data.lineas);
 
       for (final linea in data.lineas) {
         if (linea.pensamiento.toLowerCase().contains('bioético')) {
@@ -63,7 +73,9 @@ class _PensamientosGridState extends State<PensamientosGrid> {
       if (!mounted) return;
       setState(() {
         if (data.status != "error") {
-          estudiante = widget.estudiante == '' ? data.estudiante.nombre : widget.estudiante;
+          estudiante = widget.estudiante == ''
+              ? data.estudiante.nombre
+              : widget.estudiante;
         } else {
           _error = data.mensaje;
         }
@@ -94,7 +106,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
   final String gif = 'assets/img/cerebro.gif';
 
   final List<Map<String, String>> elementos = const [
-    {'img': 'assets/img/matematicas.png', 'text': 'Matemático'},
+    {'img': 'assets/img/matematicas.png', 'text': 'Numérico'},
     {'img': 'assets/img/bioetico.png', 'text': 'Bioético'},
     {'img': 'assets/img/español.png', 'text': 'Humanístico Español'},
     {'img': 'assets/img/ingles.png', 'text': 'Humanístico Inglés'},
@@ -131,7 +143,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
                   softWrap: true,
                   style: TextStyle(
                     fontFamily: 'Roboto',
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
@@ -168,12 +180,40 @@ class _PensamientosGridState extends State<PensamientosGrid> {
     }
 
     return Container(
-      width: 100.w,
-      padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 10.w),
+      //width: 100.w,
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 10.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          /*Text(
+            "Acumulado por Pensamiento \n(línea roja = calificación mínima 3.5)",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15.sp),
+          ),*/
+          RichText(
+            textAlign: TextAlign.center, // opcional, si quieres centrar
+            text: TextSpan(
+              style: TextStyle(
+                fontSize: 15.sp,
+                color: Colors.black, // color por defecto del texto
+              ),
+              children: [
+                TextSpan(text: "Promedio Año por Pensamiento \n"),
+                TextSpan(
+                  text: "(línea roja = calificación mínima 3.5)",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 2.h),
+          SizedBox(
+            //height: 100, // ← Altura fija
+            width: double.infinity,
+            child: CalificacionChart(promedios: promedios),
+          ),
+          SizedBox(height: 2.h),
           Row(
             children: [
               _buildButton(elementos[0], () {
@@ -193,7 +233,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
               }),
             ],
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 1.h),
           Row(
             children: [
               _buildButton(elementos[2], () {
@@ -213,7 +253,7 @@ class _PensamientosGridState extends State<PensamientosGrid> {
               }),
             ],
           ),
-          SizedBox(height: 4.h),
+          SizedBox(height: 1.h),
           Row(
             children: [
               _buildButton(elementos[4], () {

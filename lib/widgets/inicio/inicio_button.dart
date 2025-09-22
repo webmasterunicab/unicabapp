@@ -13,7 +13,8 @@ class InicioButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        final screen = btnNombre.contains("Registro") ? RegistroScreen() : InicioSesion();
+        final screen =
+            btnNombre.contains("Registro") ? RegistroScreen() : InicioSesion();
 
         Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => screen),
@@ -38,7 +39,7 @@ class InicioButton extends StatelessWidget {
             btnNombre,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 16.sp,
+              fontSize: 18.sp,
             ),
           ),
         ),

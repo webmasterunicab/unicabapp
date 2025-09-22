@@ -17,7 +17,7 @@ class ObservadorScreen extends StatelessWidget {
   final String email;
 
   const ObservadorScreen({super.key, required this.email});
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,9 +28,8 @@ class ObservadorScreen extends StatelessWidget {
           children: [
             MainNavegationBar(navType: NavBarTypes.navegating),
             SizedBox(height: 31),
-        
             ScreenNameDisplay(
-              name: "OBSERVADOR", 
+              name: "OBSERVADOR",
               /*suffix: OrangeButton(buttonText: "Editar", 
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(builder: (_) => ObservadorFaltaScreen()));
@@ -41,7 +40,6 @@ class ObservadorScreen extends StatelessWidget {
               ),
                suffixSize: 60, */
             ),
-
             _CardsList(email: email),
           ],
         ),
@@ -61,8 +59,7 @@ class _CardsList extends StatelessWidget {
 
     if (provider.user == null) {
       return const Text(
-        "Error al cargar los datos del usuario, \n Inténtelo más tarde."
-      );
+          "Error al cargar los datos del usuario, \n Inténtelo más tarde.");
     }
 
     return FutureBuilder<ResponseObservador>(
@@ -70,10 +67,10 @@ class _CardsList extends StatelessWidget {
         role: 1,
         email: email,
       ),
-
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: Padding(
+          return const Center(
+              child: Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
             child: CircularProgressIndicator(strokeWidth: 2.5),
           ));
@@ -82,7 +79,8 @@ class _CardsList extends StatelessWidget {
         if (snapshot.hasError) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 20),
-            child: Text('Ha ocurrido un error no esperado,\nIntentelo mas tarde.'),
+            child:
+                Text('Ha ocurrido un error no esperado,\nIntentelo mas tarde.'),
           );
         }
 
@@ -102,44 +100,43 @@ class _CardsList extends StatelessWidget {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
                 if (student.hasAssessment)
                   CardObservador(
-                    fontSize: 13.sp,
+                    fontSize: 15.sp,
                     studentName: student.name,
                     type: "VALORACIÓN",
                     dependency: student.assessmentDependency,
                     charge: student.assessmentCharge,
                     date: student.assessmentDate,
-                    cardInfo: 'MOTIVO:\n${student.assessmentReason}\n\nPERSONALIDAD:\n${student.assessmentPersonality}\n\nGENERAL:\n${student.assessmentGeneral}',
+                    cardInfo:
+                        'MOTIVO:\n${student.assessmentReason}\n\nPERSONALIDAD:\n${student.assessmentPersonality}\n\nGENERAL:\n${student.assessmentGeneral}',
                     fieldHeight: 150,
                   ),
-
                 if (student.hasFollowUps)
                   for (FollowUpModel followUp in student.followUps)
                     if (followUp.isOpen)
                       CardObservador(
-                        fontSize: 13.sp,
+                        fontSize: 15.sp,
                         studentName: student.name,
                         type: "SEGUIMIENTOS",
                         dependency: followUp.dependency,
                         charge: followUp.charge,
                         date: followUp.date,
-                        cardInfo: 'OBJETIVO:\n${followUp.objective}\n\nAVANCES:\n${followUp.progress}\n\nACCIONES ESTUDIANTE:\n${followUp.studentActions}\n\nACCIONES ACUDIENTE:\n${followUp.attendantActions}\n\nCOMPROMISOS:\n${followUp.commitments}\n\n',
+                        cardInfo:
+                            'OBJETIVO:\n${followUp.objective}\n\nAVANCES:\n${followUp.progress}\n\nACCIONES ESTUDIANTE:\n${followUp.studentActions}\n\nACCIONES ACUDIENTE:\n${followUp.attendantActions}\n\nCOMPROMISOS:\n${followUp.commitments}\n\n',
                         fieldHeight: 140,
                       ),
-
                 if (student.hasRemarks)
                   for (RemarkModel remark in student.remarks)
                     CardObservador(
-                      fontSize: 13.sp,
+                      fontSize: 15.sp,
                       studentName: student.name,
                       type: "OBSERVACIONES",
                       dependency: remark.dependency,
                       charge: remark.charge,
                       date: remark.date,
                       cardInfo: remark.remark,
-                      fieldHeight: 130,
+                      fieldHeight: 200,
                     ),
               ],
             );

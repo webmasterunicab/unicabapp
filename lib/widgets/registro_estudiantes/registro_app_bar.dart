@@ -39,7 +39,7 @@ class RegistroAppBar extends StatelessWidget implements PreferredSizeWidget {
                 "Cuéntanos un poco sobre ti.",
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 13.sp,
+                  fontSize: 15.sp,
                   fontFamily: 'Roboto',
                   fontWeight: FontWeight.w300,
                   fontStyle: FontStyle.italic,
