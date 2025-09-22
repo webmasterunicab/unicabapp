@@ -10,7 +10,7 @@ import 'package:uniconecta/screens/observador/observador_intermedia_screen.dart'
 import 'package:uniconecta/screens/observador/observador_screen.dart';
 import 'package:uniconecta/widgets/shared/navegationBar/main_navegation_bar.dart';
 import 'package:uniconecta/widgets/shared/orange_button.dart';
-import 'package:sizer/sizer.dart';
+//import 'package:sizer/sizer.dart';
 
 class GeneralScreen extends StatelessWidget {
   final String userEmail;
