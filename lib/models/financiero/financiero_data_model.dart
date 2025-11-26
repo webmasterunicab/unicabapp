@@ -67,7 +67,7 @@ class FinancieroDataModel {
       valorPension: int.tryParse(json["valor_pension_mes"]) ?? 0,
       valorPensionAnual: int.tryParse(json["total_pension_anual"]) ?? 0,
       totalPagoAnual: int.tryParse(json["total_pagar_anual"]) ?? 0,
-      deudaPendiente: int.tryParse(json["deuda_pendiente"]) ?? 0,
+      deudaPendiente: int.tryParse(json["saldo_pendiente"]) ?? 0,
     );
   }
 }
